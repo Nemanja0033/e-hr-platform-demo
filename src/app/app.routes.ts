@@ -1,14 +1,10 @@
 import { Routes } from '@angular/router';
-import { Admin } from './admin/admin';
-import { Employe } from './employe/employe';
+import { Admin } from './modules/admin/components/admin';
 
 export const routes: Routes = [
     {
-        path: 'admin',
+        path: 'hr',
         component: Admin
     },
-    {
-        path: 'employe',
-        component: Employe
-    }
+    
 ];
