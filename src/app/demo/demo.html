@@ -1,0 +1,15 @@
+<button (click)="inc()">counter from parent {{counter}}</button>
+
+<button (click)="hideContent()">Hide/Show</button>
+
+<!-- <span>{{prop}}</span> -->
+
+@if (!isHidden()) {
+<ul>
+    @for (user of users; track $index) {
+        <li>{{user.name}}</li>
+    }
+</ul>
+} @else {
+<h2>its hidden</h2>
+}
