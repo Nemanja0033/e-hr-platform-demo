@@ -1,10 +1,16 @@
 import { Routes } from '@angular/router';
-import { Admin } from './modules/admin/components/admin';
-
+import { Admin } from './modules/admin/components/admin-auth/admin';
+import { AdminDashboard } from './modules/admin/components/admin-dashboard/admin-dashboard';
 export const routes: Routes = [
     {
         path: 'hr',
-        component: Admin
+        component: Admin,
+        children: [
+            { 
+                path: 'hr/dashboard',
+                component: AdminDashboard,
+            }
+        ]
     },
     
 ];

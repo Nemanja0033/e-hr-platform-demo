@@ -1,0 +1,102 @@
+<main class="container">
+  <div class="content-container">
+
+    @if (haveAccount()) {
+      <form class="form" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+        <h3>Login</h3>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email">
+
+          @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
+            <mat-error>Email is required</mat-error>
+          }
+          @if (loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched) {
+            <mat-error>Invalid email format</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password">
+
+          @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+            <mat-error>Password is required</mat-error>
+          }
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit">Login</button>
+      </form>
+    } @else {
+      <form class="form" [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+        <h3>Register</h3>
+
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput type="text" formControlName="name">
+
+          @if (registerForm.get('name')?.hasError('required') && registerForm.get('name')?.touched) {
+            <mat-error>Name is required</mat-error>
+          }
+          @if (registerForm.get('name')?.hasError('minlength') && registerForm.get('name')?.touched) {
+            <mat-error>Name must be at least 2 characters</mat-error>
+          }
+          @if (registerForm.get('name')?.hasError('maxlength') && registerForm.get('name')?.touched) {
+            <mat-error>Name cannot exceed 32 characters</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Second Name</mat-label>
+          <input matInput type="text" formControlName="surname">
+
+          @if (registerForm.get('surname')?.hasError('required') && registerForm.get('surname')?.touched) {
+            <mat-error>Surname is required</mat-error>
+          }
+          @if (registerForm.get('surname')?.hasError('minlength') && registerForm.get('surname')?.touched) {
+            <mat-error>Surname must be at least 2 characters</mat-error>
+          }
+          @if (registerForm.get('surname')?.hasError('maxlength') && registerForm.get('surname')?.touched) {
+            <mat-error>Surname cannot exceed 38 characters</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email">
+
+          @if (registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched) {
+            <mat-error>Email is required</mat-error>
+          }
+          @if (registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched) {
+            <mat-error>Invalid email format</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password">
+
+          @if (registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched) {
+            <mat-error>Password is required</mat-error>
+          }
+          @if (registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched) {
+            <mat-error>Password must be at least 8 characters</mat-error>
+          }
+          @if (registerForm.get('password')?.hasError('maxlength') && registerForm.get('password')?.touched) {
+            <mat-error>Password cannot exceed 32 characters</mat-error>
+          }
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit">Register</button>
+      </form>
+    }
+
+    @if (haveAccount()) {
+      <button mat-raised-button color="accent" (click)="toggleCrateAccount()">Don't have an account?</button>
+    } @else {
+      <button mat-raised-button color="accent" (click)="toggleCrateAccount()">Already have an account?</button>
+    }
+  </div>
+</main>
