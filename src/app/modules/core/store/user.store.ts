@@ -12,6 +12,9 @@ export class UserStore {
   private userSubject = new BehaviorSubject<User | null>(null);
   user$ = this.userSubject.asObservable();
 
+  // Subject/BehaviorSubject: ti možeš da pozoveš .next(value) i time emituješ vrednost.
+  // Običan Observable: ti ne možeš da pozoveš .next(). On sam emituje vrednosti, a ti samo definišeš šta da radiš kada stignu (next callback u subscribe).
+
   setUser(user: User) {
     this.userSubject.next(user);
   }

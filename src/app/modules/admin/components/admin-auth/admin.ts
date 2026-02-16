@@ -67,7 +67,9 @@ export class Admin {
         this.router.navigate(['/hr/dashboard']);
         this._snackBar.open(`Welcome ${res.name}`)
       },
-      error: (err) => console.error('Login failed', err)
+      error: (err) => {
+        this._snackBar.open(err.error.message, 'Close')
+      }
     });
   }
 

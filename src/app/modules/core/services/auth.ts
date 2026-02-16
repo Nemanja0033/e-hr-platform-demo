@@ -16,6 +16,10 @@ export class AuthService {
     return this.http.post(`http://localhost:3000/api/auth/login`, loginData);
   }
 
+  getMe(){
+    return this.http.get('http://localhost:3000/api/auth/me');
+  }
+
   saveToken(token: string){
     localStorage.setItem('token', token);
   }
