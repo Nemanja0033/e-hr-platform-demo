@@ -5,6 +5,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../../core/services/auth';
 import { CommonModule } from '@angular/common';
+import { UserStore } from '../../../core/store/user.store';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -13,7 +16,7 @@ import { CommonModule } from '@angular/common';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './admin.html',
   styleUrls: ['./admin.css'],
@@ -23,7 +26,13 @@ export class Admin {
   registerForm;
   haveAccount = signal(true);
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+      private fb: FormBuilder,
+      private authService: AuthService,
+      private userStore: UserStore,
+      private _snackBar: MatSnackBar,
+      private router: Router
+  ) {
     this.loginForm = this.fb.nonNullable.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
@@ -32,7 +41,7 @@ export class Admin {
     this.registerForm = this.fb.nonNullable.group({
       email: ['', [Validators.required, Validators.email]],
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(32)]],
-      surname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(38)]],
+      // surname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(38)]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(32)]]
     });
   }
@@ -41,6 +50,7 @@ export class Admin {
     this.haveAccount.update(prev => !prev);
   }
 
+  // Login logic flow
   onLoginSubmit() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -51,11 +61,17 @@ export class Admin {
       next: (res: any) => {
         console.log('Login success', res);
         this.authService.saveToken(res.token);
+        
+        // Set user data into store rxjs
+        this.userStore.setUser({ name: res.name, email: res.email });
+        this.router.navigate(['/hr/dashboard']);
+        this._snackBar.open(`Welcome ${res.name}`)
       },
       error: (err) => console.error('Login failed', err)
     });
   }
 
+  // Register logic
   onRegisterSubmit() {
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
@@ -65,7 +81,8 @@ export class Admin {
     this.authService.register(this.registerForm.getRawValue()).subscribe({
       next: (res: any) => {
         console.log('Register success', res);
-        this.authService.saveToken(res.token);
+        this._snackBar.open("Account succesfully created!")
+        this.haveAccount.set(true); // Push user to login after succesfully register.
       },
       error: (err) => console.error('Register failed', err)
     });

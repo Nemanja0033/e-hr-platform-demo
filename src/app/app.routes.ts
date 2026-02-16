@@ -5,12 +5,10 @@ export const routes: Routes = [
     {
         path: 'hr',
         component: Admin,
-        children: [
-            { 
-                path: 'hr/dashboard',
-                component: AdminDashboard,
-            }
-        ]
     },
-    
+    {
+        path: 'hr/dashboard', // samo "dashboard"
+        component: AdminDashboard,
+    }
 ];
+

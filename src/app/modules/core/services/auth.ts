@@ -8,12 +8,12 @@ import { API_URL } from '../constants/env';
 export class AuthService {
   constructor(private http: HttpClient){}
 
-  register(registerData: {name: string; surname: string; password: string; email: string} ){
+  register(registerData: {name: string; password: string; email: string} ){
     return this.http.post(`http://localhost:3000/api/auth/register`, registerData);
   }
 
   login(loginData: {email: string; password: string}){
-    return this.http.post(`${API_URL}/auth/login`, loginData);
+    return this.http.post(`http://localhost:3000/api/auth/login`, loginData);
   }
 
   saveToken(token: string){
