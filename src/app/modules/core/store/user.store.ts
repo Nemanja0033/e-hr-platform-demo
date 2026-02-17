@@ -31,4 +31,13 @@ export class UserStore {
   getUserSnapshot(): User | null {
     return this.userSubject.value;
   }
+
+  rehydrateUser(){
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role') as "hr" | "employe";
+
+    if(token && role){
+      this.userSubject.next({ token, role, email: '', name: ''})
+    }
+  }
 }

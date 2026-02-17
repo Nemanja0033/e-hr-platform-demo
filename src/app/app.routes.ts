@@ -4,6 +4,8 @@ import { Home } from './modules/home/home';
 import { HrAuth } from './modules/admin/components/admin-auth/hr-auth';
 import { EmployeAuth } from './modules/employe/components/employe-auth/employe-auth';
 import { EmployeDashboard } from './modules/employe/components/employe-dashboard/employe-dashboard';
+import { authGuard } from './modules/core/guards/auth.guard';
+import { roleGuard } from './modules/core/guards/role.guard';
 export const routes: Routes = [
     {
         path: '',
@@ -16,6 +18,7 @@ export const routes: Routes = [
     {
         path: 'hr/dashboard', // samo "dashboard"
         component: AdminDashboard,
+        canActivate: [authGuard, roleGuard('hr')]
     },
     {
         path: 'employe/auth',
@@ -23,7 +26,7 @@ export const routes: Routes = [
     },
     {
         path: 'employe/dashboard',
-        component: EmployeDashboard
-    }
+        component: EmployeDashboard,
+        canActivate: [authGuard, roleGuard('employe')]
+}
 ];
-

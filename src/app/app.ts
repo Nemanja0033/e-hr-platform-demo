@@ -19,7 +19,7 @@ export class App {
     const token = this.authService.getToken();
     const role = this.authService.getRole();
 
-    if (token) {
+    if (token && role) {
       this.authService.getMe(role).subscribe({
         next: (user: any) => {
           this.userStore.setUser({ ...user, token });
