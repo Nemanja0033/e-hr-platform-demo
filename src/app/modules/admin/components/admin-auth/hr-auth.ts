@@ -64,7 +64,7 @@ export class HrAuth {
         this.authService.saveRole('hr');
         
         // Set user data into store rxjs
-        this.userStore.setUser({ name: res.name, email: res.email, role: 'hr' });
+        this.userStore.setUser({ name: res.name, email: res.email, role: 'hr', token: res.token });
 
         // Navigate further & show snackbar
         this.router.navigate(['/hr/dashboard']);

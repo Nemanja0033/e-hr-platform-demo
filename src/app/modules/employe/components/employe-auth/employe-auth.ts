@@ -41,7 +41,7 @@ export class EmployeAuth {
         this.authService.saveToken(res.token);
         this.authService.saveRole('employe');
 
-        this.userStore.setUser({name: res.name, email: res.email, role: 'employe' });
+        this.userStore.setUser({name: res.name, email: res.email, role: 'employe', token: res.token });
         this.router.navigate(['/employe/dashboard']);
         this._snackbar.open(`Welcome ${res.name}`);
       }

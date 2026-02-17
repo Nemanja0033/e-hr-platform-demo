@@ -14,7 +14,7 @@ export class UserStore {
   user$ = this.userSubject.asObservable();
 
   // izvedeni stream (derived observable)
-  isUserAuth$ = this.user$.pipe(
+    isUserAuth$ = this.user$.pipe(
     map(user => !!user?.token)
   )
 
