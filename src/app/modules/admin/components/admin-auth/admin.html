@@ -7,7 +7,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email">
+          <input #emailInput matInput type="email" formControlName="email">
 
           @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
             <mat-error>Email is required</mat-error>

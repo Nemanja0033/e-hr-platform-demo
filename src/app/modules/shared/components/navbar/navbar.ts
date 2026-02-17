@@ -23,7 +23,7 @@ export class Navbar {
     this.authService.logout();
     this.userStore.clearUser();
     this._snackbar.open("User signed out", 'Close');
-    this.router.navigate(['/hr/auth']);
+    this.router.navigate(['/']);
   }
 
 }

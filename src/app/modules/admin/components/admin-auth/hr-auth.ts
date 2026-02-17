@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, ElementRef, signal, ViewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,6 +25,14 @@ export class HrAuth {
   loginForm;
   registerForm;
   haveAccount = signal(true);
+  // View child angular way to have an reference to the HTML elements.
+  @ViewChild('emailInput') emailInput!: ElementRef<HTMLInputElement>;
+
+  ngAfterViewInit(){
+    setTimeout(() => {
+      this.emailInput.nativeElement.focus();
+    }, 200);
+  }
 
   constructor(
       private fb: FormBuilder,
