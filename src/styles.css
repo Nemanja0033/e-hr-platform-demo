@@ -1,1 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
+
+body{
+    background-color: whitesmoke;
+}
+
+:root {
+  --primary-color: #0056b3;
+  --secondary-color: #004494;
+  --sensitive-color: #ccddf0;
+  --text-muted: #696e72;
+}
+
+.button-primary {
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+}
+
+.button-primary:hover {
+    cursor: pointer;
+    background-color: var(--secondary-color);
+    transition: all 0.3s;
+}
+
+.button-secondary {
+    border: 1px solid rgba(128, 128, 128, 0.103);
+    cursor: pointer;
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.button-secondary:hover{
+    background-color: rgba(236, 234, 234, 0.233);
+    transition: all 0.3s;
+}
