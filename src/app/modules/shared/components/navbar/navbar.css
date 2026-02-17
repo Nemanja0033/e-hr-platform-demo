@@ -32,6 +32,18 @@
     transition: color 0.2s ease-in-out;
 }
 
+.links-container span {
+    cursor: pointer;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease-in-out;
+}
+
 .links-container a:hover {
+    color: rgb(63, 128, 224);
+}
+
+.links-container span:hover {
     color: rgb(63, 128, 224);
 }

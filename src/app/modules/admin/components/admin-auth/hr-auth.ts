@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { AuthService } from '../../../core/services/auth';
+import { AuthService } from '../../../core/services/auth/auth';
 import { CommonModule } from '@angular/common';
 import { UserStore } from '../../../core/store/user.store';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
   templateUrl: './admin.html',
   styleUrls: ['./admin.css'],
 })
-export class Admin {
+export class HrAuth {
   loginForm;
   registerForm;
   haveAccount = signal(true);

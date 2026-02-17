@@ -1,0 +1,17 @@
+<nav class="navbar">
+    <span class="logo">E-HR Platform</span>
+
+    @if (isAuth$ | async) {
+    <div class="links-container">
+        <a routerLink="/">Home</a>
+        <span (click)="handleLogout()">Logout</span>
+    </div>
+    } @else {
+    <div class="links-container">
+        <a routerLink="/">Home</a>
+        <a routerLink="/hr/auth">Login as HR</a>
+        <a href="/employe/auth">Login as Employe</a>
+    </div>
+
+    }
+</nav>
