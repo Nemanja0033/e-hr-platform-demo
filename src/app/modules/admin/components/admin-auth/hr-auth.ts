@@ -59,11 +59,14 @@ export class HrAuth {
 
     this.authService.loginHr(this.loginForm.getRawValue()).subscribe({
       next: (res: any) => {
-        console.log('Login success', res);
+        // Save token and the role in localStorage (workaround)
         this.authService.saveToken(res.token);
+        this.authService.saveRole('hr');
         
         // Set user data into store rxjs
-        this.userStore.setUser({ name: res.name, email: res.email });
+        this.userStore.setUser({ name: res.name, email: res.email, role: 'hr' });
+
+        // Navigate further & show snackbar
         this.router.navigate(['/hr/dashboard']);
         this._snackBar.open(`Welcome ${res.name}`)
       },
@@ -82,7 +85,6 @@ export class HrAuth {
 
     this.authService.registerHr(this.registerForm.getRawValue()).subscribe({
       next: (res: any) => {
-        console.log('Register success', res);
         this._snackBar.open("Account succesfully created!")
         this.haveAccount.set(true); // Push user to login after succesfully register.
       },

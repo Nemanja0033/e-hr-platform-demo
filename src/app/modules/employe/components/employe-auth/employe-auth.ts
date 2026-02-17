@@ -5,6 +5,8 @@ import { UserStore } from '../../../core/store/user.store';
 import { MatError, MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-employe-auth',
@@ -18,9 +20,11 @@ export class EmployeAuth {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private userStore: UserStore
+    private userStore: UserStore,
+    private router: Router,
+    private _snackbar: MatSnackBar
   ){
-    this.loginForm = this.fb.group({
+    this.loginForm = this.fb.nonNullable.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     })
@@ -32,6 +36,15 @@ export class EmployeAuth {
       return;
     }
 
-    console.log(this.loginForm.value);
+    this.authService.loginEmploye(this.loginForm.getRawValue()).subscribe({
+      next: (res: any) => {
+        this.authService.saveToken(res.token);
+        this.authService.saveRole('employe');
+
+        this.userStore.setUser({name: res.name, email: res.email, role: 'employe' });
+        this.router.navigate(['/employe/dashboard']);
+        this._snackbar.open(`Welcome ${res.name}`);
+      }
+    })
   }
 }

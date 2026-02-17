@@ -3,6 +3,7 @@ import { AdminDashboard } from './modules/admin/components/admin-dashboard/admin
 import { Home } from './modules/home/home';
 import { HrAuth } from './modules/admin/components/admin-auth/hr-auth';
 import { EmployeAuth } from './modules/employe/components/employe-auth/employe-auth';
+import { EmployeDashboard } from './modules/employe/components/employe-dashboard/employe-dashboard';
 export const routes: Routes = [
     {
         path: '',
@@ -19,6 +20,10 @@ export const routes: Routes = [
     {
         path: 'employe/auth',
         component: EmployeAuth
+    },
+    {
+        path: 'employe/dashboard',
+        component: EmployeDashboard
     }
 ];
 

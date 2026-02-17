@@ -19,18 +19,6 @@ export class Navbar {
     this.isAuth$ = this.userStore.isUserAuth$;
   }
 
-  ngOnInit() {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      this.authService.getMeHr().subscribe({
-        next: (user: any) => {
-          this.userStore.setUser({ ...user, token });
-        }
-      });
-    }
-  }
-
   handleLogout() {
     this.authService.logout();
     this.userStore.clearUser();

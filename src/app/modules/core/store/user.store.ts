@@ -5,6 +5,7 @@ export interface User {
   email: string;
   name?: string;
   token?: string;
+  role: 'hr' | 'employe'
 }
 
 @Injectable({ providedIn: 'root' })
