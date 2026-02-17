@@ -16,19 +16,9 @@ export class AdminDashboard {
     private userStore: UserStore,
     private authService: AuthService
   ) {
+    // This is an observable $ - in name is common practice to detect a observable.
     this.user$ = this.userStore?.user$; 
   }
 
-  ngOnInit() {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      this.authService.getMe().subscribe({
-        next: (user: any) => {
-          this.userStore.setUser({ ...user, token });
-        }
-      });
-    }
-  }
 }
 

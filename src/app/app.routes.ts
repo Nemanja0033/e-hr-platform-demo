@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { AdminDashboard } from './modules/admin/components/admin-dashboard/admin-dashboard';
 import { Home } from './modules/home/home';
 import { HrAuth } from './modules/admin/components/admin-auth/hr-auth';
+import { EmployeAuth } from './modules/employe/components/employe-auth/employe-auth';
 export const routes: Routes = [
     {
         path: '',
@@ -14,6 +15,10 @@ export const routes: Routes = [
     {
         path: 'hr/dashboard', // samo "dashboard"
         component: AdminDashboard,
+    },
+    {
+        path: 'employe/auth',
+        component: EmployeAuth
     }
 ];
 

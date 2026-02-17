@@ -3,11 +3,11 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { AuthService } from '../../../core/services/auth/auth';
 import { CommonModule } from '@angular/common';
 import { UserStore } from '../../../core/store/user.store';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../core/services/auth/auth';
 
 @Component({
   selector: 'app-admin',
@@ -57,7 +57,7 @@ export class HrAuth {
       return;
     }
 
-    this.authService.login(this.loginForm.getRawValue()).subscribe({
+    this.authService.loginHr(this.loginForm.getRawValue()).subscribe({
       next: (res: any) => {
         console.log('Login success', res);
         this.authService.saveToken(res.token);
@@ -80,13 +80,15 @@ export class HrAuth {
       return;
     }
 
-    this.authService.register(this.registerForm.getRawValue()).subscribe({
+    this.authService.registerHr(this.registerForm.getRawValue()).subscribe({
       next: (res: any) => {
         console.log('Register success', res);
         this._snackBar.open("Account succesfully created!")
         this.haveAccount.set(true); // Push user to login after succesfully register.
       },
-      error: (err) => console.error('Register failed', err)
+      error: (err) => {
+        this._snackBar.open(err.error.message, 'Got it');
+      }
     });
   }
 }

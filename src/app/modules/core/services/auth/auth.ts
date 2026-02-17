@@ -4,23 +4,25 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
+// This service provides mehtods for both HR and Employe Auth flow
+
 export class AuthService {
   constructor(private http: HttpClient){}
 
-  register(registerData: {name: string; password: string; email: string} ){
-    return this.http.post(`http://localhost:3000/api/auth/register`, registerData);
+  registerHr(registerData: {name: string; password: string; email: string} ){
+    return this.http.post(`http://localhost:3000/api/hr/auth/register`, registerData);
   }
 
-  login(loginData: {email: string; password: string}){
-    return this.http.post(`http://localhost:3000/api/auth/login`, loginData);
+  loginHr(loginData: {email: string; password: string}){
+    return this.http.post(`http://localhost:3000/api/hr/auth/login`, loginData);
+  }
+
+  getMeHr(){
+    return this.http.get('http://localhost:3000/api/hr/auth/me');
   }
 
   logout(){
     localStorage.removeItem('token');
-  }
-
-  getMe(){
-    return this.http.get('http://localhost:3000/api/auth/me');
   }
 
   saveToken(token: string){
