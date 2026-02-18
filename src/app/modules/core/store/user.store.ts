@@ -33,11 +33,12 @@ export class UserStore {
   }
 
   rehydrateUser(){
+    console.log("USER REHYDRATION")
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role') as "hr" | "employe";
 
     if(token && role){
-      this.userSubject.next({ token, role, email: '', name: ''})
+      this.userSubject.next({ token, role, email: '', name: undefined})
     }
   }
 }

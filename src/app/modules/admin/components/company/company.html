@@ -1,0 +1,38 @@
+<main class="container">
+    <div class="content">
+        <div class="content-header">
+            <h1>Company</h1>
+
+            @if (!(company$ | async)) {
+                <button [class.button-primary-disabled]="isRegisterMode()" [disabled]="isRegisterMode()" (click)="toggleRegisterMode()" class="button-primary">+ Register Company</button>
+            }
+        </div>
+
+       @if(isRegisterMode()){
+            <div class="register-company-container">
+                    <form class="form" [formGroup]="registerCompanyForm">
+                        <h3>Register a Company</h3>
+
+                        <mat-label>Company Name</mat-label>
+                        <mat-form-field>
+                            <input type="text" matInput formControlName="company_name">
+                        </mat-form-field>
+
+                        <button class="button-primary">Submit</button>
+                    </form>
+            </div>
+       } @else {
+         @if(!(company$ | async)){
+            <div class="empty-state">
+                <div>
+                    <h2>No company registered</h2>
+                </div>
+            </div>
+        } @else {
+            <div>
+                <h1> Company data. . .</h1>
+            </div>
+        }
+       }
+    </div>
+</main>

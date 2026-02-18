@@ -15,7 +15,7 @@ export const roleGuard = (requiredRole: "hr" | "employe"): CanActivateFn => {
           return true;
         }
 
-        return router.createUrlTree(['/']);
+        return router.createUrlTree([`/${requiredRole}/dashboard`]);
       })
     );
   };

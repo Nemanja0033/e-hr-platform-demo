@@ -1,35 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
 
-body{
+body {
     background-color: whitesmoke;
 }
 
 :root {
-  --primary-color: #0056b3;
-  --secondary-color: #004494;
-  --sensitive-color: #ccddf0;
-  --text-muted: #696e72;
+    --primary-color: #0056b3;
+    --secondary-color: #004494;
+    --sensitive-color: #ccddf0;
+    --text-muted: #696e72;
 
-  --employee-color: #218802;
-  --request-color: #b30068;
+    --employee-color: #218802;
+    --request-color: #b30068;
 
-  --employe-soft: #2ab3001e;
-  --request-soft: #b3006818;
+    --employe-soft: #2ab3001e;
+    --request-soft: #b3006818;
 }
 
-.employe-bg{
+.employe-bg {
     background-color: var(--employee-color) !important;
 }
 
-.employe-bg-soft{
+.employe-bg-soft {
     background-color: var(--employe-soft) !important;
 }
 
-.request-bg{
+.request-bg {
     background-color: var(--request-color) !important;
 }
 
-.request-bg-soft{
+.request-bg-soft {
     background-color: var(--request-soft) !important;
 }
 
@@ -50,6 +50,11 @@ body{
     transition: all 0.3s;
 }
 
+.button-primary-disabled {
+    cursor: auto !important;
+    opacity: 50%;
+}
+
 .button-secondary {
     border: 1px solid rgba(128, 128, 128, 0.103);
     cursor: pointer;
@@ -63,7 +68,7 @@ body{
     text-decoration: none;
 }
 
-.button-secondary:hover{
+.button-secondary:hover {
     background-color: rgba(236, 234, 234, 0.233);
     transition: all 0.3s;
 }

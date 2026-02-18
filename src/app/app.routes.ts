@@ -6,19 +6,25 @@ import { EmployeAuth } from './modules/employe/components/employe-auth/employe-a
 import { EmployeDashboard } from './modules/employe/components/employe-dashboard/employe-dashboard';
 import { authGuard } from './modules/core/guards/auth.guard';
 import { roleGuard } from './modules/core/guards/role.guard';
+import { Company } from './modules/admin/components/company/company';
 export const routes: Routes = [
     {
         path: '',
-        component: Home
+        component: Home,
     },
     {
         path: 'hr/auth',
         component: HrAuth,
     },
     {
-        path: 'hr/dashboard', // samo "dashboard"
+        path: 'hr/dashboard',
         component: AdminDashboard,
-        canActivate: [authGuard, roleGuard('hr')]
+        canActivate: [authGuard('hr'), roleGuard('hr')]
+    },
+    {
+        path: 'hr/dashboard/company',
+        component: Company,
+        canActivate: [authGuard('hr'), roleGuard("hr")]
     },
     {
         path: 'employe/auth',
@@ -27,6 +33,6 @@ export const routes: Routes = [
     {
         path: 'employe/dashboard',
         component: EmployeDashboard,
-        canActivate: [authGuard, roleGuard('employe')]
+        canActivate: [authGuard('employe'), roleGuard('employe')]
 }
 ];
