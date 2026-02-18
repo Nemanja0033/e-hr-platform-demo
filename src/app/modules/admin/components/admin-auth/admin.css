@@ -20,3 +20,13 @@
         }
     }
 }
+
+.tooltip{
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.tooltip:hover{
+    text-decoration: underline;
+    transition: all 0.3s;
+}

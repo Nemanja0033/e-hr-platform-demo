@@ -1,0 +1,51 @@
+span,
+p {
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(300px, 1fr));
+    gap: 30px;
+    place-items: start;
+    /* aligin-uje grid po horizontali */
+    align-content: start;
+    /* aligin-uje grid po vertikali */
+    height: 100%;
+    width: 80%;
+}
+
+.app-cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* tablet */
+@media (max-width: 1280px) {
+    .app-cards-container {
+        grid-template-columns: repeat(2, minmax(200px, 1fr));
+    }
+
+    
+}
+
+/* mobilni */
+@media (max-width: 768px) {
+    .app-cards-container {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+    }
+
+    .content{
+        place-items: center;
+    }
+}

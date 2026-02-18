@@ -3,7 +3,7 @@
 
     @if (haveAccount()) {
       <form class="form" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
-        <h3>Login</h3>
+        <h3>Login as HR</h3>
 
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
@@ -26,7 +26,7 @@
           }
         </mat-form-field>
 
-        <button mat-flat-button color="primary" type="submit">Login</button>
+        <button class="button-primary" type="submit">Login</button>
       </form>
     } @else {
       <form class="form" [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
@@ -89,14 +89,14 @@
           }
         </mat-form-field>
 
-        <button mat-flat-button color="primary" type="submit">Register</button>
+        <button class="button-primary" type="submit">Register</button>
       </form>
     }
 
     @if (haveAccount()) {
-      <button mat-raised-button color="accent" (click)="toggleCrateAccount()">Don't have an account?</button>
+      <span class="tooltip" (click)="toggleCrateAccount()">Don't have an account?</span>
     } @else {
-      <button mat-raised-button color="accent" (click)="toggleCrateAccount()">Already have an account?</button>
+      <span class="tooltip" (click)="toggleCrateAccount()">Already have an account?</span>
     }
   </div>
 </main>
