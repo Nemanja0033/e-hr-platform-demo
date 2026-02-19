@@ -6,6 +6,7 @@ export interface CompanyInterface {
     name: String,
     size: number,
     employes: any[],
+    Hr: any,
     hrId: String
 }
 
@@ -13,4 +14,8 @@ export interface CompanyInterface {
 export class CompanyStore {
     private companySubject = new BehaviorSubject<CompanyInterface | null>(null);
     company$ = this.companySubject.asObservable();
+
+    setCompany(company: CompanyInterface){
+        this.companySubject.next(company);
+    }
 }

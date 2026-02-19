@@ -3,29 +3,58 @@ import { CompanyInterface, CompanyStore } from '../../../core/store/company.stor
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormField, MatLabel } from "@angular/material/form-field";
-import { MatInput } from "@angular/material/input";
+import { CompanyService } from '../../../core/services/company/company.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 
 @Component({
   selector: 'app-company',
-  imports: [AsyncPipe, ReactiveFormsModule, MatFormField, MatInput, MatLabel],
+  imports: [AsyncPipe, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
   templateUrl: './company.html',
   styleUrl: './company.css',
 })
 export class Company {
-  company$: Observable<CompanyInterface | null>
+  company$: Observable<CompanyInterface | null>;
 
   registerCompanyForm;
   isRegisterMode = signal<boolean>(false);
 
-  constructor(private companyStore: CompanyStore, private fb: FormBuilder){
+  constructor(
+    private companyStore: CompanyStore,
+    private companyService: CompanyService,
+    private fb: FormBuilder,
+    private _snackbar: MatSnackBar
+  ) {
     this.company$ = companyStore.company$;
     this.registerCompanyForm = this.fb.nonNullable.group({
-      company_name: ['', [Validators.required, Validators.minLength(2), Validators.minLength(45)]]
-    })
+      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(45)]],
+    });
   }
 
-  toggleRegisterMode(){
+  toggleRegisterMode() {
     this.isRegisterMode.set(true);
+  }
+
+  onSubmitCompanyRegister() {
+    console.log("SUBMIT")
+    if (this.registerCompanyForm.invalid) {
+      this.registerCompanyForm.markAllAsTouched();
+      return;
+    }
+
+    this.companyService.registerCompany(this.registerCompanyForm.getRawValue()).subscribe({
+      next: (res: any) => {
+        this._snackbar.open("Company registered", "Close");
+        console.log("RES FROM OBSERVABLE", res.company);
+        this.companyStore.setCompany(res.company);
+        this.isRegisterMode.set(false);
+      },
+      error: (err) => {
+        console.error(err)
+        this._snackbar.open(err.error.message, "Got it");
+      }
+    })
   }
 }

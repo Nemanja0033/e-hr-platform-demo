@@ -10,27 +10,27 @@
 
        @if(isRegisterMode()){
             <div class="register-company-container">
-                    <form class="form" [formGroup]="registerCompanyForm">
+                    <form class="form" [formGroup]="registerCompanyForm" (ngSubmit)="onSubmitCompanyRegister()">
                         <h3>Register a Company</h3>
 
                         <mat-label>Company Name</mat-label>
                         <mat-form-field>
-                            <input type="text" matInput formControlName="company_name">
+                            <input type="text" matInput formControlName="name">
                         </mat-form-field>
 
-                        <button class="button-primary">Submit</button>
+                        <button type="submit" [class.button-primary-disabled]="registerCompanyForm.pending" class="button-primary">{{registerCompanyForm.pending  ? 'Submiting...' : 'Submit'}}</button>
                     </form>
             </div>
        } @else {
-         @if(!(company$ | async)){
+         @if(company$ | async; as company){
+            <div class="company-card card">
+                <h1>{{ company.name }}</h1>
+            </div>
+        } @else {
             <div class="empty-state">
                 <div>
                     <h2>No company registered</h2>
                 </div>
-            </div>
-        } @else {
-            <div>
-                <h1> Company data. . .</h1>
             </div>
         }
        }
