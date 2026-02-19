@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-employe-auth',
-  imports: [ReactiveFormsModule, MatFormField, MatLabel, MatError, MatInput, MatButton],
+  imports: [ReactiveFormsModule, MatFormField, MatLabel, MatError, MatInput],
   templateUrl: './employe-auth.html',
   styleUrl: './employe-auth.css',
 })

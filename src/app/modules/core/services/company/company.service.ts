@@ -8,4 +8,8 @@ export class CompanyService {
     registerCompany(company: { name: string }){
         return this.http.post('http://localhost:3000/api/company', company);
     }
+
+    getCompany(){
+        return this.http.get("http://localhost:3000/api/company");
+    }
 }

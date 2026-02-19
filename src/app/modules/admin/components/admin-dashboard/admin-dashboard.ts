@@ -18,6 +18,8 @@ export class AdminDashboard {
     private authService: AuthService
   ) {
     // This is an observable $ - in name is common practice to detect a observable.
+    
+    // We use AsyncPipe to automate subscribe to the observable
     this.user$ = this.userStore?.user$; 
   }
 

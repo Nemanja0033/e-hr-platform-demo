@@ -7,16 +7,18 @@ import { CompanyService } from '../../../core/services/company/company.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
 
 
 @Component({
   selector: 'app-company',
-  imports: [AsyncPipe, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+  imports: [AsyncPipe, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule],
   templateUrl: './company.html',
   styleUrl: './company.css',
 })
 export class Company {
   company$: Observable<CompanyInterface | null>;
+  loading$: Observable<boolean | null>;
 
   registerCompanyForm;
   isRegisterMode = signal<boolean>(false);
@@ -27,7 +29,9 @@ export class Company {
     private fb: FormBuilder,
     private _snackbar: MatSnackBar
   ) {
-    this.company$ = companyStore.company$;
+    this.company$ = this.companyStore.company$;
+    this.loading$ = companyStore.loading$;
+
     this.registerCompanyForm = this.fb.nonNullable.group({
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(45)]],
     });

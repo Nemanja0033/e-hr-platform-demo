@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, tap, switchMap, finalize } from "rxjs";
+import { CompanyService } from "../services/company/company.service";
 
 export interface CompanyInterface {
     id: string,
@@ -9,13 +10,39 @@ export interface CompanyInterface {
     Hr: any,
     hrId: String
 }
-
 @Injectable({ providedIn: 'root' })
 export class CompanyStore {
-    private companySubject = new BehaviorSubject<CompanyInterface | null>(null);
-    company$ = this.companySubject.asObservable();
 
-    setCompany(company: CompanyInterface){
-        this.companySubject.next(company);
-    }
+  private refreshTrigger$ = new BehaviorSubject<void>(undefined);
+
+  private companySubject = new BehaviorSubject<CompanyInterface | null>(null);
+  company$ = this.companySubject.asObservable();
+
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  loading$ = this.loadingSubject.asObservable();
+
+  constructor(private companyService: CompanyService) {
+    this.init();
+  }
+
+  private init() {
+    this.refreshTrigger$.pipe(
+      tap(() => this.loadingSubject.next(true)),
+      switchMap(() =>
+        this.companyService.getCompany().pipe(
+          finalize(() => this.loadingSubject.next(false))
+        )
+      )
+    ).subscribe(company => {
+      this.companySubject.next(company as CompanyInterface);
+    });
+  }
+
+  refetch() {
+    this.refreshTrigger$.next();
+  }
+
+  setCompany(company: CompanyInterface) {
+    this.companySubject.next(company);
+  }
 }
