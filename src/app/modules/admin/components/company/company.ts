@@ -17,10 +17,14 @@ import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress
   styleUrl: './company.css',
 })
 export class Company {
+  // Use property for observable placeholder that we use in template. 
+  // with async pipe to render (automate sub/unsub)
   company$: Observable<CompanyInterface | null>;
   loading$: Observable<boolean | null>;
 
   registerCompanyForm;
+
+  // Using signal for handling UI state
   isRegisterMode = signal<boolean>(false);
 
   constructor(
@@ -42,7 +46,6 @@ export class Company {
   }
 
   onSubmitCompanyRegister() {
-    console.log("SUBMIT")
     if (this.registerCompanyForm.invalid) {
       this.registerCompanyForm.markAllAsTouched();
       return;
@@ -51,8 +54,7 @@ export class Company {
     this.companyService.registerCompany(this.registerCompanyForm.getRawValue()).subscribe({
       next: (res: any) => {
         this._snackbar.open("Company registered", "Close");
-        console.log("RES FROM OBSERVABLE", res.company);
-        this.companyStore.setCompany(res.company);
+        this.companyStore.refetch()
         this.isRegisterMode.set(false);
       },
       error: (err) => {

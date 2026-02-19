@@ -14,12 +14,11 @@ export interface CompanyInterface {
 export class CompanyStore {
 
   private refreshTrigger$ = new BehaviorSubject<void>(undefined);
-
   private companySubject = new BehaviorSubject<CompanyInterface | null>(null);
-  company$ = this.companySubject.asObservable();
-
   private loadingSubject = new BehaviorSubject<boolean>(false);
+  
   loading$ = this.loadingSubject.asObservable();
+  company$ = this.companySubject.asObservable();
 
   constructor(private companyService: CompanyService) {
     this.init();

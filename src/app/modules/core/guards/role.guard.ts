@@ -12,10 +12,11 @@ export const roleGuard = (requiredRole: "hr" | "employe"): CanActivateFn => {
     return userStore.user$.pipe(
       map(user => {
         if (user?.role === requiredRole) {
+          console.log("ROLE GUARD",user?.role === requiredRole)
           return true;
         }
 
-        return router.createUrlTree([`/${requiredRole}/dashboard`]);
+        return router.createUrlTree([`/${requiredRole}/auth`]);
       })
     );
   };
