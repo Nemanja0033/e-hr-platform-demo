@@ -5,22 +5,35 @@ import { MatInputModule } from '@angular/material/input';
 import { Observable } from 'rxjs';
 import { EmployeInterface, EmployeService } from '../../../core/services/employe/employe.service';
 import { EmployeeStore } from '../../../core/store/employee.store';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AsyncPipe } from '@angular/common';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+
+export interface EmployeType {
+    name: string;
+    surname: string;
+    email: string;
+    password: string;
+    role: string;
+    vacationDays: number;
+    sickLeave: number
+}
 
 @Component({
   selector: 'app-employes',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatLabel, MatInputModule, MatError],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatLabel, MatInputModule, MatError, AsyncPipe, MatProgressSpinner],
   templateUrl: './employes.html',
   styleUrl: './employes.css',
 })
 export class Employes {
-  employes$: Observable<EmployeInterface[] | null>;
+  employes$: Observable<EmployeType[] | null>;
   loading$: Observable<boolean | null>;
 
   registerEmployeeForm;
   isRegisterEmployeeMode = signal<boolean>(false);
 
-  constructor(private fb: FormBuilder, private employesStore: EmployeeStore, private employeeService: EmployeService) {
-    this.employes$ = employesStore.employes$;
+  constructor(private fb: FormBuilder, private _snackbar: MatSnackBar, private employesStore: EmployeeStore, private employeeService: EmployeService) {
+    this.employes$ = employesStore.employes$ as any;
     this.loading$ = employesStore.loading$;
 
     this.registerEmployeeForm = this.fb.nonNullable.group({
@@ -44,8 +57,9 @@ export class Employes {
 
     this.employeeService.registerEmployee(this.registerEmployeeForm.getRawValue()).subscribe({
       next: (res: any) => {
+        this.isRegisterEmployeeMode.set(false);
         this.employesStore.refetch();
-        console.log("DONE", res)
+        this._snackbar.open("Employee registered succesfully");
       }
     })
   }

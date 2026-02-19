@@ -3,7 +3,8 @@
     <div class="content-header">
       <h1>Employes</h1>
 
-      <button [class.button-primary-disabled]="isRegisterEmployeeMode()" [disabled]="isRegisterEmployeeMode()" (click)="toggleRegisterMode()" class="button-primary">
+      <button [class.button-primary-disabled]="isRegisterEmployeeMode()" [disabled]="isRegisterEmployeeMode()"
+        (click)="toggleRegisterMode()" class="button-primary">
         + Add Employee
       </button>
     </div>
@@ -39,6 +40,36 @@
         <button class="button-primary" type="submit">Submit</button>
       </form>
     </div>
+    } @else {
+    @if(loading$ | async){
+    <mat-spinner />
+    } @else {
+    <div class="employes-section">
+
+      @for (employee of (employes$ | async); track $index) {
+      <div class="card employee-card">
+        <div class="employee-header">
+          <h3 class="employee-name">{{ employee.name }} {{ employee.surname }}</h3>
+          <span class="employee-role">{{ employee.role }}</span>
+        </div>
+        <div class="employee-body">
+          <p class="employee-email">{{ employee.email }}</p>
+          <div class="employee-stats">
+            <div class="stat">
+              <span class="stat-label">Vacation Days</span>
+              <span class="stat-value">{{ employee.vacationDays }}</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Sick Leave</span>
+              <span class="stat-value">{{ employee.sickLeave }}</span>
+            </div>
+          </div>
+        </div>
+        <button class="button-primary">Manage {{ employee.name }}</button>
+      </div>
+      }
+    </div>
+    }
     }
   </div>
 </main>

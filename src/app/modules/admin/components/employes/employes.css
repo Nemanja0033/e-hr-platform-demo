@@ -31,3 +31,85 @@
     gap: 10px;
     grid-template-columns: repeat(1, minmax(300px, 1fr));
 }
+
+.employes-section{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3, minmax(200px, 1fr)) !important;
+}
+
+.employee-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.employee-card:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.employee-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.employee-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.employee-role {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  background: #e6f0ff;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.employee-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.employee-email {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0;
+}
+
+.employee-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--primary-color) !important;
+}
+
+.stat {
+  background: #e6f0ff;
+  border-radius: 6px;
+  padding: 4px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+}
+
+.stat-value {
+  font-size: 1rem;
+  font-weight: 600;
+}

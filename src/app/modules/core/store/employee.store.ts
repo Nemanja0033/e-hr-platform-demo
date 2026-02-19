@@ -41,8 +41,4 @@ export class EmployeeStore {
   refetch() {
     this.refreshTrigger$.next();
   }
-
-  // setEmployes(company: EmployeInterface) {
-  //   this.employesSubject.next([...em]);
-  // }
 }
