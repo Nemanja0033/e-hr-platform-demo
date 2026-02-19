@@ -1,0 +1,44 @@
+<main class="container">
+  <div class="content">
+    <div class="content-header">
+      <h1>Employes</h1>
+
+      <button [class.button-primary-disabled]="isRegisterEmployeeMode()" [disabled]="isRegisterEmployeeMode()" (click)="toggleRegisterMode()" class="button-primary">
+        + Add Employee
+      </button>
+    </div>
+
+    @if(isRegisterEmployeeMode()){
+    <div class="register-employe">
+      <form class="form" [formGroup]="registerEmployeeForm">
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Second Name</mat-label>
+          <input matInput formControlName="surname" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <input matInput formControlName="role" />
+        </mat-form-field>
+
+        <button class="button-primary" type="submit">Submit</button>
+      </form>
+    </div>
+    }
+  </div>
+</main>
