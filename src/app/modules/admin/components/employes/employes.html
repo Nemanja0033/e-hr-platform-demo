@@ -4,7 +4,7 @@
       <h1>Employes</h1>
 
       <button [class.button-primary-disabled]="isRegisterEmployeeMode()" [disabled]="isRegisterEmployeeMode()"
-        (click)="toggleRegisterMode()" class="button-primary">
+        (click)="toggleRegisterMode()" class="button-primary employe-bg">
         + Add Employee
       </button>
     </div>
@@ -50,22 +50,22 @@
       <div class="card employee-card">
         <div class="employee-header">
           <h3 class="employee-name">{{ employee.name }} {{ employee.surname }}</h3>
-          <span class="employee-role">{{ employee.role }}</span>
+          <span class="employee-role employe-bg-soft">{{ employee.role }}</span>
         </div>
         <div class="employee-body">
           <p class="employee-email">{{ employee.email }}</p>
           <div class="employee-stats">
-            <div class="stat">
+            <div class="stat employe-bg-soft">
               <span class="stat-label">Vacation Days</span>
               <span class="stat-value">{{ employee.vacationDays }}</span>
             </div>
-            <div class="stat">
+            <div class="stat employe-bg-soft">
               <span class="stat-label">Sick Leave</span>
               <span class="stat-value">{{ employee.sickLeave }}</span>
             </div>
           </div>
         </div>
-        <button class="button-primary">Manage {{ employee.name }}</button>
+        <button class="button-primary employe-bg">Manage {{ employee.name }}</button>
       </div>
       }
     </div>

@@ -39,11 +39,11 @@ button{
 
 .button-primary {
     background-color: var(--primary-color);
-    border-radius: 5px;
+    border-radius: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 12px;
+    padding: 10px;
     color: white;
     text-decoration: none;
 }
