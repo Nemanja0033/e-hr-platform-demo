@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   loginEmploye(loginData: { email: string, password: string}){
-    return this.http.post(`http://localhost:3000/api/hr/auth/login`, loginData);
+    return this.http.post(`http://localhost:3000/api/employe/auth/login`, loginData);
   }
 
   // getMe & saveRole method is reusable beause of role argument providing
