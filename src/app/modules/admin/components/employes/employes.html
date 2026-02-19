@@ -10,7 +10,7 @@
 
     @if(isRegisterEmployeeMode()){
     <div class="register-employe">
-      <form class="form" [formGroup]="registerEmployeeForm">
+      <form class="form" [formGroup]="registerEmployeeForm" (ngSubmit)="onRegisterEmployeeSubmit()">
         <mat-form-field appearance="outline">
           <mat-label>First Name</mat-label>
           <input matInput formControlName="name" />
