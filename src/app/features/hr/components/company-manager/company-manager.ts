@@ -12,20 +12,16 @@ import { CompanyInterface, CompanyStore } from '../../../../core/store/company.s
 
 @Component({
   selector: 'app-company-manager',
-  imports: [AsyncPipe, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule],
   templateUrl: './company-manager.html',
   styleUrl: './company-manager.css',
 })
 export class Company {
-  // Use property for observable placeholder that we use in template. 
-  // with async pipe to render (automate sub/unsub)
-  company$: Observable<CompanyInterface | null>;
-  loading$: Observable<boolean | null>;
-
-  registerCompanyForm;
-
-  // Using signal for handling UI state
+  company;
+  loading;
+  
   isRegisterMode = signal<boolean>(false);
+  registerCompanyForm;
 
   constructor(
     private companyStore: CompanyStore,
@@ -33,9 +29,9 @@ export class Company {
     private fb: FormBuilder,
     private _snackbar: MatSnackBar
   ) {
-    this.company$ = this.companyStore.company$;
-    this.loading$ = companyStore.loading$;
-
+    this.company = companyStore.company;
+    this.loading = companyStore.loading;
+    
     this.registerCompanyForm = this.fb.nonNullable.group({
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(45)]],
     });

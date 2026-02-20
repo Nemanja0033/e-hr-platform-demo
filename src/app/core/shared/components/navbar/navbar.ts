@@ -13,10 +13,10 @@ import { UserStore } from "../../../store/user.store";
   imports: [RouterLink, AsyncPipe],
 })
 export class Navbar {
-  isAuth$: Observable<boolean>;
+  isAuth;
 
   constructor(private router: Router, private userStore: UserStore, private authService: AuthService, private _snackbar: MatSnackBar) {
-    this.isAuth$ = this.userStore.isUserAuth$;
+    this.isAuth = this.userStore.isUserAuth;
   }
 
   handleLogout() {

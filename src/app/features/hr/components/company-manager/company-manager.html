@@ -3,7 +3,7 @@
         <div class="content-header">
             <h1>Company</h1>
 
-            @if (!(company$ | async)) {
+            @if (!company()) {
                 <button [class.button-primary-disabled]="isRegisterMode()" [disabled]="isRegisterMode()" (click)="toggleRegisterMode()" class="button-primary">+ Register Company</button>
             }
         </div>
@@ -22,13 +22,13 @@
                     </form>
             </div>
        } @else {
-         @if(company$ | async; as company){
+         @if(company(); as company){
             <div class="card">
                 <h2>{{ company.name }}</h2>
                 <span>Company ID: {{ company.id }}</span>
                 <span>Company Size: {{ company.size }}</span>
             </div>
-        } @else if(loading$ | async) {
+        } @else if(loading()) {
             <div class="empty-state">
                 <div>
                     <mat-spinner></mat-spinner>

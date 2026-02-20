@@ -12,15 +12,14 @@ import { UserStore } from '../../../../core/store/user.store';
   styleUrl: './hr-dashboard.css',
 })
 export class AdminDashboard {
-  user$: Observable<any>;
+  user;
   constructor(
     private userStore: UserStore,
     private authService: AuthService
   ) {
     // This is an observable $ - in name is common practice to detect a observable.
-    
-    // We use AsyncPipe to automate subscribe to the observable
-    this.user$ = this.userStore?.user$; 
+    // We use AsyncPipe to automate subscribe to the observable - (FALSE, we moved to SIGNALS approach)
+    this.user = this.userStore.user 
   }
 
 }

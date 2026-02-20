@@ -21,20 +21,20 @@ export interface EmployeType {
 
 @Component({
   selector: 'app-employes-manager',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatLabel, MatInputModule, MatError, AsyncPipe, MatProgressSpinner],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatLabel, MatInputModule, MatProgressSpinner],
   templateUrl: './employes-manager.html',
   styleUrl: './employes-manager.css',
 })
 export class Employes {
-  employes$: Observable<EmployeType[] | null>;
-  loading$: Observable<boolean | null>;
+  employes;
+  loading;
 
   registerEmployeeForm;
   isRegisterEmployeeMode = signal<boolean>(false);
 
   constructor(private fb: FormBuilder, private _snackbar: MatSnackBar, private employesStore: EmployeeStore, private employeeService: EmployeService) {
-    this.employes$ = employesStore.employes$ as any;
-    this.loading$ = employesStore.loading$;
+    this.employes = employesStore.employes as any;
+    this.loading = employesStore.loading;
 
     this.registerEmployeeForm = this.fb.nonNullable.group({
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],

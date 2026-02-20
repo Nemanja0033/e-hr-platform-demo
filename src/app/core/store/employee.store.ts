@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, finalize, switchMap, tap } from 'rxjs';
 import { EmployeService } from '../services/employe/employe.service';
 
@@ -13,31 +13,31 @@ interface EmployeInterface {
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeStore {
-  private refreshTrigger$ = new BehaviorSubject<void>(undefined);
-  private employesSubject = new BehaviorSubject<EmployeInterface[] | null>(null);
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-  
-  loading$ = this.loadingSubject.asObservable();
-  employes$ = this.employesSubject.asObservable();
+  // private refreshTrigger$ = new BehaviorSubject<void>(undefined);
+  // private employesSubject = new BehaviorSubject<EmployeInterface[] | null>(null);
+  // private loadingSubject = new BehaviorSubject<boolean>(false);
+  // loading$ = this.loadingSubject.asObservable();
+  // employes$ = this.employesSubject.asObservable();
+
+  private _employes = signal<EmployeInterface[] | null>(null);
+  private _loading = signal<boolean | null>(null);
+
+  employes = this._employes.asReadonly();
+  loading = this._loading.asReadonly();
 
   constructor(private employeService: EmployeService) {
-    this.init();
+    this.refetch();
   }
 
-  private init(){
-    this.refreshTrigger$.pipe(
-      tap(() => this.loadingSubject.next(true)),
-      switchMap(() => 
-        this.employeService.getEmployes().pipe(
-          finalize(() => this.loadingSubject.next(false))
-        )
-      )
-    ).subscribe(employes => {
-      this.employesSubject.next(employes as EmployeInterface[])
-    });
-  };
-
   refetch() {
-    this.refreshTrigger$.next();
+    this._loading.set(true);
+    this.employeService.getEmployes().subscribe({
+      next: (employes: any) => {
+        this._employes.set(employes);
+      },
+      complete: () => {
+        this._loading.set(false)
+      }
+    })
   }
 }

@@ -41,12 +41,12 @@
       </form>
     </div>
     } @else {
-    @if(loading$ | async){
+    @if(loading()){
     <mat-spinner />
     } @else {
     <div class="employes-section">
 
-      @for (employee of (employes$ | async); track $index) {
+      @for (employee of employes(); track $index) {
       <div class="card employee-card">
         <div class="employee-header">
           <h3 class="employee-name">{{ employee.name }} {{ employee.surname }}</h3>
