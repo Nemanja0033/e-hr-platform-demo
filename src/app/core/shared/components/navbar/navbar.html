@@ -1,7 +1,7 @@
 <nav class="navbar">
     <span class="logo"></span>
 
-    @if (isAuth$ | async) {
+    @if (isAuth()) {
     <div class="links-container">
         <a routerLink="">Company</a>
         <a routerLink="">Employes</a>
