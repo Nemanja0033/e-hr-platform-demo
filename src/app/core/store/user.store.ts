@@ -24,6 +24,7 @@ export class UserStore {
   user = this._user.asReadonly();
 
   isUserAuth = computed(() => !!this.user()?.token);
+  userRole = computed(() => this.user()?.role);
   
   setUser(user: User) {
     this._user.set(user);

@@ -125,3 +125,4 @@ button{
 .card-description {
     color: var(--text-muted);
 }
+@import "tailwindcss";

@@ -14,9 +14,11 @@ import { UserStore } from "../../../store/user.store";
 })
 export class Navbar {
   isAuth;
+  userRole;
 
   constructor(private router: Router, private userStore: UserStore, private authService: AuthService, private _snackbar: MatSnackBar) {
     this.isAuth = this.userStore.isUserAuth;
+    this.userRole = userStore.userRole;
   }
 
   handleLogout() {

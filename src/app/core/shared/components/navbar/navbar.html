@@ -1,11 +1,17 @@
-<nav class="navbar">
-    <span class="logo"></span>
-
+<nav class="w-full mb-10 bg-white h-14 shadow-md flex justify-end py-8 px-10">
     @if (isAuth()) {
     <div class="links-container">
-        <a routerLink="">Company</a>
-        <a routerLink="">Employes</a>
-        <a routerLink="">Requests</a>
+        @switch (userRole()) {
+            @case ('hr') {
+                <a routerLink="">Company</a>
+                <a routerLink="">Employes</a>
+                <a routerLink="">Requests</a>
+            }
+            @case ('employe') {
+                <a routerLink="">Vacation Requests</a>
+                <a routerLink="">Sick Leave Requests</a>
+            }
+        }
         <button class="button-secondary" (click)="handleLogout()">Logout</button>
     </div>
     } @else {
