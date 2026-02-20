@@ -1,7 +1,5 @@
 import { Component } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
-import { Observable } from "rxjs";
-import { AsyncPipe } from "@angular/common";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { AuthService } from "../../../services/auth/auth";
 import { UserStore } from "../../../store/user.store";
@@ -10,7 +8,7 @@ import { UserStore } from "../../../store/user.store";
   selector: 'app-navbar',
   templateUrl: './navbar.html',
   styleUrls: ['./navbar.css'],
-  imports: [RouterLink, AsyncPipe],
+  imports: [RouterLink],
 })
 export class Navbar {
   isAuth;

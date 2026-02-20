@@ -1,24 +1,23 @@
-<nav class="w-full mb-10 bg-white h-14 shadow-md flex justify-end py-8 px-10">
-    @if (isAuth()) {
+<nav class="w-full bg-white shadow-md flex justify-end py-8 px-10">
+  @if (isAuth()) {
     <div class="links-container">
-        @switch (userRole()) {
-            @case ('hr') {
-                <a routerLink="">Company</a>
-                <a routerLink="">Employes</a>
-                <a routerLink="">Requests</a>
-            }
-            @case ('employe') {
-                <a routerLink="">Vacation Requests</a>
-                <a routerLink="">Sick Leave Requests</a>
-            }
+      @switch (userRole()) {
+        @case ('hr') {
+          <a routerLink="/company">Company</a>
+          <a routerLink="/employes">Employees</a>
+          <a routerLink="/requests">Requests</a>
         }
-        <button class="button-secondary" (click)="handleLogout()">Logout</button>
+        @case ('employe') {
+          <a routerLink="/vacation">Vacation Requests</a>
+          <a routerLink="/sick-leave">Sick Leave Requests</a>
+        }
+      }
+      <button class="button-secondary" (click)="handleLogout()">Logout</button>
     </div>
-    } @else {
+  } @else {
     <div class="links-container">
-        <a routerLink="/hr/auth">Login as HR</a>
-        <a routerLink="/employe/auth">Login as Employe</a>
+      <a routerLink="/hr/auth">Login as HR</a>
+      <a routerLink="/employe/auth">Login as Employee</a>
     </div>
-
-    }
+  }
 </nav>

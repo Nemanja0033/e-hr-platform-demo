@@ -5,7 +5,9 @@ export interface User {
   email: string;
   name?: string;
   token?: string;
-  role: 'hr' | 'employe'
+  role: 'hr' | 'employe';
+  vacationDays?: number;  
+  sickLeave?: number
 }
 
 @Injectable({ providedIn: 'root' })
