@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, tap, switchMap, finalize } from "rxjs";
+import { BehaviorSubject, tap, switchMap, finalize, shareReplay } from "rxjs";
 import { CompanyService } from "../services/company/company.service";
 
 export interface CompanyInterface {
@@ -32,7 +32,7 @@ export class CompanyStore {
         this.companyService.getCompany().pipe(
           finalize(() => this.loadingSubject.next(false))
         )
-      )
+      ),
     ).subscribe(company => {
       this.companySubject.next(company as CompanyInterface);
     });

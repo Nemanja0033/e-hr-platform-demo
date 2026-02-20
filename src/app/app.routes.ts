@@ -8,6 +8,8 @@ import { Company } from './features/hr/components/company-manager/company-manage
 import { HrAuth } from './features/hr/components/hr-auth/hr-auth';
 import { Employes } from './features/hr/components/employes-manager/employes-manager';
 import { AdminDashboard } from './features/hr/components/hr-dashboard/hr-dashboard';
+
+// TODO Use lazy loading for performance optimization.
 export const routes: Routes = [
   {
     path: '',
