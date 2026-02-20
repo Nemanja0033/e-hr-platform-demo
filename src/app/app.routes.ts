@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
-import { AdminDashboard } from './modules/admin/components/admin-dashboard/admin-dashboard';
-import { Home } from './modules/home/home';
-import { HrAuth } from './modules/admin/components/admin-auth/hr-auth';
-import { EmployeAuth } from './modules/employe/components/employe-auth/employe-auth';
-import { EmployeDashboard } from './modules/employe/components/employe-dashboard/employe-dashboard';
-import { authGuard } from './modules/core/guards/auth.guard';
-import { roleGuard } from './modules/core/guards/role.guard';
-import { Company } from './modules/admin/components/company/company';
-import { Employes } from './modules/admin/components/employes/employes';
+import { authGuard } from './core/guards/auth.guard';
+import { roleGuard } from './core/guards/role.guard';
+import { EmployeAuth } from './features/employe/components/employe-auth/employe-auth';
+import { EmployeDashboard } from './features/employe/components/employe-dashboard/employe-dashboard';
+import { Home } from './features/home/home';
+import { Company } from './features/hr/components/company-manager/company-manager';
+import { HrAuth } from './features/hr/components/hr-auth/hr-auth';
+import { Employes } from './features/hr/components/employes-manager/employes-manager';
+import { AdminDashboard } from './features/hr/components/hr-dashboard/hr-dashboard';
 export const routes: Routes = [
   {
     path: '',
@@ -30,7 +30,7 @@ export const routes: Routes = [
   {
     path: 'hr/dashboard/employes',
     component: Employes,
-    canActivate: [authGuard('hr'), roleGuard('hr')]
+    canActivate: [authGuard('hr'), roleGuard('hr')],
   },
   {
     path: 'employe/auth',

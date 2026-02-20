@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Navbar } from './modules/shared/components/navbar/navbar';
-import { AuthService } from './modules/core/services/auth/auth';
-import { UserStore } from './modules/core/store/user.store';
+import { AuthService } from './core/services/auth/auth';
+import { Navbar } from './core/shared/components/navbar/navbar';
+import { UserStore } from './core/store/user.store';
 
 @Component({
   selector: 'app-root',

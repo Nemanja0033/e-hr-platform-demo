@@ -1,0 +1,49 @@
+.navbar {
+    background-color: white;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 2rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 10px rgba(207, 202, 202, 0.076);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+a{
+    color: grey !important;
+    cursor: pointer !important;
+    all: unset;
+}
+
+a:hover{
+    color: rgba(0, 0, 0, 0.67) !important;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.links-container {
+    align-items: center;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.links-container a {
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease-in-out;
+}
+
+.links-container span {
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease-in-out;
+}
+

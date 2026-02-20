@@ -2,8 +2,8 @@ import { APP_INITIALIZER, ApplicationConfig, provideBrowserGlobalErrorListeners 
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authInterceptorFn } from './interceptors/bearer.interceptor';
-import { UserStore } from './modules/core/store/user.store';
+import { authInterceptorFn } from './core/interceptors/bearer.interceptor';
+import { UserStore } from './core/store/user.store';
 
 export const appConfig: ApplicationConfig = {
   providers: [
