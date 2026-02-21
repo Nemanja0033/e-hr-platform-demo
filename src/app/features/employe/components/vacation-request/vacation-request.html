@@ -23,10 +23,11 @@
                     <mat-datepicker-toggle matIconSuffix [for]="endDate"></mat-datepicker-toggle>
                     <mat-datepicker #endDate></mat-datepicker>
                 </mat-form-field>
-                <button type="submit" class="button-primary">Submit</button>
+                <button [disabled]="isInvalidDateRange()" [class.button-primary-disabled]="isInvalidDateRange()" type="submit" class="button-primary">Submit</button>
             </form>
 
             <span class="text-lg font-semibold text-blue-500">{{ employeeData()?.vacationDays }}</span>
+            <span>Vacatoion Days Requested {{ requestedVacationDays() }}</span>
         </div>
         }
     </div>
