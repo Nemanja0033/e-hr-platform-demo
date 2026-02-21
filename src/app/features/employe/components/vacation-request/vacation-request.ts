@@ -17,7 +17,7 @@ export class VacationRequest {
   isInvalidDateRange = signal<boolean | null>(null);
   vacationDateForm;
   employeeData;
-  requestedVacationDays = signal<number | null>(null);
+  vacationDaysLeft = signal<number | null>(null)
 
   constructor(
     private fb: FormBuilder,
@@ -33,13 +33,15 @@ export class VacationRequest {
 
   ngOnInit() {
     this.vacationDateForm.valueChanges.subscribe((val) => {
-      if (val.startDate && val.endDate && val.endDate > new Date()) {
+      const isEndDateSelected = val.endDate! > new Date();
+
+      if (val.startDate && val.endDate && isEndDateSelected) {
         const diff = Math.ceil(
           (new Date(val.endDate).getTime() - new Date(val.startDate).getTime()) /
             (1000 * 60 * 60 * 24)
         );
-        this.requestedVacationDays.set(diff);
         const daysLeft = this.employeeData()?.vacationDays ?? 0;
+        this.vacationDaysLeft.set(daysLeft - diff);
 
         if (diff > daysLeft) {
           this._snackbar.open('You dont have required amount of vacation days.');
