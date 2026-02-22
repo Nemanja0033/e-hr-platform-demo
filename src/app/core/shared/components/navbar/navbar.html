@@ -11,6 +11,11 @@
           <a routerLink="/vacation">Vacation Requests</a>
           <a routerLink="/sick-leave">Sick Leave Requests</a>
         }
+        @default {
+          <div>
+            <span>none</span>
+          </div>
+        }
       }
       <button class="button-secondary" (click)="handleLogout()">Logout</button>
     </div>

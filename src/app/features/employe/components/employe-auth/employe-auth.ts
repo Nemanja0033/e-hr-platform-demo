@@ -41,9 +41,12 @@ export class EmployeAuth {
         this.authService.saveToken(res.token);
         this.authService.saveRole('employe');
 
-        this.userStore.setUser({ ...res, role: 'employe', token: res.token });
+        console.log("user data", res);
+        // Workaround destrucuring employee data
+        delete res.employe.role;
+        this.userStore.setUser({ ...res.employe, roleGlobal: 'employe', token: res.token });
         this.router.navigate(['/employe/dashboard']);
-        this._snackbar.open(`Welcome ${res.name}`);
+        this._snackbar.open(`Welcome ${res.employe.name}`);
       }
     })
   }

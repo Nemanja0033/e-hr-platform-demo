@@ -7,7 +7,8 @@ export interface User {
   token?: string;
   role: 'hr' | 'employe';
   vacationDays?: number;  
-  sickLeave?: number
+  sickLeave?: number;
+  roleGlobal?: 'hr' | 'employe';
 }
 
 @Injectable({ providedIn: 'root' })
@@ -26,7 +27,7 @@ export class UserStore {
   user = this._user.asReadonly();
 
   isUserAuth = computed(() => !!this.user()?.token);
-  userRole = computed(() => this.user()?.role);
+  userRole = computed(() => this.user()?.role ?? this.user()?.roleGlobal);
   
   setUser(user: User) {
     this._user.set(user);

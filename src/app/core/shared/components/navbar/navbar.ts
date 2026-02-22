@@ -16,7 +16,11 @@ export class Navbar {
 
   constructor(private router: Router, private userStore: UserStore, private authService: AuthService, private _snackbar: MatSnackBar) {
     this.isAuth = this.userStore.isUserAuth;
-    this.userRole = userStore.userRole;
+    this.userRole = this.userStore.userRole;
+  }
+
+  ngOnInit(){
+    console.log("is role correct", this.userRole() === 'employe')
   }
 
   handleLogout() {
