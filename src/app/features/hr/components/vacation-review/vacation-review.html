@@ -1,1 +1,40 @@
-<p>vacation-review works!</p>
+<main class="w-full flex justify-center">
+    <div class="w-[80%] grid place-items-center gap-5">
+        <div class="w-full flex justify-start py-2 border-b border-gray-300">
+            <h1 class="text-xl font-medium">Review Employes Requests</h1>
+        </div>
+        @if (requests()?.length) {
+            <div class="w-full h-full grid grid-cols-3 place-items-start gap-2">
+                @for (req of requests(); track $index) {
+                    <div class="p-5 rounded-md shadow-md border border-gray-300 w-fit grid">
+                        <div class="flex justify-between w-full items-center">
+                            <span class="bg-blue-200 w-fit text-blue-400 rounded-lg p-1">{{ req.employe.name + ' ' + req.employe.surname }}</span>
+                            <span>{{ req.status.toUpperCase() }}</span>
+                        </div>
+                        <div class="flex gap-3 w-full justify-between">
+                            <span>From: {{ req.startDate | date}}</span>
+                            <span>End: {{ req.endDate | date}}</span>
+                        </div>
+
+                        @if(req.status === 'pending'){
+                            <div class="w-full flex items-center justify-between mt-5">
+                                <button (click)="approveRequest({ requestId: req.id, employeId: req.employeId, startDate: req.startDate, endDate: req.endDate})" class="button-primary">Approve</button>
+                                <button (click)="rejectRequest({ requestId: req.id, employeId: req.employeId, startDate: req.startDate, endDate: req.endDate})" class="button-secondary">Reject</button>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+        @if (isLoading()){
+            <div>
+                <span>Loading. . .</span>
+            </div>
+        }
+        @if (!isLoading() && !requests()?.length) {
+            <div>
+                <span>No Requests</span>
+            </div>
+        }
+    </div>
+</main>

@@ -9,6 +9,7 @@ import { HrAuth } from './features/hr/components/hr-auth/hr-auth';
 import { Employes } from './features/hr/components/employes-manager/employes-manager';
 import { AdminDashboard } from './features/hr/components/hr-dashboard/hr-dashboard';
 import { VacationRequest } from './features/employe/components/vacation-request/vacation-request';
+import { VacationReview } from './features/hr/components/vacation-review/vacation-review';
 
 // TODO Use lazy loading for performance optimization.
 export const routes: Routes = [
@@ -34,6 +35,11 @@ export const routes: Routes = [
     path: 'hr/dashboard/employes',
     component: Employes,
     canActivate: [authGuard('hr'), roleGuard('hr')],
+  },
+  {
+    path: 'hr/dashboard/requests',
+    component: VacationReview,
+    canActivate: [authGuard('hr'), roleGuard('hr')]
   },
   {
     path: 'employe/auth',

@@ -50,6 +50,7 @@ export class VacationRequest {
       this.vacationDateForm.valueChanges.subscribe((val) => {
         const isEndDateSelected = val.endDate! > new Date();
 
+        // **TODO** same for start date, prevent to start date been before real date today
         // Prevent invalid date range (end date to be before start)
         if (val.endDate! < val.startDate!) {
           this.vacationDateForm.controls.endDate.setValue(val.startDate as Date);

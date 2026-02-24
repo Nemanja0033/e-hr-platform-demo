@@ -21,6 +21,7 @@ export class Navbar {
 
   ngOnInit(){
     console.log("is role correct", this.userRole() === 'employe')
+    console.log("USER ROLE ", this.userRole())
   }
 
   handleLogout() {

@@ -7,6 +7,7 @@
 
         @if(isRequestMode()){
         <div class="w-full grid place-items-center gap-3 mt-10  p-5">
+            <h2 class="bg-blue-200 text-blue-500 p-2 text-2xl rounded-lg font-medium"> Vacation days left {{ employeeData()?.vacationDays }}</h2>
             <form class="grid gap-4 items-center" [formGroup]="vacationDateForm" (ngSubmit)="onRequestFormSubmit()">
                 <mat-form-field>
                     <mat-label>Select start date</mat-label>
@@ -32,7 +33,7 @@
         </div>
         } @else {
             @if(vacationRequests()?.length){
-                <div class="w-full grid gap-4 grid-cols-1 place-items-center">
+                <div class="w-full grid gap-4 grid-cols-4 place-items-center">
                     @for (req of vacationRequests(); track $index) {
                     <div class="w-fit p-5 gap-3 rounded-md shadow-md bg-white border-gray-200 border grid grid-cols-1">
                         <div class="w-full flex justify-between items-center">
@@ -41,7 +42,7 @@
                             </span>
                         </div>
 
-                        <div class="flex gap-5 font-semibold text-lg items-center">
+                        <div class="flex gap-5 font-medium text-gray-400 text-lg items-center">
                             <span>From: {{ req.startDate | date:'dd/MM/yyyy' }}</span>
                             <span>To: {{ req.endDate | date:'dd/mm/yyyy'}}</span>
                         </div>

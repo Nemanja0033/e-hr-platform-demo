@@ -1,22 +1,15 @@
 <nav class="w-full bg-white shadow-md flex justify-end py-5 mb-10 px-10">
   @if (isAuth()) {
     <div class="links-container">
-      @switch (userRole()) {
-        @case ('hr') {
+        @if(userRole() === 'hr') {
           <a routerLink="/company">Company</a>
           <a routerLink="/employes">Employees</a>
-          <a routerLink="/requests">Requests</a>
+          <a routerLink="/hr/dashboard/requests">Requests</a>
         }
-        @case ('employe') {
+        @if (userRole() === 'employe') {
           <a routerLink="/vacation">Vacation Requests</a>
           <a routerLink="/sick-leave">Sick Leave Requests</a>
         }
-        @default {
-          <div>
-            <span>none</span>
-          </div>
-        }
-      }
       <button class="button-secondary" (click)="handleLogout()">Logout</button>
     </div>
   } @else {
