@@ -7,7 +7,7 @@ import { UserStore } from '../../../../core/store/user.store';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { VacationRequestStore } from '../../../../core/store/vacation-requests.store';
-import { VacationRequestService } from '../../../../core/services/vacation-request/vacation-request.service';
+import { VacationRequestService } from '../../../../core/services/http/vacation-request-http.service';
 import { MatProgressSpinner, MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { DatePipe } from '@angular/common';
 

@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../../core/services/auth/auth';
+import { AuthService } from '../../../../core/services/http/auth-http.service';
 import { UserStore } from '../../../../core/store/user.store';
 
 @Component({

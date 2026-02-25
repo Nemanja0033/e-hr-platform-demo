@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { VacationRequestService } from '../../../../core/services/vacation-request/vacation-request.service';
+import { VacationRequestService } from '../../../../core/services/http/vacation-request-http.service';
 import { DatePipe } from '@angular/common';
 import { finalize, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';

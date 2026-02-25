@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../../../core/services/auth/auth';
+import { AuthService } from '../../../../core/services/http/auth-http.service';
 import { UserStore } from '../../../../core/store/user.store';
 
 @Component({

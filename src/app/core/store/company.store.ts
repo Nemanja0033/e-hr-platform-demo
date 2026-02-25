@@ -1,6 +1,6 @@
 import { Injectable, signal } from "@angular/core";
 import { BehaviorSubject, tap, switchMap, finalize, shareReplay } from "rxjs";
-import { CompanyService } from "../services/company/company.service";
+import { CompanyService } from "../services/http/company-http.service";
 
 export interface CompanyInterface {
     id: string,

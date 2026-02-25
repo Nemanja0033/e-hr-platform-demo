@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from './core/services/auth/auth';
+import { AuthService } from './core/services/http/auth-http.service';
 import { Navbar } from './core/shared/components/navbar/navbar';
 import { UserStore } from './core/store/user.store';
 

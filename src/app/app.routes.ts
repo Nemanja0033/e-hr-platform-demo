@@ -4,12 +4,9 @@ import { roleGuard } from './core/guards/role.guard';
 import { EmployeAuth } from './features/employe/components/employe-auth/employe-auth';
 import { EmployeDashboard } from './features/employe/components/employe-dashboard/employe-dashboard';
 import { Home } from './features/home/home';
-import { Company } from './features/hr/components/company-manager/company-manager';
 import { HrAuth } from './features/hr/components/hr-auth/hr-auth';
-import { Employes } from './features/hr/components/employes-manager/employes-manager';
 import { AdminDashboard } from './features/hr/components/hr-dashboard/hr-dashboard';
 import { VacationRequest } from './features/employe/components/vacation-request/vacation-request';
-import { VacationReview } from './features/hr/components/vacation-review/vacation-review';
 
 // TODO Use lazy loading for performance optimization.
 export const routes: Routes = [
@@ -28,17 +25,17 @@ export const routes: Routes = [
   },
   {
     path: 'hr/dashboard/company',
-    component: Company,
+    loadComponent: () => import('./features/hr/components/company-manager/company-manager').then(m => m.Company),
     canActivate: [authGuard('hr'), roleGuard('hr')],
   },
   {
     path: 'hr/dashboard/employes',
-    component: Employes,
+    loadComponent: () => import('./features/hr/components/employes-manager/employes-manager').then(m => m.Employes),
     canActivate: [authGuard('hr'), roleGuard('hr')],
   },
   {
     path: 'hr/dashboard/requests',
-    component: VacationReview,
+    loadComponent: () => import('./features/hr/components/vacation-review/vacation-review').then(m => m.VacationReview),
     canActivate: [authGuard('hr'), roleGuard('hr')]
   },
   {

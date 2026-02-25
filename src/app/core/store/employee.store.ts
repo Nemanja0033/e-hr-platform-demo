@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, finalize, switchMap, tap } from 'rxjs';
-import { EmployeService } from '../services/employe/employe.service';
+import { EmployeService } from '../services/http/employe-http.service';
 
 interface EmployeInterface {
   name: string;

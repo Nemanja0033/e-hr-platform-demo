@@ -2,21 +2,19 @@ import { Component, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatError, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AsyncPipe } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { EmployeService } from '../../../../core/services/employe/employe.service';
 import { EmployeeStore } from '../../../../core/store/employee.store';
+import { EmployeService } from '../../../../core/services/http/employe-http.service';
 
 export interface EmployeType {
-    name: string;
-    surname: string;
-    email: string;
-    password: string;
-    role: string;
-    vacationDays: number;
-    sickLeave: number
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+  role: string;
+  vacationDays: number;
+  sickLeave: number;
 }
 
 @Component({
@@ -32,7 +30,12 @@ export class Employes {
   registerEmployeeForm;
   isRegisterEmployeeMode = signal<boolean>(false);
 
-  constructor(private fb: FormBuilder, private _snackbar: MatSnackBar, private employesStore: EmployeeStore, private employeeService: EmployeService) {
+  constructor(
+    private fb: FormBuilder,
+    private _snackbar: MatSnackBar,
+    private employesStore: EmployeeStore,
+    private employeeService: EmployeService
+  ) {
     this.employes = employesStore.employes as any;
     this.loading = employesStore.loading;
 
@@ -49,8 +52,8 @@ export class Employes {
     this.isRegisterEmployeeMode.set(true);
   }
 
-  onRegisterEmployeeSubmit(){
-    if(this.registerEmployeeForm.invalid){
+  onRegisterEmployeeSubmit() {
+    if (this.registerEmployeeForm.invalid) {
       this.registerEmployeeForm.markAllAsTouched();
       return;
     }
@@ -59,8 +62,8 @@ export class Employes {
       next: (res: any) => {
         this.isRegisterEmployeeMode.set(false);
         this.employesStore.refetch();
-        this._snackbar.open("Employee registered succesfully");
-      }
-    })
+        this._snackbar.open('Employee registered succesfully');
+      },
+    });
   }
 }

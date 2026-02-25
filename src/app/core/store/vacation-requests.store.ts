@@ -1,5 +1,5 @@
     import { Injectable, signal } from "@angular/core";
-    import { VacationRequestService } from "../services/vacation-request/vacation-request.service";
+    import { VacationRequestService } from "../services/http/vacation-request-http.service";
 
     interface VacationRequest {
         startDate: Date,
