@@ -1,61 +1,60 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
-import { EmployeAuth } from './features/employe/components/employe-auth/employe-auth';
-import { EmployeDashboard } from './features/employe/components/employe-dashboard/employe-dashboard';
-// import { Home } from './pages/home/home';
-import { HrAuth } from './features/hr/components/hr-auth/hr-auth';
-import { AdminDashboard } from './features/hr/components/hr-dashboard/hr-dashboard';
-import { VacationRequest } from './features/employe/components/vacation-request/vacation-request';
-import { SickLeaveRequest } from './features/employe/components/sick-leave-request/sick-leave-request';
+import { EmployeeAuthComponent } from './pages/employee/employee-auth/employee-auth.component';
+import { EmployeeDashboardComponent } from './pages/employee/employee-dashboard/employee-dashboard.component';
+import { HrAuthComponent } from './pages/hr/hr-auth/hr-auth.component';
+import { HrDashboardComponent } from './pages/hr/hr-dashboard/hr-dashboard.component';
+import { VacationRequestComponent } from './pages/employee/vacation-request/vacation-request.component';
+import { SickLeaveRequestComponent } from './pages/employee/sick-leave-request/sick-leave-request.component';
+import { Gateway } from './pages/gateway/gateway';
 
-// TODO Use lazy loading for performance optimization.
 export const routes: Routes = [
-  // {
-  //   path: '',
-  //   component: Home,
-  // },
+  {
+    path: '',
+    component: Gateway,
+  },
   {
     path: 'hr/auth',
-    component: HrAuth,
+    component: HrAuthComponent,
   },
   {
     path: 'hr/dashboard',
-    component: AdminDashboard,
+    component: HrDashboardComponent,
     canActivate: [authGuard('hr'), roleGuard('hr')],
   },
   {
     path: 'hr/dashboard/company',
-    loadComponent: () => import('./features/hr/components/company-manager/company-manager').then(m => m.Company),
+    loadComponent: () => import('./pages/hr/company-manager/company-manager.component').then(m => m.CompanyManagerComponent),
     canActivate: [authGuard('hr'), roleGuard('hr')],
   },
   {
-    path: 'hr/dashboard/employes',
-    loadComponent: () => import('./features/hr/components/employes-manager/employes-manager').then(m => m.Employes),
+    path: 'hr/dashboard/employees',
+    loadComponent: () => import('./pages/hr/employees-manager/employees-manager.component').then(m => m.EmployeesManagerComponent),
     canActivate: [authGuard('hr'), roleGuard('hr')],
   },
   {
     path: 'hr/dashboard/requests',
-    loadComponent: () => import('./features/hr/components/vacation-review/vacation-review').then(m => m.VacationReview),
+    loadComponent: () => import('./pages/hr/vacation-review/vacation-review.component').then(m => m.VacationReviewComponent),
     canActivate: [authGuard('hr'), roleGuard('hr')]
   },
   {
-    path: 'employe/auth',
-    component: EmployeAuth,
+    path: 'employee/auth',
+    component: EmployeeAuthComponent,
   },
   {
-    path: 'employe/dashboard',
-    component: EmployeDashboard,
+    path: 'employee/dashboard',
+    component: EmployeeDashboardComponent,
     canActivate: [authGuard('employe'), roleGuard('employe')],
   },
   {
-    path: 'employe/dashboard/vacation-request',
-    component: VacationRequest,
+    path: 'employee/dashboard/vacation-request',
+    component: VacationRequestComponent,
     canActivate: [authGuard('employe'), roleGuard('employe')]
   },
   {
-    path: 'employe/dashboard/sick-leave-request',
-    component: SickLeaveRequest,
+    path: 'employee/dashboard/sick-leave-request',
+    component: SickLeaveRequestComponent,
     canActivate: [authGuard('employe'), roleGuard('employe')]
   }
 ];

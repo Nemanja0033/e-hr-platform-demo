@@ -1,0 +1,75 @@
+<main class="container">
+  <div class="content">
+    <div class="content-header">
+      <h1>Employees</h1>
+
+      <button [class.button-primary-disabled]="isRegisterEmployeeMode()" [disabled]="isRegisterEmployeeMode()"
+        (click)="toggleRegisterMode()" class="button-primary employee-bg">
+        + Add Employee
+      </button>
+    </div>
+
+    @if(isRegisterEmployeeMode()){
+    <div class="register-employee">
+      <form class="form" [formGroup]="registerEmployeeForm" (ngSubmit)="onRegisterEmployeeSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Second Name</mat-label>
+          <input matInput formControlName="surname" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <input matInput formControlName="role" />
+        </mat-form-field>
+
+        <button class="button-primary" type="submit">Submit</button>
+      </form>
+    </div>
+    } @else {
+    @if(loading()){
+    <mat-spinner />
+    } @else {
+    <div class="employees-section">
+
+      @for (employe of employees(); track $index) {
+      <div class="card employee-card">
+        <div class="employee-header">
+          <h3 class="employee-name">{{ employe.name }} {{ employe.surname }}</h3>
+          <span class="employee-role employee-bg-soft">{{ employe.role }}</span>
+        </div>
+        <div class="employee-body">
+          <p class="employee-email">{{ employe.email }}</p>
+          <div class="employee-stats">
+            <div class="stat employee-bg-soft">
+              <span class="stat-label">Vacation Days</span>
+              <span class="stat-value">{{ employe.vacationDays }}</span>
+            </div>
+            <div class="stat employee-bg-soft">
+              <span class="stat-label">Sick Leave</span>
+              <span class="stat-value">{{ employe.sickLeave }}</span>
+            </div>
+          </div>
+        </div>
+        <button class="button-primary employee-bg">Manage {{ employe.name }}</button>
+      </div>
+      }
+    </div>
+    }
+    }
+  </div>
+</main>
