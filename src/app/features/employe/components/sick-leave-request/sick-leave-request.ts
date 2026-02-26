@@ -4,6 +4,8 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SickLeaveRequestHttpService } from '../../services/http/sick-leave-request-http.service';
+import { finalize, tap } from 'rxjs';
 
 @Component({
   selector: 'app-sick-leave-request',
@@ -17,9 +19,7 @@ export class SickLeaveRequest implements OnInit {
   sickLeaveRequestData = signal([]);
   isRequestMode = signal(false);
 
-  constructor(private fb: FormBuilder) {
-
-  }
+  constructor(private fb: FormBuilder, private sickLeaveRequestHttpService: SickLeaveRequestHttpService) { }
 
   ngOnInit(): void {
     this.sickLeaveRequestForm = this.fb.nonNullable.group({
@@ -39,8 +39,14 @@ export class SickLeaveRequest implements OnInit {
   }
 
   onRequestFormSubmit() {
-    console.log('submitted');
-    console.log(this.sickLeaveRequestForm.valid);
-    console.log(this.sickLeaveRequestForm.value);
+    if(this.sickLeaveRequestForm.invalid){
+      this.sickLeaveRequestForm.markAllAsTouched();
+      return;
+    }
+
+    this.sickLeaveRequestHttpService.submitSickLeaveRequest(this.sickLeaveRequestForm.getRawValue()).pipe(
+      tap(() => this.isLoading.set(true)),
+      finalize(() => this.isLoading.set(false))
+    ).subscribe()
   }
 }

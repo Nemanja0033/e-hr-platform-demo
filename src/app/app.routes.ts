@@ -3,7 +3,7 @@ import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
 import { EmployeAuth } from './features/employe/components/employe-auth/employe-auth';
 import { EmployeDashboard } from './features/employe/components/employe-dashboard/employe-dashboard';
-import { Home } from './pages/home/home';
+// import { Home } from './pages/home/home';
 import { HrAuth } from './features/hr/components/hr-auth/hr-auth';
 import { AdminDashboard } from './features/hr/components/hr-dashboard/hr-dashboard';
 import { VacationRequest } from './features/employe/components/vacation-request/vacation-request';
@@ -11,10 +11,10 @@ import { SickLeaveRequest } from './features/employe/components/sick-leave-reque
 
 // TODO Use lazy loading for performance optimization.
 export const routes: Routes = [
-  {
-    path: '',
-    component: Home,
-  },
+  // {
+  //   path: '',
+  //   component: Home,
+  // },
   {
     path: 'hr/auth',
     component: HrAuth,
