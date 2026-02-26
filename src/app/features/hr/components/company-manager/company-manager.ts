@@ -6,8 +6,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
-import { CompanyInterface, CompanyStore } from '../../../../core/store/company.store';
-import { CompanyService } from '../../../../core/services/http/company-http.service';
+import { CompanyInterface, CompanyStore } from '../../store/company.store';
+import { CompanyService } from '../../services/http/company-http.service';
 
 
 @Component({

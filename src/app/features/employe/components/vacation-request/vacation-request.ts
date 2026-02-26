@@ -6,8 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { UserStore } from '../../../../core/store/user.store';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
-import { VacationRequestStore } from '../../../../core/store/vacation-requests.store';
-import { VacationRequestService } from '../../../../core/services/http/vacation-request-http.service';
+import { VacationRequestStore } from '../../store/vacation-requests.store';
+import { VacationRequestHttpService } from '../../services/http/vacation-request-http.service';
 import { MatProgressSpinner, MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { DatePipe } from '@angular/common';
 
@@ -28,12 +28,14 @@ export class VacationRequest {
   vacationRequests;
   vacationRequestsLoading;
 
+  // Better not to init form inside constructor, use ngOnInit for that, bcs of case the form depends
+  // On @Input or some external data which is not available in the constructor.
   constructor(
     private fb: FormBuilder,
     private userStore: UserStore,
     private _snackbar: MatSnackBar,
     private vacationRequestStore: VacationRequestStore,
-    private vacationRequestService: VacationRequestService
+    private vacationRequestHttpService: VacationRequestHttpService
   ) {
     this.employeeData = userStore.user;
     this.vacationRequests = vacationRequestStore.vacationRequests;
@@ -101,7 +103,7 @@ export class VacationRequest {
       return;
     }
 
-    this.vacationRequestService.submitVacationRequest(this.vacationDateForm.getRawValue()).subscribe({
+    this.vacationRequestHttpService.submitVacationRequest(this.vacationDateForm.getRawValue()).subscribe({
       next: () => {
         this.vacationRequestStore.refetch()
       },

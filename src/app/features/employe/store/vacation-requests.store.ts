@@ -1,5 +1,5 @@
     import { Injectable, signal } from "@angular/core";
-    import { VacationRequestService } from "../services/http/vacation-request-http.service";
+    import { VacationRequestHttpService } from "../services/http/vacation-request-http.service";
 
     interface VacationRequest {
         startDate: Date,
@@ -11,7 +11,7 @@
 
     @Injectable({ providedIn: "root" })
     export class VacationRequestStore { 
-        constructor(private vacationRequestService: VacationRequestService) {
+        constructor(private vacationRequestService: VacationRequestHttpService) {
             this.refetch();
         }
 

@@ -5,8 +5,8 @@ import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from '../../../../core/services/http/auth-http.service';
 import { UserStore } from '../../../../core/store/user.store';
+import { AuthService } from '../../../../core/services/auth-http.service';
 
 @Component({
   selector: 'app-employe-auth',

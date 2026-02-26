@@ -4,8 +4,8 @@ import { MatError, MatFormFieldModule, MatLabel } from '@angular/material/form-f
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { EmployeeStore } from '../../../../core/store/employee.store';
-import { EmployeService } from '../../../../core/services/http/employe-http.service';
+import { EmployeeStore } from '../../store/employee.store';
+import { EmployeService } from '../../services/http/employe-http.service';
 
 export interface EmployeType {
   name: string;

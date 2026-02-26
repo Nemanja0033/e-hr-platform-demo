@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { AuthService } from "../../../services/http/auth-http.service";
+import { AuthService } from "../../../services/auth-http.service";
 import { UserStore } from "../../../store/user.store";
 
 @Component({

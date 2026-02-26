@@ -1,8 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { VacationRequestService } from '../../../../core/services/http/vacation-request-http.service';
 import { DatePipe } from '@angular/common';
 import { finalize, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { VacationReviewStore } from '../../store/vacation-review.store';
+import { VacatoionReviewService } from '../../services/http/vacation-review.service';
 
 @Component({
   selector: 'app-vacation-review',
@@ -18,11 +19,12 @@ export class VacationReview {
   isActionsDisabled = signal<boolean>(false);
 
   constructor(
-    private vacationReviewService: VacationRequestService,
+    private vacationReviewStore: VacationReviewStore,
+    private vacationReviewService: VacatoionReviewService,
     private _snackbar: MatSnackBar
   ) {
-    this.requests = vacationReviewService.vacationRequestReviews;
-    this.isLoading = vacationReviewService.isLoading;
+    this.requests = vacationReviewStore.vacationRequestReviews;
+    this.isLoading = vacationReviewStore.isLoading;
   }
 
   approveRequest(rawReviewData: any) {
@@ -43,7 +45,7 @@ export class VacationReview {
         finalize(() => {
           this.isActionsDisabled.set(false);
           this._snackbar.open(`Request ${requestReviewData.status} sucessfully`, 'close');
-          this.vacationReviewService.refetchEmployesVacationRequest();
+          this.vacationReviewStore.refetchEmployesVacationRequest();
         })
       )
       .subscribe();
@@ -67,7 +69,7 @@ export class VacationReview {
         finalize(() => {
           this.isActionsDisabled.set(false);
           this._snackbar.open(`Request ${requestReviewData.status} sucessfully`, 'close');
-          this.vacationReviewService.refetchEmployesVacationRequest();
+          this.vacationReviewStore.refetchEmployesVacationRequest();
         })
       )
       .subscribe();
