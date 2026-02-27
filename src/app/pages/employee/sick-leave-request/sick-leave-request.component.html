@@ -1,64 +1,97 @@
 <main class="w-full h-fit flex justify-center">
     <div class="w-[80%] grid gap-5 place-items-center">
+
         <div class="w-full h-fit flex justify-between py-3 border-b border-gray-200">
             <h1 class="text-2xl font-semibold">Sick Leave Request</h1>
-            <button (click)="toggleRequestMode()" class="button-primary ">Submit New Request</button>
+            <button (click)="toggleRequestMode()" class="button-primary">
+                Submit New Request
+            </button>
         </div>
 
-        @if(isRequestMode()){
-        <div class="w-full grid place-items-center gap-3 mt-10  p-5">
-            <h2 class="bg-purple-200 text-purple-500 p-2 text-2xl rounded-lg font-medium"> Sick Leave days left</h2>
-            <form class="grid gap-4 items-center"  [formGroup]="sickLeaveRequestForm" (ngSubmit)="onRequestFormSubmit()">
+        @if (isRequestMode()) {
+
+        <div class="w-full grid place-items-center gap-3 mt-10 p-5">
+            <h2 class="bg-purple-200 text-purple-500 p-2 text-2xl rounded-lg font-medium">
+                Sick Leave days left {{ employeeData()?.sickLeaveDays }}
+            </h2>
+
+            <form class="grid gap-4 items-center" [formGroup]="sickLeaveRequestForm" (ngSubmit)="onRequestFormSubmit()">
+
                 <mat-form-field>
                     <mat-label>Select start date</mat-label>
                     <input matInput [matDatepicker]="startDate" formControlName="startDate">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="startDate"></mat-datepicker-toggle>
                     <mat-datepicker #startDate></mat-datepicker>
                 </mat-form-field>
+
                 <mat-form-field>
                     <mat-label>Select end date</mat-label>
                     <input matInput [matDatepicker]="endDate" formControlName="endDate">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="endDate"></mat-datepicker-toggle>
                     <mat-datepicker #endDate></mat-datepicker>
                 </mat-form-field>
+
                 <mat-form-field>
                     <mat-label>Reason</mat-label>
-                    <textarea formControlName="reason" matInput placeholder="Ex. It makes me feel..."></textarea>
+                    <textarea formControlName="reason" matInput placeholder="Explain your reason..."></textarea>
                 </mat-form-field>
-                <button [class.button-primary-disabled]="false" type="submit" class="button-primary">Submit</button>
+
+                <button type="submit" class="button-primary" [disabled]="sickLeaveRequestForm.invalid || isLoading()">
+                    Submit
+                </button>
+
             </form>
         </div>
-        } @else {
-            @if(sickLeaveRequestData().length){
-                <div class="w-full grid gap-4 grid-cols-4 place-items-center">
-                    @for (req of sickLeaveRequestData(); track $index) {
-                    <div class="w-fit p-5 gap-3 rounded-md shadow-md bg-white border-gray-200 border grid grid-cols-1">
-                        <div class="w-full flex justify-between items-center">
-                            <span class="bg-blue-300 p-2 text-xs rounded-lg font-medium text-blue-500">
-                                
-                            </span>
-                        </div>
 
-                        <div class="flex gap-5 font-medium text-gray-400 text-lg items-center">
-                            <span>From:</span>
-                            <span></span>
-                        </div>
-                    </div>
-                }
+        } @else {
+
+        @if (isLoading()) {
+
+        <div class="w-full flex justify-center mt-10">
+            <mat-spinner />
+        </div>
+
+        } @else if (requests().length) {
+
+        <div class="w-full grid gap-4 grid-cols-4 place-items-center mt-6">
+
+            @for (req of requests(); track req.id) {
+
+            <div class="w-fit p-5 gap-3 rounded-md shadow-md bg-white border-gray-200 border grid">
+
+                <div class="flex justify-between items-center">
+                    <!-- <span class="bg-blue-300 p-2 text-xs rounded-lg font-medium text-blue-500">
+                        {{ req.status }}
+                    </span> -->
                 </div>
-            } @else {
-                @if(isLoading()){
-                    <div>
-                        <mat-spinner />
-                    </div>
-                } @else {
-                    <div class="w-full flex justify-center">
-                        <span>No submited sick leave requests</span>
-                    </div>
-                }
+
+                <div class="flex gap-5 font-medium text-gray-400 text-sm items-center">
+                    <span>From:</span>
+                    <span>{{ req.startDate | date }}</span>
+                </div>
+
+                <div class="flex gap-5 font-medium text-gray-400 text-sm items-center">
+                    <span>To:</span>
+                    <span>{{ req.endDate | date }}</span>
+                </div>
+
+                <div class="text-gray-600 text-sm mt-2">
+                    {{ req.reason }}
+                </div>
+
+            </div>
+
             }
+
+        </div>
+
+        } @else {
+
+        <div class="w-full flex justify-center mt-10">
+            <span>No submitted sick leave requests</span>
+        </div>
         }
+        }
+
     </div>
 </main>

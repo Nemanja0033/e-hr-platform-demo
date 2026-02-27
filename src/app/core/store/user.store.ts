@@ -7,7 +7,7 @@ export interface User {
   token?: string;
   role: 'hr' | 'employe';
   vacationDays?: number;  
-  sickLeave?: number;
+  sickLeaveDays?: number;
   roleGlobal?: 'hr' | 'employe';
 }
 
