@@ -39,6 +39,11 @@ export const routes: Routes = [
     canActivate: [authGuard('hr'), roleGuard('hr')]
   },
   {
+    path: 'hr/dashboard/sick-leave-reports',
+    loadComponent: () => import('./pages/hr/sick-leave-report/sick-leave-report').then(m => m.SickLeaveReport),
+    canActivate: [authGuard('hr'), roleGuard('hr')]
+  },
+  {
     path: 'employee/auth',
     component: EmployeeAuthComponent,
   },
