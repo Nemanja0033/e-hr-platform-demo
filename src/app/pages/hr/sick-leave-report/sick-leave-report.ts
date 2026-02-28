@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { SickLeaveReportsService } from '../../../core/services/sick-leave-reports.service';
+import { WebSocketService } from '../../../core/services/ws/webSocket.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-sick-leave-report',
@@ -8,13 +10,24 @@ import { SickLeaveReportsService } from '../../../core/services/sick-leave-repor
   templateUrl: './sick-leave-report.html',
   styleUrl: './sick-leave-report.css',
 })
-export class SickLeaveReport implements OnInit {
+export class SickLeaveReport implements OnInit, OnDestroy {
   sickLeaveReportsService = inject(SickLeaveReportsService);
+  webSocketService = inject(WebSocketService);
+  destroy$ = new Subject<void>();
 
   isLoading = this.sickLeaveReportsService.isLoading;
   submitedSickLeaveRequests = this.sickLeaveReportsService.sickLeaveReportsData;
 
   ngOnInit(): void {
-    this.sickLeaveReportsService.getSickLeaveReports()
+    this.sickLeaveReportsService.getSickLeaveReports();
+    // Implement realtime reports update in the template.
+    this.webSocketService.on('sickLeave:new').pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((notification: any) => this.sickLeaveReportsService.insertRealtimeSickLeaveReports(notification))
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.webSocketService.disconnect();
   }
 }

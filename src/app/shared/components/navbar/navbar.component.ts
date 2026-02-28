@@ -1,8 +1,13 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy, OnInit, signal } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { AuthHttpService } from "../../../core/services/http/auth-http.service";
 import { UserStore } from "../../../core/store/user.store";
+import { WebSocketService } from "../../../core/services/ws/webSocket.service";
+import { AsyncPipe, JsonPipe } from "@angular/common";
+import { Subject, takeUntil } from "rxjs";
+
+const notificationSound = new Audio('assets/notification.mp3');
 
 @Component({
   selector: 'app-navbar',
@@ -10,18 +15,29 @@ import { UserStore } from "../../../core/store/user.store";
   styleUrl: './navbar.component.css',
   imports: [RouterLink],
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit, OnDestroy {
   isAuth;
   userRole;
+  sickLeaveNotification = signal<any[]>([]);
+  destroy$ = new Subject<void>();
 
-  constructor(private router: Router, private userStore: UserStore, private authService: AuthHttpService, private _snackbar: MatSnackBar) {
+  constructor(private webSocketService: WebSocketService, private router: Router, private userStore: UserStore, private authService: AuthHttpService, private _snackbar: MatSnackBar) {
     this.isAuth = this.userStore.isUserAuth;
     this.userRole = this.userStore.userRole;
   }
 
-  ngOnInit(){
-    console.log("is role correct", this.userRole() === 'employe')
-    console.log("USER ROLE ", this.userRole())
+  ngOnInit() {
+    if (this.userRole() === 'hr') {
+      this.webSocketService.on("sickLeave:new").pipe(
+        takeUntil(this.destroy$)
+      ).subscribe((notification) => {
+        console.log("ws callback called")
+        this.sickLeaveNotification.update((perv) => [...perv, notification]);
+        notificationSound.play().catch(err => {
+          console.error('Audio play blocked:', err);
+        });
+      });
+    }
   }
 
   handleLogout() {
@@ -31,4 +47,11 @@ export class NavbarComponent {
     this.router.navigate(['/']);
   }
 
+  // Prevent memory leak, unsub from observable and disconect from ws.
+  ngOnDestroy(): void {
+    if (this.userRole() === 'hr') {
+      this.destroy$.next();
+      this.webSocketService.disconnect();
+    }
+  }
 }

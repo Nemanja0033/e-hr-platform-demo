@@ -1,6 +1,8 @@
 <nav class="w-full bg-white shadow-md flex justify-end py-5 mb-10 px-10">
   @if (isAuth()) {
     <div class="links-container">
+          <span>Notifications: {{ sickLeaveNotification().length }}</span>
+      
         @if(userRole() === 'hr') {
           <a routerLink="/hr/dashboard/company">Company</a>
           <a routerLink="/hr/dashboard/employees">Employees</a>

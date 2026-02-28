@@ -23,6 +23,10 @@ export class SickLeaveReportsService {
             });
     }
 
+    insertRealtimeSickLeaveReports(sickLeaveReport: SubmitedSickLeaveRequestType) {
+        this._sickLeaveReportsData.update((perv: any) => [...perv, sickLeaveReport]);
+    }
+
     refetchSickLeaveReports() {
         this.getSickLeaveReports();
     }
