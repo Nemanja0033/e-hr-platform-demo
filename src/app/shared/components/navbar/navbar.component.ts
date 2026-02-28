@@ -27,6 +27,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('user role', this.userRole())
     if (this.userRole() === 'hr') {
       this.webSocketService.on("sickLeave:new").pipe(
         takeUntil(this.destroy$)

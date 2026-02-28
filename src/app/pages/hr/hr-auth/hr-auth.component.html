@@ -3,9 +3,9 @@
 
     @if (haveAccount()) {
       <form class="form" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
-        <h3>Login as HR</h3>
+        <span class="text-2xl bg-blue-100 p-2 rounded-lg font-medium text-blue-500">Login as HR ✓</span>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Email</mat-label>
           <input #emailInput matInput type="email" formControlName="email">
 
@@ -17,7 +17,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Password</mat-label>
           <input matInput type="password" formControlName="password">
 
@@ -30,9 +30,9 @@
       </form>
     } @else {
       <form class="form" [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
-        <h3>Register</h3>
+        <span class="text-2xl bg-blue-100 p-2 rounded-lg font-medium text-blue-500">Register as HR ✓</span>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>First Name</mat-label>
           <input matInput type="text" formControlName="name">
 
@@ -47,7 +47,7 @@
           }
         </mat-form-field>
 
-        <!-- <mat-form-field appearance="outline">
+        <!-- <mat-form-field>
           <mat-label>Second Name</mat-label>
           <input matInput type="text" formControlName="surname">
 
@@ -62,7 +62,7 @@
           }
         </mat-form-field> -->
 
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Email</mat-label>
           <input matInput type="email" formControlName="email">
 
@@ -74,7 +74,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Password</mat-label>
           <input matInput type="password" formControlName="password">
 

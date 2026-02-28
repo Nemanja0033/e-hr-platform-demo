@@ -16,7 +16,7 @@
 
         .form {
             display: grid;
-            gap: 3px
+            gap: 20px
         }
     }
 }
