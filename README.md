@@ -1,59 +1,29 @@
-# Frontend
+## Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.4.
+**Angular role-based frontend for a demo multitenant e-HR platform.**
 
-## Development server
+### Application Architecture
+- **Standalone components:** Modern Angular approach with fine-grained reactivity using `signal` store.
+- **Authentication flow:** Client stores JWT in local storage after receiving it from the server.  
+  > Note: This is only for demo purposes. In production, a more secure approach should be used.
+- **Routing:** Lazy loading is implemented. The app is divided into two global portals:
+  - **Employee portal**
+  - **HR portal**
+- **Multitenancy:** Multiple companies can use the same application. Data is isolated by `companyId`, ensuring that HR and employees only see data belonging to their company.
 
-To start a local development server, run:
+### Application Features
+- **HR portal:**
+  - HR registration and authentication
+  - Company management (demo)
+  - Employee management (demo)
+  - Vacation request review
+  - Sick leave reports
+- **Employee portal:**
+  - Vacation request submission
+  - Sick leave submission
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Status
+This application is in **demo version**, which means:
+- The code is not fully tested or production-ready.
+- Some parts need to be fixed, optimized, and scaled for real-world usage.
+- Possible mistakes or architectural trade-offs are known and will be addressed in future iterations.
