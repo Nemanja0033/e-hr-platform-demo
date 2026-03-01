@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthHttpService } from '../../../core/services/http/auth-http.service';
 import { UserStore } from '../../../core/store/user.store';
+import { WebSocketService } from '../../../core/services/ws/webSocket.service';
 
 @Component({
   selector: 'app-hr-auth',
@@ -39,7 +40,7 @@ export class HrAuthComponent {
       private authService: AuthHttpService,
       private userStore: UserStore,
       private _snackBar: MatSnackBar,
-      private router: Router
+      private router: Router,
   ) {
     this.loginForm = this.fb.nonNullable.group({
       email: ['', [Validators.required, Validators.email]],
@@ -70,6 +71,7 @@ export class HrAuthComponent {
         // Save token and the role in localStorage (workaround)
         this.authService.saveToken(res.token);
         this.authService.saveRole('hr');
+        this.authService.saveEmail(res.email);
         
         // Set user data into store rxjs
         this.userStore.setUser({ name: res.name, email: res.email, role: 'hr', token: res.token });

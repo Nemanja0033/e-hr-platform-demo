@@ -1,7 +1,7 @@
 import { Injectable, signal } from "@angular/core";
 import { finalize } from "rxjs";
 import { SickLeaveRequestHttpService } from "./http/sick-leave-request-http.service";
-import { SickLeaveRequestDataType, SubmitedSickLeaveRequestType } from "../models/employee.model";
+import { SickLeaveRequestDataType, SubmitedSickLeaveRequestType } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class SickLeaveRequestService {

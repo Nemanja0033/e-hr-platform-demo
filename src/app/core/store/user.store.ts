@@ -27,7 +27,6 @@ export class UserStore {
   user = this._user.asReadonly();
 
   isUserAuth = computed(() => !!this.user()?.token);
-  userRole = computed(() => this.user()?.role ?? this.user()?.roleGlobal);
   
   setUser(user: User) {
     this._user.set(user);
@@ -41,12 +40,17 @@ export class UserStore {
   //   return this.userSubject.value;
   // }
 
+  getUserRole(){
+    return localStorage.getItem('role');
+  }
+
   rehydrateUser(){
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role') as "hr" | "employe";
+    const email = localStorage.getItem('email') as string;
 
     if(token && role){
-      this._user.set({ token, role, email: '', name: undefined})
+      this._user.set({ token, role, email, name: undefined})
     }
   }
 }

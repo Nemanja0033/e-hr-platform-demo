@@ -34,6 +34,14 @@ export class AuthHttpService {
     localStorage.setItem('role', role);
   }
 
+  saveEmail(email: string){
+    localStorage.setItem('email', email);
+  }
+
+  getEmail(){
+    localStorage.getItem('email');
+  }
+
   getRole(): "hr" | "employe" {
     return localStorage.getItem('role') as "hr" | "employe";
   }

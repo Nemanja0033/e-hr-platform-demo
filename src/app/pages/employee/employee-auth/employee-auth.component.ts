@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserStore } from '../../../core/store/user.store';
 import { AuthHttpService } from '../../../core/services/http/auth-http.service';
 import { RouterLink } from '@angular/router'; // Assuming RouterLink is needed for EmployeeDashboardComponent
+import { WebSocketService } from '../../../core/services/ws/webSocket.service';
 
 @Component({
   selector: 'app-employee-auth',
@@ -22,7 +23,7 @@ export class EmployeeAuthComponent {
     private authService: AuthHttpService,
     private userStore: UserStore,
     private router: Router,
-    private _snackbar: MatSnackBar
+    private _snackbar: MatSnackBar,
   ){
     this.loginForm = this.fb.nonNullable.group({
       email: ['', [Validators.required, Validators.email]],
@@ -40,11 +41,13 @@ export class EmployeeAuthComponent {
       next: (res: any) => {
         this.authService.saveToken(res.token);
         this.authService.saveRole('employe');
+        this.authService.saveEmail(res.email);
 
         console.log("user data", res);
         // Workaround destrucuring employee data
         delete res.employe.role;
         this.userStore.setUser({ ...res.employe, roleGlobal: 'employe', token: res.token });
+        
         this.router.navigate(['/employee/dashboard']);
         this._snackbar.open(`Welcome ${res.employe.name}`);
       }

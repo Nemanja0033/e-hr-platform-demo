@@ -3,6 +3,7 @@ import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { SickLeaveReportsService } from '../../../core/services/sick-leave-reports.service';
 import { WebSocketService } from '../../../core/services/ws/webSocket.service';
 import { Subject, takeUntil } from 'rxjs';
+import { UserStore } from '../../../core/store/user.store';
 
 @Component({
   selector: 'app-sick-leave-report',
@@ -11,7 +12,8 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrl: './sick-leave-report.css',
 })
 export class SickLeaveReport implements OnInit, OnDestroy {
-  sickLeaveReportsService = inject(SickLeaveReportsService);
+  private sickLeaveReportsService = inject(SickLeaveReportsService);
+  private userStore = inject(UserStore);
   webSocketService = inject(WebSocketService);
   destroy$ = new Subject<void>();
 
@@ -19,6 +21,8 @@ export class SickLeaveReport implements OnInit, OnDestroy {
   submitedSickLeaveRequests = this.sickLeaveReportsService.sickLeaveReportsData;
 
   ngOnInit(): void {
+    this.webSocketService.connect(this.userStore.user()?.email as string);
+
     this.sickLeaveReportsService.getSickLeaveReports();
     // Implement realtime reports update in the template.
     this.webSocketService.on('sickLeave:new').pipe(

@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { SickLeaveRequestDataType } from "../../models/employee.model";
+import { SickLeaveRequestDataType } from "../../models";
 
 @Injectable({ providedIn: "root" })
 export class SickLeaveRequestHttpService {

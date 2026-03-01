@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, signal } from "@angular/core";
+import { Component, inject, OnDestroy, OnInit, signal } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { AuthHttpService } from "../../../core/services/http/auth-http.service";
@@ -6,6 +6,7 @@ import { UserStore } from "../../../core/store/user.store";
 import { WebSocketService } from "../../../core/services/ws/webSocket.service";
 import { AsyncPipe, JsonPipe } from "@angular/common";
 import { Subject, takeUntil } from "rxjs";
+import { Notifications } from "../notifications/notifications";
 
 const notificationSound = new Audio('assets/notification.mp3');
 
@@ -13,46 +14,19 @@ const notificationSound = new Audio('assets/notification.mp3');
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
-  imports: [RouterLink],
+  imports: [RouterLink, Notifications],
 })
-export class NavbarComponent implements OnInit, OnDestroy {
-  isAuth;
-  userRole;
-  sickLeaveNotification = signal<any[]>([]);
-  destroy$ = new Subject<void>();
+export class NavbarComponent {
+  private userStore = inject(UserStore);
 
-  constructor(private webSocketService: WebSocketService, private router: Router, private userStore: UserStore, private authService: AuthHttpService, private _snackbar: MatSnackBar) {
-    this.isAuth = this.userStore.isUserAuth;
-    this.userRole = this.userStore.userRole;
-  }
+  isAuth = this.userStore.isUserAuth;
 
-  ngOnInit() {
-    console.log('user role', this.userRole())
-    if (this.userRole() === 'hr') {
-      this.webSocketService.on("sickLeave:new").pipe(
-        takeUntil(this.destroy$)
-      ).subscribe((notification) => {
-        console.log("ws callback called")
-        this.sickLeaveNotification.update((perv) => [...perv, notification]);
-        notificationSound.play().catch(err => {
-          console.error('Audio play blocked:', err);
-        });
-      });
-    }
-  }
+  constructor(private webSocketService: WebSocketService, private router: Router, private authService: AuthHttpService, private _snackbar: MatSnackBar) {}
 
   handleLogout() {
     this.authService.logout();
     this.userStore.clearUser();
     this._snackbar.open("User signed out", 'Close');
     this.router.navigate(['/']);
-  }
-
-  // Prevent memory leak, unsub from observable and disconect from ws.
-  ngOnDestroy(): void {
-    if (this.userRole() === 'hr') {
-      this.destroy$.next();
-      this.webSocketService.disconnect();
-    }
   }
 }

@@ -13,3 +13,12 @@ export interface SubmitedSickLeaveRequestType {
     sickType?: string;
     employeId: string;
 }
+
+export interface NotificationsType {
+    type: string;
+    body: {
+       author: any;
+       subject: string;
+       timestamp: Date 
+    }
+}
