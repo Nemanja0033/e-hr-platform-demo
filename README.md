@@ -10,6 +10,9 @@
   - **Employee portal**
   - **HR portal**
 - **Multitenancy:** Multiple companies can use the same application. Data is isolated by `companyId`, ensuring that HR and employees only see data belonging to their company.
+- **WebSocket integration:** Real-time notifications and data updates are implemented using Socket.IO.  
+  - Employees receive instant feedback on submitted requests.  
+  - HR receives live updates about new sick leave and vacation requests.
 
 ### Application Features
 - **HR portal:**
@@ -18,9 +21,11 @@
   - Employee management (demo)
   - Vacation request review
   - Sick leave reports
+  - Real-time notifications for employee requests
 - **Employee portal:**
   - Vacation request submission
   - Sick leave submission
+  - Real-time confirmation and updates
 
 ### Status
 This application is in **demo version**, which means:
