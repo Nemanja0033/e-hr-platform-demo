@@ -41,7 +41,7 @@ export class EmployeeAuthComponent {
       next: (res: any) => {
         this.authService.saveToken(res.token);
         this.authService.saveRole('employe');
-        this.authService.saveEmail(res.email);
+        this.authService.saveEmail(res.employe.email);
 
         console.log("user data", res);
         // Workaround destrucuring employee data

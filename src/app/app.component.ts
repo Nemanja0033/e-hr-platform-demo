@@ -22,8 +22,9 @@ export class AppComponent {
     const token = this.authService.getToken();
     const role = this.authService.getRole();
     const email = this.authService.getEmail();
+    console.log({ token, role, email})
 
-    if (token && role && email) {
+    if (token && role) {
       this.authService.getMe(role).subscribe({
         next: (user: any) => {
           this.userStore.setUser({ ...user, token });

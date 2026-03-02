@@ -3,11 +3,12 @@ import { Subject, takeUntil } from 'rxjs';
 import { WebSocketService } from '../../../core/services/ws/webSocket.service';
 import { UserStore } from '../../../core/store/user.store';
 import { NotificationsType } from '../../../core/models';
+import { DatePipe } from '@angular/common';
 const notificationSound = new Audio('assets/notification.mp3');
 
 @Component({
   selector: 'app-notifications',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './notifications.html',
   styleUrl: './notifications.css',
 })
