@@ -25,12 +25,20 @@ p {
 
 .app-cards-container {
     display: grid;
-    grid-template-columns: repeat(3, minmax(300px, 1fr));
+    grid-template-columns: repeat(4, minmax(300px, 1fr));
     gap: 30px;
 }
 
 /* tablet */
 @media (max-width: 1280px) {
+    .app-cards-container {
+        grid-template-columns: repeat(3, minmax(200px, 1fr));
+    }
+
+    
+}
+
+@media (max-width: 1000px) {
     .app-cards-container {
         grid-template-columns: repeat(2, minmax(200px, 1fr));
     }

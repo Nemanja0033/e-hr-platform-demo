@@ -50,16 +50,16 @@ export const routes: Routes = [
   {
     path: 'employee/dashboard',
     component: EmployeeDashboardComponent,
-    canActivate: [authGuard('employe'), roleGuard('employe')],
+    canActivate: [authGuard('employee'), roleGuard('employe')],
   },
   {
     path: 'employee/dashboard/vacation-request',
     component: VacationRequestComponent,
-    canActivate: [authGuard('employe'), roleGuard('employe')]
+    canActivate: [authGuard('employee'), roleGuard('employe')]
   },
   {
     path: 'employee/dashboard/sick-leave-request',
     component: SickLeaveRequestComponent,
-    canActivate: [authGuard('employe'), roleGuard('employe')]
+    canActivate: [authGuard('employee'), roleGuard('employe')]
   }
 ];
