@@ -78,10 +78,10 @@ export class HrAuthComponent {
 
         // Navigate further & show snackbar
         this.router.navigate(['/hr/dashboard']);
-        this._snackBar.open(`Welcome ${res.name}`)
+        this._snackBar.open(`Welcome ${res.name}`, 'close')
       },
       error: (err) => {
-        this._snackBar.open(err.error.message, 'Close')
+        this._snackBar.open(err.error.message ?? 'Something went wrong', 'Close')
       }
     });
   }
@@ -95,11 +95,11 @@ export class HrAuthComponent {
 
     this.authService.registerHr(this.registerForm.getRawValue()).subscribe({
       next: (res: any) => {
-        this._snackBar.open("Account succesfully created!")
+        this._snackBar.open("Account succesfully created!", 'close')
         this.haveAccount.set(true); // Push user to login after succesfully register.
       },
       error: (err) => {
-        this._snackBar.open(err.error.message, 'Got it');
+        this._snackBar.open(err.error.message ?? 'Something went wrong', 'Got it');
       }
     });
   }

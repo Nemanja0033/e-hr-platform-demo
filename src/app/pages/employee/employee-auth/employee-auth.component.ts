@@ -49,7 +49,10 @@ export class EmployeeAuthComponent {
         this.userStore.setUser({ ...res.employe, roleGlobal: 'employe', token: res.token });
         
         this.router.navigate(['/employee/dashboard']);
-        this._snackbar.open(`Welcome ${res.employe.name}`);
+        this._snackbar.open(`Welcome ${res.employe.name}`, 'close');
+      },
+      error: (err) => {
+        this._snackbar.open(`${err.message ?? 'Something went wrong'}`, 'close');
       }
     })
   }
