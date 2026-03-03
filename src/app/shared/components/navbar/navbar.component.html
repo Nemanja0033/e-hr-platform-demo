@@ -1,12 +1,22 @@
-<nav class="w-full bg-white shadow-md flex justify-between py-5 mb-10 px-10">
+<nav class="w-full bg-white shadow-md flex items-center justify-between py-5 mb-10 px-10">
   <h1
     class="text-lg font-extrabold bg-gradient-to-r from-blue-600 to-indigo-300 text-transparent bg-clip-text inline-block">
     HrPlatform✓
   </h1>
   @if (isAuth()) {
   <div class="links-container">
-    <app-notifications />
-    <button class="button-secondary" (click)="handleLogout()">Logout</button>
+    <app-notifications (notificationsModalOpened)="forceCloseAvatarModal($event)" [avatarModalOpened]="isAvatarModalOpen()" />
+    <div class="relative">
+      <div (click)="toggleAvatarModal()" class="p-2 w-10 h-10 font-semibold flex justify-center items-center cursor-pointer text-blue-600 rounded-full bg-blue-200">
+        {{ userAvatarPrefix() }}  
+      </div>
+      @if(isAvatarModalOpen()){
+        <div class="absolute right-0 top-8 bg-white rounded-md shadow-md border place-items-start place-content-start border-gray-200 w-32 p-2 grid grid-cols-1 gap-3 min-h-32 max-h-96 overflow-auto">
+                  <h1 class="font-semibold text-lg">User Settings</h1>
+                  <button class="button-secondary w-20!" (click)="handleLogout()">Logout</button>
+        </div>
+      }
+    </div>
   </div>
   } @else {
   <div class="links-container">

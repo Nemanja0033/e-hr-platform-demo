@@ -1,8 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { finalize, tap } from 'rxjs';
+import { finalize, Subject, takeUntil, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { VacationReviewService } from '../../../core/services/vacation-review.service';
+import { WebSocketService } from '../../../core/services/ws/webSocket.service';
 
 @Component({
   selector: 'app-vacation-review',
@@ -10,8 +11,9 @@ import { VacationReviewService } from '../../../core/services/vacation-review.se
   templateUrl: './vacation-review.component.html',
   styleUrl: './vacation-review.component.css',
 })
-export class VacationReviewComponent {
-  MS_PER_DAY = 1000 * 60 * 60 * 24;
+export class VacationReviewComponent implements OnInit, OnDestroy {
+  private MS_PER_DAY = 1000 * 60 * 60 * 24;
+  private destroy$ = new Subject<void>();
 
   requests;
   isLoading;
@@ -19,12 +21,24 @@ export class VacationReviewComponent {
 
   constructor(
     private vacationReviewService: VacationReviewService,
-    private _snackbar: MatSnackBar
+    private _snackbar: MatSnackBar,
+    private webSocketService: WebSocketService
   ) {
     this.requests = vacationReviewService.vacationRequestReviews;
     this.isLoading = vacationReviewService.isLoading;
   }
 
+  ngOnInit(): void {
+    this.webSocketService.on("vacationRequest:new").pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(reqData => this.vacationReviewService.insertRealtimeVacationRequests(reqData));
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+  }
+
+  // TODO refactor this handler function to be reusable (e.g handleRequest(status: "apporved" | "rejected"))
   approveRequest(rawReviewData: any) {
     const requestedDays = Math.ceil(
       (rawReviewData.endDate - rawReviewData.startDate) / this.MS_PER_DAY

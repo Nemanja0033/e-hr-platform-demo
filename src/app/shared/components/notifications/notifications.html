@@ -1,31 +1,38 @@
 <div class="relative flex justify-center">
     <div (click)="toggleNotificationModal()" [class.opacity-100!]="notifications().length"
-        class="cursor-pointer hover:rotate-12 opacity-70">
+        class="cursor-pointer opacity-70">
         <div [class.hidden]="!notifications().length"
-            class="bg-red-500 w-3 h-3 p-2 flex justify-center items-center text-xs text-white font-medium rounded-full absolute">
+            class="bg-blue-600 w-3 h-3 p-2 flex justify-center items-center text-xs text-white font-medium rounded-full absolute">
             {{ notifications().length }}</div>
-        <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
             <g id="SVGRepo_iconCarrier">
                 <path
-                    d="M3 18a1 1 0 0 1-.894-1.447L4 12.763V10a8 8 0 1 1 16 0v2.764l1.894 3.789A1 1 0 0 1 21 18H3ZM12 22a4.002 4.002 0 0 1-3.874-3h7.748A4.002 4.002 0 0 1 12 22Z"
-                    fill="#386aff"></path>
+                    d="M10.88 2.603A.75.75 0 0 1 11.614 2h.77a.75.75 0 0 1 .735.603l.143.712a1.5 1.5 0 0 0 .75 1.02l.3.165a5.586 5.586 0 0 1 3.239 4.47l.54 4.864c.101.905.564 1.732 1.283 2.291l.354.275a1.5 1.5 0 0 1 .534 1.548L20.25 18a1.32 1.32 0 0 1-1.281 1H15a3 3 0 1 1-6 0H5.03a1.32 1.32 0 0 1-1.28-1l-.013-.052A1.5 1.5 0 0 1 4.27 16.4l.354-.275a3.375 3.375 0 0 0 1.282-2.291l.54-4.865A5.586 5.586 0 0 1 9.688 4.5l.3-.164a1.5 1.5 0 0 0 .75-1.021l.142-.712z"
+                    fill="#93c5fd"></path>
             </g>
         </svg>
     </div>
     @if(isNotificationModalOpen()){
-    <div class="absolute top-8 bg-white rounded-md shadow-md border border-gray-200 w-60 p-2 grid grid-cols-1 gap-3 min-h-32 max-h-96 overflow-auto">
+    <div
+        class="absolute right-0 top-8 bg-white rounded-md shadow-md border border-gray-200 w-60 p-2 grid grid-cols-1 gap-3 min-h-32 max-h-96 overflow-auto">
         <h1 class="font-semibold text-lg">Notifications</h1>
-        @for (notification of notifications(); track $index) {
-            <div class="w-full cursor-pointer hover:opacity-90 rounded-md shadow-md border border-gray-200 p-3 grid h-auto">
-                <!-- TODO Implement custom pipe for type parsing to normal text -->
-                <!-- TODO dynamic coloring of notiication type (e.g red for sick leave, blue for vacation) -->
-                <span class="text-xs p-1 text-blue-400 bg-blue-200 w-fit rounded-md ">{{  notification.type }}</span>
-                <p class="text-md font-medium">{{ notification.body.subject }}</p>
-                <span>{{ notification.body.timestamp | date}}</span>
+        @if(notifications().length){
+            @for (notification of notifications(); track $index) {
+                <div class="w-full cursor-pointer hover:opacity-90 rounded-md shadow-md border border-gray-200 p-3 grid h-auto">
+                    <!-- TODO Implement custom pipe for type parsing to normal text -->
+                    <!-- TODO dynamic coloring of notiication type (e.g red for sick leave, blue for vacation) -->
+                    <span class="text-xs p-1 text-blue-400 bg-blue-200 w-fit rounded-md ">{{ notification.type }}</span>
+                    <p class="text-md font-medium">{{ notification.body.subject }}</p>
+                    <span>{{ notification.body.timestamp | date}}</span>
+                </div>
+            }
+        } @else {
+            <div class="w-full flex justify-center">
+                <h3>No new notifications</h3>
             </div>
         }
     </div>
-    } 
+    }
 </div>

@@ -22,9 +22,9 @@ export class VacationRequestService {
     }
 
     refetch(){
+        this._loading.set(true);
         this.vacationRequestHttpService.getSubmitedVacationRequests().subscribe({
             next: (res: any) => {
-                this._loading.set(true);
                 this._vacationRequests.set(res);
             },
             complete: () => {

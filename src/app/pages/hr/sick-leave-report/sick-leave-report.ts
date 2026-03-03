@@ -21,8 +21,6 @@ export class SickLeaveReport implements OnInit, OnDestroy {
   submitedSickLeaveRequests = this.sickLeaveReportsService.sickLeaveReportsData;
 
   ngOnInit(): void {
-    this.webSocketService.connect(this.userStore.user()?.email as string);
-
     this.sickLeaveReportsService.getSickLeaveReports();
     // Implement realtime reports update in the template.
     this.webSocketService.on('sickLeave:new').pipe(

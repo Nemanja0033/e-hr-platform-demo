@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { VacationRequestService } from '../../../core/services/vacation-request.service';
 import { MatProgressSpinner, MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { DatePipe } from '@angular/common';
+import { WebSocketService } from '../../../core/services/ws/webSocket.service';
 
 @Component({
   selector: 'app-vacation-request',
@@ -33,7 +34,8 @@ export class VacationRequestComponent {
     private fb: FormBuilder,
     private userStore: UserStore,
     private _snackbar: MatSnackBar,
-    private vacationRequestService: VacationRequestService
+    private vacationRequestService: VacationRequestService,
+    private webSocketService: WebSocketService
   ) {
     this.employeeData = userStore.user;
     this.vacationRequests = vacationRequestService.vacationRequests;
@@ -76,13 +78,17 @@ export class VacationRequestComponent {
           }
         }
       })
-    )
+    );
 
     this.subscription.add(
       this.vacationDateForm.controls.startDate.valueChanges.subscribe(val => {
         // Sync the end date with the start date.
         this.vacationDateForm.controls.endDate.setValue(val as Date);
       })
+    );
+
+    this.subscription.add(
+      this.webSocketService.on("vacationRequest:updated").subscribe( _ => this.vacationRequestService.refetch())
     )
 
   }
