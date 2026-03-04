@@ -12,7 +12,6 @@ import { EmployeeInterface } from '../../../core/services/http/employee-http.ser
   selector: 'app-employees-manager',
   imports: [ReactiveFormsModule, MatFormFieldModule, MatLabel, MatInputModule, MatProgressSpinner],
   templateUrl: './employees-manager.component.html',
-  styleUrl: './employees-manager.component.css',
 })
 export class EmployeesManagerComponent {
   employees;

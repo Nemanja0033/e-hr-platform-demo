@@ -1,84 +1,84 @@
-<main class="container">
-  <div class="grid gap-3 w-full place-content-center">
-    <div class="content-header">
+<main class="flex min-h-[70vh] items-center justify-center p-5">
+  <div class="grid place-content-center gap-3 w-full max-w-4xl">
+    <div class="flex flex-col gap-2 mb-4">
       <h1
-        class="text-3xl font-semibold bg-gradient-to-r inline-block from-blue-600 to-indigo-300 text-transparent bg-clip-text"
+        class="bg-gradient-to-r from-primary to-indigo-300 bg-clip-text text-3xl font-semibold text-transparent"
       >
         Welcome Back
       </h1>
-      <p class="text-mauve-400">Please select your portal to continue.</p>
+      <p class="text-text-muted">Please select your portal to continue.</p>
     </div>
-    <div class="flex items-center gap-3">
-      <div class="gateway-card">
-        <div class="gateway-card-header">
-          <div class="gateway-card-header-chip">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- HR Portal Card -->
+      <div class="group flex flex-col gap-8 rounded-md border-2 border-gray-100 bg-surface p-6 shadow-card transition-all duration-300 hover:shadow-lg">
+        <div class="flex items-center justify-start">
+          <div class="flex items-center justify-center rounded-md bg-sensitive p-2">
             <svg
-              width="20px"
-              height="20px"
+              width="24px"
+              height="24px"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-              <g id="SVGRepo_iconCarrier">
-                <path
-                  d="M17 9L9.99998 16L6.99994 13"
-                  stroke="#004494"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-              </g>
+              <path
+                d="M17 9L9.99998 16L6.99994 13"
+                stroke="var(--color-primary)"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
             </svg>
           </div>
         </div>
 
-        <div class="gateway-card-content">
-          <span class="headline">Login as HR</span>
-          <p class="description">Manage payroll, recruitment, and employee records.</p>
+        <div class="flex flex-col gap-2">
+          <span class="text-lg font-medium text-gray-900">Login as HR</span>
+          <p class="text-text-muted">Manage payroll, recruitment, and employee records.</p>
         </div>
 
-        <a routerLink="/hr/dashboard" class="button-primary">Acces Dashboard</a>
+        <a routerLink="/hr/dashboard" 
+           class="flex items-center justify-center rounded-xs bg-primary px-4 py-2.5 text-surface shadow-sm transition-all duration-300 hover:bg-primary-dark">
+          Access Dashboard
+        </a>
       </div>
 
-      <div class="gateway-card">
-        <div class="gateway-card-header">
-          <div class="gateway-card-header-chip">
+      <!-- Employee Portal Card -->
+      <div class="group flex flex-col gap-8 rounded-md border-2 border-gray-100 bg-surface p-6 shadow-card transition-all duration-300 hover:shadow-lg">
+        <div class="flex items-center justify-start">
+          <div class="flex items-center justify-center rounded-md bg-blue-50 p-2">
             <svg
-              width="20px"
-              height="20px"
+              width="24px"
+              height="24px"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-              <g id="SVGRepo_iconCarrier">
-                <circle cx="12" cy="9" r="3" stroke="#1C274C" stroke-width="1.5"></circle>
-                <path
-                  d="M17.9691 20C17.81 17.1085 16.9247 15 11.9999 15C7.07521 15 6.18991 17.1085 6.03076 20"
-                  stroke="#1C274C"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                ></path>
-                <path
-                  d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7"
-                  stroke="#1C274C"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                ></path>
-              </g>
+              <circle cx="12" cy="9" r="3" stroke="currentColor" stroke-width="1.5"></circle>
+              <path
+                d="M17.9691 20C17.81 17.1085 16.9247 15 11.9999 15C7.07521 15 6.18991 17.1085 6.03076 20"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              ></path>
+              <path
+                d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              ></path>
             </svg>
           </div>
         </div>
 
-        <div class="gateway-card-content">
-          <span class="headline">Login as Employee</span>
-          <p class="description">View payslips, apply for leave, and update profile.</p>
+        <div class="flex flex-col gap-2">
+          <span class="text-lg font-medium text-gray-900">Login as Employee</span>
+          <p class="text-text-muted">View payslips, apply for leave, and update profile in few clicks.</p>
         </div>
 
-        <a routerLink="/employee/dashboard" class="button-secondary">Employee Portal</a>
+        <a routerLink="/employee/dashboard" 
+           class="flex items-center justify-center rounded-xs border border-gray-200 bg-surface px-4 py-2.5 text-primary transition-all duration-300 hover:bg-gray-50">
+          Employee Portal
+        </a>
       </div>
     </div>
   </div>

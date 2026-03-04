@@ -12,7 +12,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 @Component({
   selector: 'app-sick-leave-request',
   templateUrl: './sick-leave-request.component.html',
-  styleUrl: './sick-leave-request.component.css',
   standalone: true,
   imports: [
     ReactiveFormsModule,

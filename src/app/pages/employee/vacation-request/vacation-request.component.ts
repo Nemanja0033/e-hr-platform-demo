@@ -15,7 +15,6 @@ import { WebSocketService } from '../../../core/services/ws/webSocket.service';
   selector: 'app-vacation-request',
   imports: [DatePipe, MatProgressSpinnerModule ,MatFormFieldModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, MatProgressSpinner],
   templateUrl: './vacation-request.component.html',
-  styleUrl: './vacation-request.component.css',
 })
 export class VacationRequestComponent {
   private subscription = new Subscription();

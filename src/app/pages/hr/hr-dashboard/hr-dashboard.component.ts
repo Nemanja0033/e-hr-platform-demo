@@ -7,9 +7,8 @@ import { UserStore } from '../../../core/store/user.store';
 
 @Component({
   selector: 'app-hr-dashboard',
-  imports: [AsyncPipe, RouterLink],
+  imports: [RouterLink],
   templateUrl: './hr-dashboard.component.html',
-  styleUrl: './hr-dashboard.component.css',
 })
 export class HrDashboardComponent {
   user;

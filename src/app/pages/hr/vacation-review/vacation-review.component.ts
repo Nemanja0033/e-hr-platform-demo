@@ -5,11 +5,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { VacationReviewService } from '../../../core/services/vacation-review.service';
 import { WebSocketService } from '../../../core/services/ws/webSocket.service';
 
+import { NgClass } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 @Component({
   selector: 'app-vacation-review',
-  imports: [DatePipe],
+  imports: [DatePipe, NgClass, MatProgressSpinnerModule],
   templateUrl: './vacation-review.component.html',
-  styleUrl: './vacation-review.component.css',
 })
 export class VacationReviewComponent implements OnInit, OnDestroy {
   private MS_PER_DAY = 1000 * 60 * 60 * 24;

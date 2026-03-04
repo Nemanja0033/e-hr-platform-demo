@@ -10,7 +10,6 @@ const notificationSound = new Audio('assets/notification.mp3');
   selector: 'app-notifications',
   imports: [DatePipe],
   templateUrl: './notifications.html',
-  styleUrl: './notifications.css',
 })
 export class Notifications implements OnInit, OnChanges, OnDestroy {
   private webSocketService = inject(WebSocketService);

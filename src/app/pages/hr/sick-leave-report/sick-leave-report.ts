@@ -5,11 +5,12 @@ import { WebSocketService } from '../../../core/services/ws/webSocket.service';
 import { Subject, takeUntil } from 'rxjs';
 import { UserStore } from '../../../core/store/user.store';
 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 @Component({
   selector: 'app-sick-leave-report',
-  imports: [DatePipe],
+  imports: [DatePipe, MatProgressSpinnerModule],
   templateUrl: './sick-leave-report.html',
-  styleUrl: './sick-leave-report.css',
 })
 export class SickLeaveReport implements OnInit, OnDestroy {
   private sickLeaveReportsService = inject(SickLeaveReportsService);

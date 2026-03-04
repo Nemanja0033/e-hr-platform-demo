@@ -5,7 +5,6 @@ import { RouterLink } from '@angular/router';
   selector: 'app-gateway',
   imports: [RouterLink],
   templateUrl: './gateway.html',
-  styleUrl: './gateway.css',
 })
 export class Gateway {
   constructor(){}

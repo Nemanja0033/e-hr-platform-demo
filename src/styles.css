@@ -1,138 +1,68 @@
-/* You can add global styles to this file, and also import other style files */
+@theme {
+    --color-primary: #005cbb;
+    --color-primary-dark: #0453ad;
+    --color-sensitive: #ccddf0;
+    --color-text-muted: #696e72;
 
-body {
-    background-color: whitesmoke;
+    --color-employee: #218802;
+    --color-employee-soft: color-mix(in srgb, var(--color-employee), transparent 88%);
+
+    --color-request: #b30068;
+    --color-request-soft: color-mix(in srgb, var(--color-request), transparent 90%);
+
+    --color-background: whitesmoke;
+    --color-surface: #ffffff;
+
+    --radius-xs: 3px;
+    --radius-sm: 5px;
+    --radius-md: 10px;
+
+    --shadow-card: 0px 2px 20px #0204052d;
 }
 
-:root {
-    --primary-color: #005cbb;
-    --secondary-color: #0453ad;
-    --sensitive-color: #ccddf0;
-    --text-muted: #696e72;
-
-    --employee-color: #218802;
-    --request-color: #b30068;
-
-    --employe-soft: #2ab3001e;
-    --request-soft: #b3006818;
-}
-
-.employe-bg {
-    background-color: var(--employee-color) !important;
-}
-
-.employe-bg-soft {
-    background-color: var(--employe-soft) !important;
-}
-
-.request-bg {
-    background-color: var(--request-color) !important;
-}
-
-.request-bg-soft {
-    background-color: var(--request-soft) !important;
-}
-
-button{
-    all: unset;
-}
-
-.button-primary {
-    background-color: var(--primary-color);
-    border-radius: 3px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 8px;
-    color: white;
-    text-decoration: none;
-    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.103);
-}
-
-.button-primary:hover {
-    cursor: pointer;
-    background-color: var(--secondary-color);
-    transition: all 0.3s;
-}
-
-.button-primary-disabled {
-    cursor: auto !important;
-    opacity: 50%;
-}
-
-.button-secondary {
-    border: 1px solid rgba(128, 128, 128, 0.103);
-    cursor: pointer;
-    background-color: white;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 8px;
-    color: var(--primary-color);
-    text-decoration: none;
-}
-
-.button-secondary:hover {
-    background-color: rgba(236, 234, 234, 0.233);
-    transition: all 0.3s;
-}
-
-/* Card */
-
-.card {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border-radius: 3px;
-    border: 2px solid rgba(70, 61, 61, 0.068);
-    padding: 16px;
-    background: #fff;
-    box-shadow: 0px 2px 20px #0204052d;
-}
-
-.card-header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.card-header-chip {
-    background-color: var(--sensitive-color);
-    border-radius: 10px;
-    padding: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.card-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.card-headline {
-    font-size: large;
-    font-weight: 500;
-}
-
-.card-description {
-    color: var(--text-muted);
-}
 @import "tailwindcss";
 
-/* Animations */
+/* Global Resets */
+html,
+body {
+    height: 100%;
+}
 
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    color-scheme: light;
+    background-color: var(--color-background);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+}
+
+/* Base Styles */
+button {
+    all: unset;
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: default;
+}
+
+/* Animations */
 .enter-animation {
-  animation: slide-fade 0.2s;
+    animation: slide-fade 0.2s ease-out;
 }
 
 @keyframes slide-fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

@@ -11,9 +11,8 @@ import { CompanyInterface, CompanyService } from '../../../core/services/company
 
 @Component({
   selector: 'app-company-manager',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, UpperCasePipe, NgClass],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule],
   templateUrl: './company-manager.component.html',
-  styleUrl: './company-manager.component.css',
 })
 export class CompanyManagerComponent {
   company;

@@ -13,7 +13,6 @@ const notificationSound = new Audio('assets/notification.mp3');
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css',
   imports: [RouterLink, Notifications],
 })
 export class NavbarComponent {

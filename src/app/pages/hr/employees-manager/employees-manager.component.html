@@ -1,75 +1,94 @@
-<main class="container">
-  <div class="content">
-    <div class="content-header">
-      <h1>Employees</h1>
-
-      <button [class.button-primary-disabled]="isRegisterEmployeeMode()" [disabled]="isRegisterEmployeeMode()"
-        (click)="toggleRegisterMode()" class="button-primary employee-bg">
-        + Add Employee
-      </button>
-    </div>
-
-    @if(isRegisterEmployeeMode()){
-    <div class="register-employee">
-      <form class="form" [formGroup]="registerEmployeeForm" (ngSubmit)="onRegisterEmployeeSubmit()">
-        <mat-form-field appearance="outline">
-          <mat-label>First Name</mat-label>
-          <input matInput formControlName="name" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Second Name</mat-label>
-          <input matInput formControlName="surname" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
-          <input matInput formControlName="password" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Role</mat-label>
-          <input matInput formControlName="role" />
-        </mat-form-field>
-
-        <button class="button-primary" type="submit">Submit</button>
-      </form>
-    </div>
-    } @else {
-    @if(loading()){
-    <mat-spinner />
-    } @else {
-    <div class="employees-section">
-
-      @for (employe of employees(); track $index) {
-      <div class="card employee-card">
-        <div class="employee-header">
-          <h3 class="employee-name">{{ employe.name }} {{ employe.surname }}</h3>
-          <span class="employee-role employee-bg-soft">{{ employe.role }}</span>
+<main class="w-full flex justify-center p-6 md:p-10">
+    <div class="w-full max-w-7xl flex flex-col gap-8">
+        <div class="flex items-center justify-between border-b border-gray-100 pb-6">
+            <h1 class="text-3xl font-bold text-gray-900">Employees</h1>
+            <button [disabled]="isRegisterEmployeeMode()" 
+                    (click)="toggleRegisterMode()" 
+                    class="flex items-center justify-center rounded-xs bg-employee px-5 py-2.5 text-surface font-medium shadow-sm transition-all duration-300 hover:opacity-90 disabled:opacity-50">
+                + Add Employee
+            </button>
         </div>
-        <div class="employee-body">
-          <p class="employee-email">{{ employe.email }}</p>
-          <div class="employee-stats">
-            <div class="stat employee-bg-soft">
-              <span class="stat-label">Vacation Days</span>
-              <span class="stat-value">{{ employe.vacationDays }}</span>
+
+        @if(isRegisterEmployeeMode()){
+            <div class="flex flex-col gap-8 bg-surface p-8 rounded-md border-2 border-gray-100 shadow-card max-w-2xl mx-auto w-full">
+                <div class="flex flex-col gap-1">
+                    <h2 class="text-xl font-semibold text-gray-900">Add New Employee</h2>
+                    <p class="text-sm text-text-muted">Fill in the details to register a new team member.</p>
+                </div>
+
+                <form class="grid grid-cols-1 md:grid-cols-2 gap-6" [formGroup]="registerEmployeeForm" (ngSubmit)="onRegisterEmployeeSubmit()">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="name" placeholder="John" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="surname" placeholder="Doe" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full md:col-span-2">
+                        <mat-label>Email Address</mat-label>
+                        <input matInput type="email" formControlName="email" placeholder="john.doe@company.com" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label>Temporary Password</mat-label>
+                        <input matInput formControlName="password" type="password" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label>Role</mat-label>
+                        <input matInput formControlName="role" placeholder="e.g. Developer" />
+                    </mat-form-field>
+
+                    <div class="md:col-span-2 flex justify-end gap-4 pt-4">
+                        <button type="button" (click)="isRegisterEmployeeMode.set(false)" class="px-6 py-2.5 text-sm font-medium text-gray-600 hover:text-gray-900">Cancel</button>
+                        <button class="flex items-center justify-center rounded-xs bg-employee px-8 py-2.5 text-surface font-medium shadow-sm transition-all duration-300 hover:opacity-90 disabled:opacity-50" 
+                                type="submit"
+                                [disabled]="registerEmployeeForm.invalid">
+                            Create Employee
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div class="stat employee-bg-soft">
-              <span class="stat-label">Sick Leave</span>
-              <span class="stat-value">{{ employe.sickLeave }}</span>
-            </div>
-          </div>
-        </div>
-        <button class="button-primary employee-bg">Manage {{ employe.name }}</button>
-      </div>
-      }
+        } @else {
+            @if(loading()){
+                <div class="flex justify-center py-20">
+                    <mat-spinner diameter="40" />
+                </div>
+            } @else {
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @for (employe of employees(); track $index) {
+                        <div class="group flex flex-col gap-6 rounded-md border-2 border-gray-100 bg-surface p-6 shadow-card transition-all duration-300 hover:shadow-lg">
+                            <div class="flex items-start justify-between">
+                                <div class="flex flex-col gap-1">
+                                    <h3 class="text-xl font-bold text-gray-900">{{ employe.name }} {{ employe.surname }}</h3>
+                                    <span class="text-sm text-text-muted">{{ employe.email }}</span>
+                                </div>
+                                <span class="rounded-full bg-employee-soft px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-employee">
+                                    {{ employe.role }}
+                                </span>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="flex flex-col gap-1 rounded-md bg-gray-50 p-3">
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-text-muted">Vacation</span>
+                                    <span class="text-lg font-bold text-gray-900">{{ employe.vacationDays }}<span class="text-xs font-normal text-gray-400 ml-1">days</span></span>
+                                </div>
+                                <div class="flex flex-col gap-1 rounded-md bg-gray-50 p-3">
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-text-muted">Sick Leave</span>
+                                    <span class="text-lg font-bold text-gray-900">{{ employe.sickLeave }}<span class="text-xs font-normal text-gray-400 ml-1">days</span></span>
+                                </div>
+                            </div>
+
+                            <button class="mt-auto flex items-center justify-center rounded-xs bg-employee px-4 py-2.5 text-surface font-medium shadow-sm transition-all duration-300 hover:opacity-90">
+                                View Profile
+                            </button>
+                        </div>
+                    }
+                </div>
+            }
+        }
     </div>
-    }
-    }
-  </div>
 </main>

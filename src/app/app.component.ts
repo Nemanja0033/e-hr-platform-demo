@@ -10,7 +10,6 @@ import { WebSocketService } from './core/services/ws/webSocket.service';
   selector: 'app-root',
   imports: [RouterOutlet, NavbarComponent, ReactiveFormsModule,],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
 })
 export class AppComponent {
   constructor(private authService: AuthHttpService, private userStore: UserStore, private webSocketService: WebSocketService){}

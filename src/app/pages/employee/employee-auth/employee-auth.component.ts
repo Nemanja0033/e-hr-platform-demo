@@ -13,7 +13,6 @@ import { WebSocketService } from '../../../core/services/ws/webSocket.service';
   selector: 'app-employee-auth',
   imports: [ReactiveFormsModule, MatFormField, MatLabel, MatError, MatInput],
   templateUrl: './employee-auth.component.html',
-  styleUrl: './employee-auth.component.css',
 })
 export class EmployeeAuthComponent {
   loginForm;

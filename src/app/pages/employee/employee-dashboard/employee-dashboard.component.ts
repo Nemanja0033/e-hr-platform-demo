@@ -5,7 +5,6 @@ import { RouterLink } from '@angular/router';
   selector: 'app-employee-dashboard',
   imports: [RouterLink],
   templateUrl: './employee-dashboard.component.html',
-  styleUrl: './employee-dashboard.component.css',
 })
 export class EmployeeDashboardComponent {
 

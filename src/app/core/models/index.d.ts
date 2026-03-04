@@ -11,7 +11,12 @@ export interface SubmitedSickLeaveRequestType {
     endDate: Date;
     reason?: string;
     sickType?: string;
+    status?: string;
     employeId: string;
+    employe?: {
+        name: string;
+        surname: string;
+    }
 }
 
 export interface NotificationsType {

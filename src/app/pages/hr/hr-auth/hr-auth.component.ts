@@ -20,7 +20,6 @@ import { WebSocketService } from '../../../core/services/ws/webSocket.service';
     CommonModule,
   ],
   templateUrl: './hr-auth.component.html',
-  styleUrl: './hr-auth.component.css',
 })
 export class HrAuthComponent {
   loginForm;
