@@ -4,7 +4,7 @@ import { CompanyHttpService } from "./http/company-http.service";
 
 export interface CompanyInterface {
     id: string,
-    name: String,
+    name: string,
     size: number,
     employees: any[],
     Hr: any,

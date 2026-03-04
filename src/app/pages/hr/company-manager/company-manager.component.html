@@ -1,7 +1,7 @@
-<main class="container">
-    <div class="content">
-        <div class="content-header">
-            <h1>Company</h1>
+<main class="w-full flex justify-center items-start">
+    <div class="w-xl grid gap-5">
+        <div class="w-full flex justify-between items-center">
+            <h1 class="text-2xl font-light">Company</h1>
 
             @if (!company()) {
                 <button [class.button-primary-disabled]="isRegisterMode()" [disabled]="isRegisterMode()" (click)="toggleRegisterMode()" class="button-primary">+ Register Company</button>
@@ -9,10 +9,8 @@
         </div>
 
        @if(isRegisterMode()){
-            <div class="register-company-container">
-                    <form class="form" [formGroup]="registerCompanyForm" (ngSubmit)="onSubmitCompanyRegister()">
-                        <h3>Register a Company</h3>
-
+            <div class="w-full flex justify-center">
+                    <form class="w-full bg-white shadow-md p-3 border border-gray-200 grid gap-3" [formGroup]="registerCompanyForm" (ngSubmit)="onSubmitCompanyRegister()">
                         <mat-label>Company Name</mat-label>
                         <mat-form-field>
                             <input type="text" matInput formControlName="name">
@@ -23,19 +21,29 @@
             </div>
        } @else {
          @if(company(); as company){
-            <div class="card">
-                <h2>{{ company.name }}</h2>
-                <span>Company ID: {{ company.id }}</span>
-                <span>Company Size: {{ company.size }}</span>
+            <!-- Inputs are hardcoded-disabled for demo only -->
+            <div class="bg-white p-3 rounded-md shadow-md border border-gray-200 grid gap-5">
+                <span class="text-md">Company ID: {{ company.id }}</span>
+                <div class="text-md flex gap-3 items-center">
+                    <span>Company name:</span>
+                    <input [disabled]="true" [ngClass]="{'opacity-50': true}" class="bg-gray-100 cursor-not-allowed rounded-sm shadow-sm border-gray-200 border px-3" type="text" [defaultValue]="company.name">
+                </div>
+                <div class="text-md flex gap-3 items-center">
+                    <span>Company size:</span>
+                    <input [disabled]="true" [ngClass]="{'opacity-50': true}" class="bg-gray-100 cursor-not-allowed rounded-sm shadow-sm border-gray-200 border px-3" type="number" [defaultValue]="company.size">
+                </div>
+                <div class="w-full flex justify-end py-2 border-t border-gray-200">
+                    <button [ngClass]="{'opacity-40!': true}" class="button-primary cursor-not-allowed! w-fit!">Edit Company</button>
+                </div>
             </div>
         } @else if(loading()) {
-            <div class="empty-state">
+            <div class="w-full flex justify-center">
                 <div>
                     <mat-spinner></mat-spinner>
                 </div>
             </div>
         } @else{
-            <div class="empty-state">
+            <div class="w-full flex justify-center">
                 <div>
                     <h1>No registered company</h1>
                 </div>

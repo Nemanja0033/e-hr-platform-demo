@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, UpperCasePipe, NgClass } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,7 +11,7 @@ import { CompanyInterface, CompanyService } from '../../../core/services/company
 
 @Component({
   selector: 'app-company-manager',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, UpperCasePipe, NgClass],
   templateUrl: './company-manager.component.html',
   styleUrl: './company-manager.component.css',
 })

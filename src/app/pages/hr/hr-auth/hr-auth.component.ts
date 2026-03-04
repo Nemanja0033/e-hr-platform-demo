@@ -26,6 +26,7 @@ export class HrAuthComponent {
   loginForm;
   registerForm;
   haveAccount = signal(true);
+  isFormSubmiting = signal(false);
   // View child angular way to have an reference to the HTML elements.
   @ViewChild('emailInput') emailInput!: ElementRef<HTMLInputElement>;
 
@@ -66,6 +67,8 @@ export class HrAuthComponent {
       return;
     }
 
+    this.isFormSubmiting.set(true);
+
     this.authService.loginHr(this.loginForm.getRawValue()).subscribe({
       next: (res: any) => {
         // Save token and the role in localStorage (workaround)
@@ -82,6 +85,9 @@ export class HrAuthComponent {
       },
       error: (err) => {
         this._snackBar.open(err.error.message ?? 'Something went wrong', 'Close')
+      },
+      complete: () => {
+        this.isFormSubmiting.set(false);
       }
     });
   }
@@ -93,6 +99,8 @@ export class HrAuthComponent {
       return;
     }
 
+    this.isFormSubmiting.set(true);
+
     this.authService.registerHr(this.registerForm.getRawValue()).subscribe({
       next: (res: any) => {
         this._snackBar.open("Account succesfully created!", 'close')
@@ -100,6 +108,9 @@ export class HrAuthComponent {
       },
       error: (err) => {
         this._snackBar.open(err.error.message ?? 'Something went wrong', 'Got it');
+      },
+      complete: () => {
+        this.isFormSubmiting.set(false);
       }
     });
   }
