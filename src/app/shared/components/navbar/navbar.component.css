@@ -32,7 +32,7 @@ a:hover{
 .links-container {
     align-items: center;
     display: flex;
-    gap: 1.5rem;
+    gap: 10px;
 }
 
 .links-container a {
@@ -47,4 +47,3 @@ a:hover{
     font-weight: 500;
     transition: color 0.2s ease-in-out;
 }
-

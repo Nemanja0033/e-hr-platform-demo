@@ -39,13 +39,14 @@ button{
 
 .button-primary {
     background-color: var(--primary-color);
-    border-radius: 8px;
+    border-radius: 3px;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 8px;
     color: white;
     text-decoration: none;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.103);
 }
 
 .button-primary:hover {
@@ -83,17 +84,11 @@ button{
     display: flex;
     flex-direction: column;
     gap: 10px;
-    border-radius: 10px;
+    border-radius: 3px;
     border: 2px solid rgba(70, 61, 61, 0.068);
     padding: 16px;
     background: #fff;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.055);
-}
-
-.card:hover {
-    /* border: 1px solid #0045942c; */
-    transition: all 0.4s;
-    box-shadow: 0px 2px 20px #0045942d;
+    box-shadow: 0px 2px 20px #0204052d;
 }
 
 .card-header {
@@ -126,3 +121,18 @@ button{
     color: var(--text-muted);
 }
 @import "tailwindcss";
+
+/* Animations */
+
+.enter-animation {
+  animation: slide-fade 0.2s;
+}
+
+@keyframes slide-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -20,7 +20,7 @@ p {
     align-content: start;
     /* aligin-uje grid po vertikali */
     height: 100%;
-    width: 80%;
+    width: 100%;
 }
 
 .app-cards-container {
