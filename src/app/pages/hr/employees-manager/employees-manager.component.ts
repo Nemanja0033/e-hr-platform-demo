@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { EmployeeService } from '../../../core/services/employee.service';
 import { EmployeeInterface } from '../../../core/services/http/employee-http.service';
+import { finalize, tap } from 'rxjs';
 // Interface moved to HTTP service or models
 
 @Component({
@@ -47,12 +48,12 @@ export class EmployeesManagerComponent {
       return;
     }
 
-    this.employeeService.registerEmployee(this.registerEmployeeForm.getRawValue()).subscribe({
-      next: (res: any) => {
-        this.isRegisterEmployeeMode.set(false);
+    this.employeeService.registerEmployee(this.registerEmployeeForm.getRawValue()).pipe(
+      tap(() => this.isRegisterEmployeeMode.set(false)),
+      finalize(() => {
         this.employeeService.refetch();
         this._snackbar.open('Employee registered succesfully');
-      },
-    });
+      })
+    ).subscribe();
   }
 }

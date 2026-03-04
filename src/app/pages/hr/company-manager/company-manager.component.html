@@ -2,7 +2,7 @@
     <div class="w-full max-w-3xl flex flex-col gap-8">
         <div class="flex items-center justify-between border-b border-gray-100 pb-6">
             <h1 class="text-3xl font-bold text-gray-900">Company Settings</h1>
-            @if (!company()) {
+            @if (!company() && !loading()) {
                 <button [disabled]="isRegisterMode()" 
                         (click)="toggleRegisterMode()" 
                         class="flex items-center justify-center rounded-xs bg-primary px-5 py-2.5 text-surface font-medium shadow-sm transition-all duration-300 hover:bg-primary-dark disabled:opacity-50">
@@ -42,7 +42,7 @@
                         <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Company Details</span>
                         <h2 class="text-2xl font-bold text-gray-900">{{ company.name }}</h2>
                     </div>
-                    <span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-primary">ID: {{ company.id }}</span>
+                    <span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-primary">ID: {{ company.id | id }}</span>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">

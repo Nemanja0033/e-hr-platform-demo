@@ -28,8 +28,6 @@ export class VacationReviewService {
   }
 
   insertRealtimeVacationRequests(data: any){
-    console.log("PERV data", this._vacationRequestReviews());
-    console.log("DATA FROM WS", data);
     this._vacationRequestReviews.update((perv: any) => [...perv, data]);
   }
 }

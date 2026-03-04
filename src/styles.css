@@ -41,10 +41,6 @@ body {
 }
 
 /* Base Styles */
-button {
-    all: unset;
-    cursor: pointer;
-}
 
 button:disabled {
     cursor: default;

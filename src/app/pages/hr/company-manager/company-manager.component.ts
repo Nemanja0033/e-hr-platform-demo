@@ -7,11 +7,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
 import { CompanyInterface, CompanyService } from '../../../core/services/company.service';
-
+import { IdPipe } from '../../../core/pipes/id-pipe';
 
 @Component({
   selector: 'app-company-manager',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, IdPipe],
   templateUrl: './company-manager.component.html',
 })
 export class CompanyManagerComponent {

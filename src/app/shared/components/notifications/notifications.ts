@@ -4,11 +4,12 @@ import { WebSocketService } from '../../../core/services/ws/webSocket.service';
 import { UserStore } from '../../../core/store/user.store';
 import { NotificationsType } from '../../../core/models';
 import { DatePipe } from '@angular/common';
+import { UnderscorePipe } from '../../../core/pipes/underscore-pipe';
 const notificationSound = new Audio('assets/notification.mp3');
 
 @Component({
   selector: 'app-notifications',
-  imports: [DatePipe],
+  imports: [DatePipe, UnderscorePipe],
   templateUrl: './notifications.html',
 })
 export class Notifications implements OnInit, OnChanges, OnDestroy {

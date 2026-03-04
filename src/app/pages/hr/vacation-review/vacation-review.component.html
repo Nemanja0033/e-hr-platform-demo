@@ -43,12 +43,12 @@
                             @if(req.status === 'pending'){
                                 <div class="mt-auto flex gap-3 pt-2">
                                     <button [disabled]="isActionsDisabled()"
-                                            (click)="rejectRequest({ requestId: req.id, employeeId: req.employeeId, startDate: req.startDate, endDate: req.endDate})" 
+                                            (click)="onRequestAction({ requestId: req.id, employeeId: req.employeeId, startDate: req.startDate, endDate: req.endDate}, 'rejected')" 
                                             class="flex-1 flex items-center justify-center rounded-xs border border-gray-200 bg-surface px-4 py-2.5 text-sm font-medium text-red-600 transition-all duration-300 hover:bg-red-50 disabled:opacity-50">
                                         Reject
                                     </button>
                                     <button [disabled]="isActionsDisabled()"
-                                            (click)="approveRequest({ requestId: req.id, employeeId: req.employeeId, startDate: req.startDate, endDate: req.endDate})" 
+                                            (click)="onRequestAction({ requestId: req.id, employeeId: req.employeeId, startDate: req.startDate, endDate: req.endDate}, 'approved')" 
                                             class="flex-1 flex items-center justify-center rounded-xs bg-primary px-4 py-2.5 text-sm font-medium text-surface shadow-sm transition-all duration-300 hover:bg-primary-dark disabled:opacity-50">
                                         Approve
                                     </button>

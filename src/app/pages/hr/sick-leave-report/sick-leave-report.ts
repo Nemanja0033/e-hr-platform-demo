@@ -4,7 +4,6 @@ import { SickLeaveReportsService } from '../../../core/services/sick-leave-repor
 import { WebSocketService } from '../../../core/services/ws/webSocket.service';
 import { Subject, takeUntil } from 'rxjs';
 import { UserStore } from '../../../core/store/user.store';
-
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
@@ -13,10 +12,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   templateUrl: './sick-leave-report.html',
 })
 export class SickLeaveReport implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+
   private sickLeaveReportsService = inject(SickLeaveReportsService);
   private userStore = inject(UserStore);
   webSocketService = inject(WebSocketService);
-  destroy$ = new Subject<void>();
 
   isLoading = this.sickLeaveReportsService.isLoading;
   submitedSickLeaveRequests = this.sickLeaveReportsService.sickLeaveReportsData;
