@@ -8,6 +8,10 @@
             </div>
         </div>
 
+        @if(requests()?.length){
+            <app-pagination [pages]="pages()!" [selectedPage]="selectedPage()" (pervPageChange)="onPervPageSelect()" (nextPageChange)="onNextPageSelect()" (slectPageChange)="onPageSelect($event)" />
+        }
+
         @if (requests(); as allRequests) {
             @if (allRequests.length > 0) {
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -57,7 +61,7 @@
                         </div>
                     }
                 </div>
-            } @else {
+            } @if(allRequests.length === 0 && !isLoading()) {
                 <div class="flex flex-col items-center justify-center py-24 opacity-60">
                     <svg width="64" height="64" viewBox="0 0 24 24" fill="none" class="text-gray-300 mb-4">
                          <path d="M8 7V3M16 7V3M7 11H17M5 21H19C20.1046 21 21 20.1046 21 19V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V19C3 20.1046 3.89543 21 5 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

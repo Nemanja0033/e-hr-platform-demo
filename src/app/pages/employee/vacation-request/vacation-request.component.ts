@@ -10,6 +10,7 @@ import { VacationRequestService } from '../../../core/services/vacation-request.
 import { MatProgressSpinner, MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { DatePipe } from '@angular/common';
 import { WebSocketService } from '../../../core/services/ws/webSocket.service';
+import { calculateDays } from '../../../core/helpers/helpers';
 
 @Component({
   selector: 'app-vacation-request',
@@ -46,24 +47,26 @@ export class VacationRequestComponent {
     });
   }
 
+  // TODO use custom validators, for validation logic from (custom-validators.ts)
   ngOnInit() {
     this.subscription.add(
       this.vacationDateForm.valueChanges.subscribe((val) => {
         const isEndDateSelected = val.endDate! > new Date();
 
-        // **TODO** same for start date, prevent to start date been before real date today
-        // Prevent invalid date range (end date to be before start)
         if (val.endDate! < val.startDate!) {
           this.vacationDateForm.controls.endDate.setValue(val.startDate as Date);
           this._snackbar.open("End date cannot be before start date.");
           this.isInvalidDateRange.set(true);
         }
 
+        // if(val.startDate! < new Date()) {
+        //   this.vacationDateForm.controls.startDate.setValue(new Date(), { emitEvent: false });
+        //   this._snackbar.open("Start date cannot be before today's date.");
+        //   this.isInvalidDateRange.set(true);
+        // }
+
         if (val.startDate && val.endDate && isEndDateSelected) {
-          const diff = Math.ceil(
-            (new Date(val.endDate).getTime() - new Date(val.startDate).getTime()) /
-            (1000 * 60 * 60 * 24)
-          );
+          const diff = calculateDays(new Date(val.endDate), new Date(val.startDate));
           const daysLeft = this.employeeData()?.vacationDays ?? 0;
           this.vacationDaysLeft.set(daysLeft - diff);
 
@@ -108,10 +111,13 @@ export class VacationRequestComponent {
 
     this.vacationRequestService.submitVacationRequest(this.vacationDateForm.getRawValue()).subscribe({
       next: () => {
-        this.vacationRequestService.refetch()
+        this.vacationRequestService.refetch();
+        this._snackbar.open("Vacation request submited");
+      },
+      error: () => {
+        this._snackbar.open("Server error");
       },
       complete: () => {
-        this._snackbar.open("Vacation request submited");
         this.isRequestMode.set(false)
       }
     });
