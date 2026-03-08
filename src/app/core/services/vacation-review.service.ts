@@ -1,15 +1,16 @@
 import { effect, Injectable, signal } from '@angular/core';
-import { debounceTime, finalize, Subscription, switchMap, tap } from 'rxjs';
+import { debounceTime, finalize, Subject, Subscription, switchMap, tap } from 'rxjs';
 import { VacationReviewHttpService } from './http/vacation-review-http.service';
 import {toObservable} from '@angular/core/rxjs-interop';
+import { WebSocketService } from './ws/webSocket.service';
 
 @Injectable({ providedIn: 'root' })
 export class VacationReviewService {
   private subs = new Subscription();
+  private _queryParams = { page: 1, limit: 9 };
 
   private _vacationRequestReviews = signal<any[] | null>(null);
   private _isLoading = signal<boolean>(false);
-  private _queryParams = { page: 1, limit: 10 };
   private _allPages = signal<number[] | null>(null);
   private _selectedPage = signal(1);
 
@@ -18,7 +19,7 @@ export class VacationReviewService {
   vacationRequestReviews = this._vacationRequestReviews.asReadonly();
   isLoading = this._isLoading.asReadonly();
 
-  constructor(private vacationReviewHttpService: VacationReviewHttpService) {
+  constructor(private vacationReviewHttpService: VacationReviewHttpService, private webSocketService: WebSocketService) {
     this.subs.add(
       toObservable(this._selectedPage).pipe(
         tap(() => {
@@ -40,17 +41,24 @@ export class VacationReviewService {
   getVacationRequests() {
     this._isLoading.set(true);
     return this.vacationReviewHttpService.getVacationRequests(this._queryParams).pipe(
-      finalize(() => this._isLoading.set(false)),
       tap((res: any) => {
         this._vacationRequestReviews.set(res.vacationRequests);
         this._allPages.set(res.pages);
-      })
+      }),
+      finalize(() => this._isLoading.set(false)),
     );
   }
 
   refetch(){
     this._vacationRequestReviews.set([]);
-    this.getVacationRequests();
+    this.getVacationRequests().subscribe();
+  }
+
+  subscribeToWebSocketEvent() {
+    return this.webSocketService.on("vacationRequest:new").pipe(
+      // tap for side effects, finalize only on FINITE observables, this is HOT observable and do not finish
+      tap(() => this.refetch())
+    )
   }
 
   selectPage(page: number){

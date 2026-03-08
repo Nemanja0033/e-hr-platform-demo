@@ -6,16 +6,12 @@ import { NgClass } from '@angular/common';
   imports: [NgClass],
   templateUrl: './pagination.html',
 })
-export class Pagination implements OnInit {
+export class Pagination {
   pages = input.required<number[]>();
   selectedPage = input.required<number>();
   slectPageChange = output<number>();
   nextPageChange = output<void>();
   pervPageChange = output<void>();
-
-  ngOnInit(): void {
-    console.log(this.pages, this.selectedPage, " PAGIANTION")
-  }
 
   onNextPageChange(){
     this.nextPageChange.emit();

@@ -83,7 +83,8 @@ export class HrAuthComponent {
         this._snackBar.open(`Welcome ${res.name}`, 'close')
       },
       error: (err) => {
-        this._snackBar.open(err.error.message ?? 'Something went wrong', 'Close')
+        this._snackBar.open(err.error.message ?? 'Something went wrong', 'Close');
+        this.isFormSubmiting.set(false);
       },
       complete: () => {
         this.isFormSubmiting.set(false);
@@ -107,6 +108,7 @@ export class HrAuthComponent {
       },
       error: (err) => {
         this._snackBar.open(err.error.message ?? 'Something went wrong', 'Got it');
+        this.isFormSubmiting.set(false);
       },
       complete: () => {
         this.isFormSubmiting.set(false);

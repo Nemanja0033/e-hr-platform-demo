@@ -8,9 +8,7 @@
             </div>
         </div>
 
-        @if(requests()?.length){
-            <app-pagination [pages]="pages()!" [selectedPage]="selectedPage()" (pervPageChange)="onPervPageSelect()" (nextPageChange)="onNextPageSelect()" (slectPageChange)="onPageSelect($event)" />
-        }
+        <app-pagination [pages]="pages()!" [selectedPage]="selectedPage()" (pervPageChange)="onPervPageSelect()" (nextPageChange)="onNextPageSelect()" (slectPageChange)="onPageSelect($event)" />
 
         @if (requests(); as allRequests) {
             @if (allRequests.length > 0) {
