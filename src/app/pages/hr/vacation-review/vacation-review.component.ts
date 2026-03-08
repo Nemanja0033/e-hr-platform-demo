@@ -36,10 +36,7 @@ export class VacationReviewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.vacationReviewService.getVacationRequests().subscribe();
-
-    this.webSocketService.on("vacationRequest:new").pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(_ => this.vacationReviewService.refetch());
+    this.vacationReviewService.subscribeToWebSocketEvent().subscribe()
   }
 
   onPervPageSelect(){
