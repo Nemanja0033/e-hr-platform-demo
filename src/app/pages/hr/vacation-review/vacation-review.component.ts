@@ -4,7 +4,6 @@ import { finalize, Subject, takeUntil, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { VacationReviewService } from '../../../core/services/vacation-review.service';
 import { WebSocketService } from '../../../core/services/ws/webSocket.service';
-
 import { NgClass } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { calculateDays } from '../../../core/helpers/helpers';
@@ -36,7 +35,10 @@ export class VacationReviewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.vacationReviewService.getVacationRequests().subscribe();
-    this.vacationReviewService.subscribeToWebSocketEvent().subscribe()
+    this.vacationReviewService.subscribeToWebSocketEvent().subscribe((res: any) => {
+      console.log(res)
+      this.vacationReviewService.insertRealtimeVacationRequests(res);
+    })
   }
 
   onPervPageSelect(){

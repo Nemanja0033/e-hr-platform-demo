@@ -7,7 +7,7 @@ import { WebSocketService } from './ws/webSocket.service';
 @Injectable({ providedIn: 'root' })
 export class VacationReviewService {
   private subs = new Subscription();
-  private _queryParams = { page: 1, limit: 9 };
+  private _queryParams = { page: 1, limit: 10 };
 
   private _vacationRequestReviews = signal<any[] | null>(null);
   private _isLoading = signal<boolean>(false);
@@ -55,10 +55,7 @@ export class VacationReviewService {
   }
 
   subscribeToWebSocketEvent() {
-    return this.webSocketService.on("vacationRequest:new").pipe(
-      // tap for side effects, finalize only on FINITE observables, this is HOT observable and do not finish
-      tap(() => this.refetch())
-    )
+    return this.webSocketService.on("vacationRequest:new");
   }
 
   selectPage(page: number){
@@ -80,8 +77,13 @@ export class VacationReviewService {
     return this.vacationReviewHttpService.reviewVacationRequest(reviewData);
   }
 
-  insertRealtimeVacationRequests(data: any){
-    this._vacationRequestReviews.update((perv: any) => [...perv, data]);
+  insertRealtimeVacationRequests(data: any){  
+    if(this._vacationRequestReviews()!.length){
+      this._vacationRequestReviews.update((perv: any) => [...perv, data]);
+    }
+    else{
+      this._vacationRequestReviews.set([data]);
+    }
   }
 
   dispose(){
