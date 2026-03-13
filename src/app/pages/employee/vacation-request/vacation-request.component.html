@@ -23,6 +23,9 @@
                             <mat-hint>MM/DD/YYYY</mat-hint>
                             <mat-datepicker-toggle matIconSuffix [for]="startDate"></mat-datepicker-toggle>
                             <mat-datepicker #startDate></mat-datepicker>
+                            @if(vacationDateForm.controls.startDate.hasError('invalidStartDate')){
+                                <span class="text-xs text-red-500">Start date is invalid</span>
+                            }
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="w-full">
@@ -31,12 +34,18 @@
                             <mat-hint>MM/DD/YYYY</mat-hint>
                             <mat-datepicker-toggle matIconSuffix [for]="endDate"></mat-datepicker-toggle>
                             <mat-datepicker #endDate></mat-datepicker>
+                            @if(vacationDateForm.controls.endDate.hasError('invalidEndDate')){
+                                <span class="text-xs text-red-500">End date is invalid</span>
+                            }
+                            @if(vacationDateForm.hasError('notEnoughDays')){
+                                <span class="text-xs text-red-500">Not Enough Vacation Days</span>
+                            }
                         </mat-form-field>
                     </div>
 
-                    <button [disabled]="vacationRequestsLoading()" 
+                    <button [disabled]="vacationRequestsLoading() || vacationDateForm.invalid" 
                             type="submit" 
-                            class="flex items-center justify-center rounded-xs bg-primary px-6 py-3 text-surface font-medium shadow-sm transition-all duration-300 hover:bg-primary-dark disabled:opacity-50">
+                            class="flex items-center justify-center cursor-pointer rounded-xs bg-primary px-6 py-3 text-surface font-medium shadow-sm transition-all duration-300 hover:bg-primary-dark disabled:opacity-50">
                         {{ vacationRequestsLoading() ? 'Submitting...' : 'Submit Request' }}
                     </button>
                 </form>

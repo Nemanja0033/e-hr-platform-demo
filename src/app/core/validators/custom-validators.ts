@@ -30,9 +30,13 @@ export function vacationDaysValidator(employeeDays: number): ValidatorFn {
     const startDate = group.get('startDate')?.value as Date;
     const endDate = group.get('endDate')?.value as Date;
 
+    console.log(startDate,  endDate, "DATES FORM VACATION VALIDATOR")
+
     if (startDate && endDate) {
+      console.log("VALIDATION RUNS")
       const diff = calculateDays(endDate, startDate);
       if (diff > employeeDays) {
+        console.log("VALIDATION WORKS")
         return { notEnoughDays: true };
       }
     }
