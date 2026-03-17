@@ -1,0 +1,51 @@
+<main class="w-full flex justify-center p-6 md:p-10">
+    <div class="w-full max-w-7xl flex flex-col gap-8">
+        <h1 class="text-3xl font-bold text-gray-900">Welcome Employee</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Vacation Request Card -->
+            <div class="group flex flex-col gap-6 rounded-md border-2 border-gray-100 bg-surface p-6 shadow-card transition-all duration-300 hover:shadow-lg">
+                <div class="flex items-center justify-start">
+                    <div class="flex items-center justify-center rounded-md bg-amber-50 p-3">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-amber-500">
+                             <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                             <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <h3 class="text-lg font-semibold text-gray-900">Vacation Requests</h3>
+                    <p class="text-text-muted text-sm">Review and submit your vacation requests in two clicks.</p>
+                </div>
+
+                <a routerLink="/employee/dashboard/vacation-request" 
+                   class="mt-auto flex items-center justify-center rounded-xs bg-amber-500 px-4 py-2.5 text-surface font-medium shadow-sm transition-all duration-300 hover:bg-amber-600">
+                    Manage Vacation Requests
+                </a>
+            </div>
+
+            <!-- Sick Leave Request Card -->
+            <div class="group flex flex-col gap-6 rounded-md border-2 border-gray-100 bg-surface p-6 shadow-card transition-all duration-300 hover:shadow-lg">
+                <div class="flex items-center justify-start">
+                    <div class="flex items-center justify-center rounded-md bg-purple-50 p-3">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-purple-600">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 8V12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <h3 class="text-lg font-semibold text-gray-900">Sick Leave Requests</h3>
+                    <p class="text-text-muted text-sm">Didn't feel well? Submit your sick leave request and notify HR.</p>
+                </div>
+
+                <a routerLink="/employee/dashboard/sick-leave-request" 
+                   class="mt-auto flex items-center justify-center rounded-xs bg-purple-600 px-4 py-2.5 text-surface font-medium shadow-sm transition-all duration-300 hover:bg-purple-700">
+                    Manage Sick Leave
+                </a>
+            </div>
+        </div>
+    </div>
+</main>

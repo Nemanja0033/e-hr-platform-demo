@@ -1,0 +1,98 @@
+@if (user(); as user) {
+    <main class="w-full flex justify-center p-6 md:p-10">
+        <div class="w-full max-w-7xl flex flex-col gap-8">
+            <h1 class="text-3xl font-bold text-gray-900">Welcome, {{ user?.name }}</h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+                <!-- Company Card -->
+                <div class="group flex flex-col gap-6 rounded-md border-2 border-gray-100 bg-surface p-6 shadow-card transition-all duration-300 hover:shadow-lg">
+                    <div class="flex items-center justify-start">
+                        <div class="flex items-center justify-center rounded-md bg-blue-50 p-3">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-primary">
+                                <path d="M16 4H2V24H18V6M8 22V18H10V22M16 22H12V17M8 10H6V8H8M12 10H10V8H12M8 14H6V12H8M12 14H10V12H12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+    
+                    <div class="flex flex-col gap-2">
+                        <h3 class="text-lg font-semibold text-gray-900">Company</h3>
+                        <p class="text-text-muted text-sm leading-relaxed">Manage company's budget, departments and strategic objectives.</p>
+                    </div>
+    
+                    <a routerLink="/hr/dashboard/company" 
+                       class="mt-auto flex items-center justify-center rounded-xs bg-primary px-4 py-2.5 text-surface font-medium shadow-sm transition-all duration-300 hover:bg-primary-dark">
+                        Manage Company
+                    </a>
+                </div>
+    
+                <!-- Employees Card -->
+                <div class="group flex flex-col gap-6 rounded-md border-2 border-gray-100 bg-surface p-6 shadow-card transition-all duration-300 hover:shadow-lg">
+                    <div class="flex items-center justify-start">
+                        <div class="flex items-center justify-center rounded-md bg-green-50 p-3">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-employee">
+                                 <path d="M14 19L16 21L20 17M4 21C4 17 7 14 11 14M15 7C15 9 13 11 11 11C9 11 7 9 7 7C7 5 9 3 11 3C13 3 15 5 15 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+    
+                    <div class="flex flex-col gap-2">
+                        <h3 class="text-lg font-semibold text-gray-900">Employees</h3>
+                        <p class="text-text-muted text-sm leading-relaxed">Manage company employees, their salary, documents and personal data.</p>
+                    </div>
+    
+                    <a routerLink="/hr/dashboard/employees" 
+                       class="mt-auto flex items-center justify-center rounded-xs bg-employee px-4 py-2.5 text-surface font-medium shadow-sm transition-all duration-300 hover:opacity-90">
+                        Manage Employees
+                    </a>
+                </div>
+    
+                <!-- Vacation Requests Card -->
+                <div class="group flex flex-col gap-6 rounded-md border-2 border-gray-100 bg-surface p-6 shadow-card transition-all duration-300 hover:shadow-lg">
+                    <div class="flex items-center justify-start">
+                        <div class="flex items-center justify-center rounded-md bg-amber-50 p-3">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-amber-500">
+                                 <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                 <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                    </div>
+    
+                    <div class="flex flex-col gap-2">
+                        <h3 class="text-lg font-semibold text-gray-900">Vacation Requests</h3>
+                        <p class="text-text-muted text-sm leading-relaxed">Review employee's vacation requests and manage approvals.</p>
+                    </div>
+    
+                    <a routerLink="/hr/dashboard/requests" 
+                       class="mt-auto flex items-center justify-center rounded-xs bg-amber-500 px-4 py-2.5 text-surface font-medium shadow-sm transition-all duration-300 hover:bg-amber-600">
+                        Manage Requests
+                    </a>
+                </div>
+    
+                <!-- Sick Leave Card -->
+                <div class="group flex flex-col gap-6 rounded-md border-2 border-gray-100 bg-surface p-6 shadow-card transition-all duration-300 hover:shadow-lg">
+                    <div class="flex items-center justify-start">
+                        <div class="flex items-center justify-center rounded-md bg-red-50 p-3">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-red-600">
+                                 <path d="M11 2H13V11H22V13H13V22H11V13H2V11H11V2Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                    </div>
+    
+                    <div class="flex flex-col gap-2">
+                        <h3 class="text-lg font-semibold text-gray-900">Sick Leave Report</h3>
+                        <p class="text-text-muted text-sm leading-relaxed">Monitor real-time sick leave submissions and health reports.</p>
+                    </div>
+    
+                    <a routerLink="/hr/dashboard/sick-leave-reports" 
+                       class="mt-auto flex items-center justify-center rounded-xs bg-red-600 px-4 py-2.5 text-surface font-medium shadow-sm transition-all duration-300 hover:bg-red-700">
+                        Review Reports
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+    } @else {
+        <div class="flex h-[80vh] items-center justify-center">
+            <span class="text-lg font-medium text-gray-400">Loading Dashboard...</span>
+        </div>
+    }

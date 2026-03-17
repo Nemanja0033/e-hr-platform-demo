@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
-import { RouterLink, RouterOutlet } from '@angular/router';
 import { AuthHttpService } from '../../../core/services/http/auth-http.service';
 import { UserStore } from '../../../core/store/user.store';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-hr-dashboard',
-  imports: [RouterLink, RouterOutlet],
-  templateUrl: './hr-dashboard.component.html',
+  selector: 'app-dashboard-home',
+  imports: [RouterLink],
+  templateUrl: './dashboard-home.html',
+  styleUrl: './dashboard-home.css',
 })
-export class HrDashboardComponent {
+export class DashboardHome {
   user;
   constructor(
     private userStore: UserStore,
@@ -21,4 +20,3 @@ export class HrDashboardComponent {
     this.user = this.userStore.user 
   }
 }
-
