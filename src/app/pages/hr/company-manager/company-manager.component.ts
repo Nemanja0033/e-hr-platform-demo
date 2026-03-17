@@ -1,12 +1,10 @@
-import { Component, signal } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AsyncPipe, UpperCasePipe, NgClass } from '@angular/common';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
-import { CompanyInterface, CompanyService } from '../../../core/services/company.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CompanyService } from '../../../core/services/company.service';
 import { IdPipe } from '../../../core/pipes/id-pipe';
 
 @Component({
@@ -14,7 +12,7 @@ import { IdPipe } from '../../../core/pipes/id-pipe';
   imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, IdPipe],
   templateUrl: './company-manager.component.html',
 })
-export class CompanyManagerComponent {
+export class CompanyManagerComponent implements OnInit {
   company;
   loading;
   
@@ -34,6 +32,10 @@ export class CompanyManagerComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.companyService.getCompanyData().subscribe()
+  }
+
   toggleRegisterMode() {
     this.isRegisterMode.set(true);
   }
@@ -47,7 +49,7 @@ export class CompanyManagerComponent {
     this.companyService.registerCompany(this.registerCompanyForm.getRawValue()).subscribe({
       next: (res: any) => {
         this._snackbar.open("Company registered", "Close");
-        this.companyService.refetch()
+        this.companyService.refetch();
         this.isRegisterMode.set(false);
       },
       error: (err) => {

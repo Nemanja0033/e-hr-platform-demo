@@ -1,5 +1,5 @@
 import { Injectable, signal } from "@angular/core";
-import { finalize } from "rxjs";
+import { finalize, tap } from "rxjs";
 import { CompanyHttpService } from "./http/company-http.service";
 
 export interface CompanyInterface {
@@ -19,18 +19,22 @@ export class CompanyService {
   company = this._company.asReadonly();
   loading = this._loading.asReadonly();
 
-  constructor(private companyHttpService: CompanyHttpService) {
-    this.refetch();
-  }
+  constructor(private companyHttpService: CompanyHttpService) { }
 
-  refetch() {
+  getCompanyData() {
     this._loading.set(true);
-    this.companyHttpService.getCompany().pipe(
+
+    return this.companyHttpService.getCompany().pipe(
+      tap((company: CompanyInterface | any) => this._company.set(company)), 
       finalize(() => this._loading.set(false))
-    ).subscribe((company: CompanyInterface | any) => this._company.set(company))
+    )
   }
 
   registerCompany(company: { name: string }) {
     return this.companyHttpService.registerCompany(company);
+  }
+
+  refetch(){
+    this.getCompanyData().subscribe();
   }
 }
