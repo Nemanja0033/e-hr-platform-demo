@@ -1,92 +1,57 @@
-import { effect, Injectable, signal } from '@angular/core';
-import { debounceTime, finalize, Subject, Subscription, switchMap, tap } from 'rxjs';
+import { Injectable, inject, signal, computed } from '@angular/core';
+import { debounceTime, map, scan, shareReplay, startWith, switchMap, tap, merge, Subject } from 'rxjs';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { VacationReviewHttpService } from './http/vacation-review-http.service';
-import {toObservable} from '@angular/core/rxjs-interop';
 import { WebSocketService } from './ws/webSocket.service';
 
 @Injectable({ providedIn: 'root' })
 export class VacationReviewService {
-  private subs = new Subscription();
-  private _queryParams = { page: 1, limit: 10 };
+  private http = inject(VacationReviewHttpService);
+  private ws = inject(WebSocketService);
 
-  private _vacationRequestReviews = signal<any[] | null>(null);
-  private _isLoading = signal<boolean>(false);
-  private _allPages = signal<number[] | null>(null);
   private _selectedPage = signal(1);
+  private _refetch$ = new Subject<void>();
+  private _isLoading = signal(false);
 
-  allPages = this._allPages.asReadonly();
-  selectedPage = this._selectedPage.asReadonly();
-  vacationRequestReviews = this._vacationRequestReviews.asReadonly();
+  private newRequests$ = this.ws.on("vacationRequest:new");
+
+  private dataStream$ = merge(
+    toObservable(this._selectedPage), 
+    this._refetch$
+  ).pipe(
+    debounceTime(100),
+    tap(() => {
+      this._isLoading.set(true);
+    }),
+    switchMap(() => this.http.getVacationRequests({ page: this._selectedPage(), limit: 5 })),
+    tap(() => this._isLoading.set(false)),
+    shareReplay(1) 
+  );
+
+  private finalState$ = merge(
+    this.dataStream$.pipe(map(res => ({ type: 'SET', payload: res }))),
+    this.newRequests$.pipe(map(req => ({ type: 'ADD', payload: req })))
+  ).pipe(
+    scan((state: any, action: any) => {
+      if (action.type === 'SET') return action.payload;
+      return { 
+        ...state, 
+        vacationRequests: [...state.vacationRequests, action.payload] 
+      };
+    }, { vacationRequests: [], pages: [] })
+  );
+
+  state = toSignal(this.finalState$);
+  vacationRequestReviews = computed(() => this.state()?.vacationRequests ?? []);
+  allPages = computed(() => this.state()?.pages ?? []);
   isLoading = this._isLoading.asReadonly();
+  selectedPage = this._selectedPage.asReadonly();
 
-  constructor(private vacationReviewHttpService: VacationReviewHttpService, private webSocketService: WebSocketService) {
-    this.subs.add(
-      toObservable(this._selectedPage).pipe(
-        tap(() => {
-          this._vacationRequestReviews.set([]);
-          this._isLoading.set(true);
-        }),
-        debounceTime(300),
-        switchMap(page => {
-          return this.vacationReviewHttpService.getVacationRequests({ page, limit: this._queryParams.limit })
-            .pipe(finalize(() => this._isLoading.set(false)))
-        })
-      ).subscribe((res: any) => {
-        this._vacationRequestReviews.set(res.vacationRequests);
-        this._allPages.set(res.pages);
-      })
-    )
-  }
-
-  getVacationRequests() {
-    this._isLoading.set(true);
-    return this.vacationReviewHttpService.getVacationRequests(this._queryParams).pipe(
-      tap((res: any) => {
-        this._vacationRequestReviews.set(res.vacationRequests);
-        this._allPages.set(res.pages);
-      }),
-      finalize(() => this._isLoading.set(false)),
-    );
-  }
-
-  refetch(){
-    this._vacationRequestReviews.set([]);
-    this.getVacationRequests().subscribe();
-  }
-
-  subscribeToWebSocketEvent() {
-    return this.webSocketService.on("vacationRequest:new");
-  }
-
-  selectPage(page: number){
-    this._queryParams.page = page;
-    this._selectedPage.set(page);
-  }
-
-  nextPage(){
-    this._queryParams.page++;
-    this._selectedPage.set(this._queryParams.page);
-  }
-
-  pervPage(){
-    this._queryParams.page--;
-    this._selectedPage.set(this._queryParams.page);
-  }
-
+  selectPage(page: number) { this._selectedPage.set(page); }
+  
+  refetch() { this._refetch$.next(); }
+  
   reviewVacationRequest(reviewData: any) {
-    return this.vacationReviewHttpService.reviewVacationRequest(reviewData);
-  }
-
-  insertRealtimeVacationRequests(data: any){  
-    if(this._vacationRequestReviews()!.length){
-      this._vacationRequestReviews.update((perv: any) => [...perv, data]);
-    }
-    else{
-      this._vacationRequestReviews.set([data]);
-    }
-  }
-
-  dispose(){
-    this.subs.unsubscribe();
+    return this.http.reviewVacationRequest(reviewData);
   }
 }

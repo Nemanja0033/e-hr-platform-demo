@@ -1,79 +1,46 @@
-import { Component, OnDestroy, OnInit, Signal, signal } from '@angular/core';
-import { DatePipe } from '@angular/common';
-import { finalize, Subject, takeUntil, tap } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { VacationReviewService } from '../../../core/services/vacation-review.service';
-import { WebSocketService } from '../../../core/services/ws/webSocket.service';
-import { NgClass } from '@angular/common';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { calculateDays } from '../../../core/helpers/helpers';
-import { Pagination } from '../../../shared/components/pagination/pagination';
+import { DatePipe, NgClass } from "@angular/common";
+import { Component, inject, signal } from "@angular/core";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { tap, finalize } from "rxjs";
+import { VacationReviewService } from "../../../core/services/vacation-review.service";
+import { Pagination } from "../../../shared/components/pagination/pagination";
 
 @Component({
   selector: 'app-vacation-review',
+  standalone: true, // Podrazumevano u novom Angularu
   imports: [DatePipe, NgClass, MatProgressSpinnerModule, Pagination],
   templateUrl: './vacation-review.component.html',
 })
-export class VacationReviewComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
-  requests;
-  isLoading;
-  selectedPage;
-  pages;
+export class VacationReviewComponent {
+  _snackbar = inject(MatSnackBar); 
+  vacationReviewService = inject(VacationReviewService);
+
+  // 1. Direktno povezivanje sa readonly signalima iz servisa
+  requests = this.vacationReviewService.vacationRequestReviews;
+  isLoading = this.vacationReviewService.isLoading;
+  selectedPage = this.vacationReviewService.selectedPage;
+  pages = this.vacationReviewService.allPages;
+  
   isActionsDisabled = signal<boolean>(false);
 
-  constructor(
-    private vacationReviewService: VacationReviewService,
-    private _snackbar: MatSnackBar,
-    private webSocketService: WebSocketService
-  ) {
-    this.requests = vacationReviewService.vacationRequestReviews;
-    this.isLoading = vacationReviewService.isLoading;
-    this.selectedPage = vacationReviewService.selectedPage;
-    this.pages = vacationReviewService.allPages;
-  }
-
-  ngOnInit(): void {
-    this.vacationReviewService.getVacationRequests().subscribe();
-    this.vacationReviewService.subscribeToWebSocketEvent().subscribe((res: any) => {
-      console.log(res)
-      this.vacationReviewService.insertRealtimeVacationRequests(res);
-    })
-  }
-
-  onPervPageSelect(){
-    this.vacationReviewService.pervPage();
-  }
-
-  onNextPageSelect(){
-    this.vacationReviewService.nextPage();
-  }
-
-  onPageSelect(page: number){
+  // 2. Akcije su sada samo "okidači" u servisu
+  onPageSelect(page: number) {
     this.vacationReviewService.selectPage(page);
   }
 
-  onRequestAction(rawRequestData: any, status: "approved" | "rejected"){
-    const requestedDays = calculateDays(new Date(rawRequestData.endDate), new Date(rawRequestData.endDate));
-
-    const mapedReviewData = {
-      ...rawRequestData,
-      requestedDays,
-      status
-    };
+  onRequestAction(rawRequestData: any, status: "approved" | "rejected") {
+    // Logika mapiranja...
+    const mapedReviewData = { ...rawRequestData, status };
 
     this.vacationReviewService.reviewVacationRequest(mapedReviewData).pipe(
       tap(() => this.isActionsDisabled.set(true)),
       finalize(() => {
-          this.isActionsDisabled.set(false);
-          this._snackbar.open(`Request ${mapedReviewData.status} sucessfully`, 'close');
-          this.vacationReviewService.refetch();
+        this.isActionsDisabled.set(false);
+        this._snackbar.open(`Request ${status} successfully`, 'close');
+        // Samo kažemo servisu da osveži, on zna kako
+        this.vacationReviewService.refetch();
       })
     ).subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this.vacationReviewService.dispose();
-    this.destroy$.next();
   }
 }
