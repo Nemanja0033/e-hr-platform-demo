@@ -2,18 +2,23 @@
     <div class="w-full max-w-7xl flex flex-col gap-8">
         <div class="flex items-center justify-between border-b border-gray-100 pb-6">
             <h1 class="text-3xl font-bold text-gray-900">Vacation Requests</h1>
-            <div class="flex items-center gap-2 text-sm text-text-muted">
+            <!-- <div class="flex items-center gap-2 text-sm text-text-muted">
                 <span class="flex h-2 w-2 rounded-full bg-amber-500"></span>
                 Pending Review
-            </div>
+            </div> -->
+            <button (click)="onApproveAll()" class="bg-blue-500 p-3 text-white rounded-md shadow-md cursor-pointer hover:bg-blue-600 transition-all">Approve All Request</button>
         </div>
 
-        <app-pagination 
+        <div class="w-full justify-between flex">
+            <app-pagination 
             [pages]="pages() || []" 
             [selectedPage]="selectedPage()" 
             (pervPageChange)="onPageSelect(selectedPage() - 1)" 
             (nextPageChange)="onPageSelect(selectedPage() + 1)" 
             (slectPageChange)="onPageSelect($event)" />
+
+            <input type="text" (input)="onSearchTermToggle($event)" placeholder="Search by employe name" class="w-fit px-3 bg-white h-10 border-1 border-gray-300">
+        </div>
 
         @if (requests() && !isLoading()) {
             @if (requests().length > 0) {
