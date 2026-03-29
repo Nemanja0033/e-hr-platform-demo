@@ -32,3 +32,10 @@ This application is in **demo version**, which means:
 - The code is not fully tested or production-ready.
 - Some parts need to be fixed, optimized, and scaled for real-world usage.
 - Possible mistakes or architectural trade-offs are known and will be addressed in future iterations.
+
+
+## Launching the project with specific node version
+
+1. `nvm use 22.17.0`
+2. `npm install`
+3. `npm start`:
