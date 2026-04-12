@@ -1,0 +1,23 @@
+- Generating browser application bundles (phase: setup)...
+√ Browser application bundle generation complete.
+√ Browser application bundle generation complete.
+- Copying assets...
+√ Copying assets complete.
+- Generating index html...
+√ Index html generation complete.
+
+Initial Chunk Files           | Names                            |  Raw Size | Estimated Transfer Size
+main.9ec5ed3e80868e7c.js      | main                             | 418.41 kB |               110.33 kB
+polyfills.21ede31c6a86672a.js | polyfills                        |  33.02 kB |                10.61 kB
+styles.d9ed7e440c508c9b.css   | styles                           |  20.51 kB |                 3.85 kB
+runtime.09fc8371010f3a62.js   | runtime                          |   2.72 kB |                 1.31 kB
+
+| Initial Total                    | 474.66 kB |               126.10 kB
+
+Lazy Chunk Files              | Names                            |  Raw Size | Estimated Transfer Size
+0.c8b05cfc629f1b68.js         | modules-hr-hr-module             |  48.46 kB |                 9.50 kB
+516.10995898ca4ab831.js       | modules-employee-employee-module |  25.96 kB |                 5.48 kB
+common.a83009ffa2aba41c.js    | common                           |   4.50 kB |                 1.47 kB
+842.d3c5bfeed0f3a0a4.js       | modules-gateway-gateway-module   |   3.39 kB |                 1.28 kB
+
+Build at: 2026-04-11T15:36:06.392Z - Hash: 3c9a4edbd52c4b3b - Time: 51440ms

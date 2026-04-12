@@ -1,9 +1,9 @@
 <div class="flex w-fit gap-2 items-center">
-    <button [disabled]="selectedPage() === 1" (click)="onPervPageChange()" class="w-fit p-2 cursor-pointer text-sm shadow-sm rounded-xs bg-blue-500 text-white">Perv</button>
-    @for (page of pages(); track $index) {
-        <button (click)="onPageSelected(page)" [ngClass]="{'bg-blue-500! text-white': page === selectedPage()}" class="bg-white rounded-xs cursor-pointer p-2 px-4 text-sm flex justify-center items-center text-gray-400">
+    <button [disabled]="selectedPage === 1" (click)="onPervPageChange()" class="w-fit p-2 cursor-pointer text-sm shadow-sm rounded-xs bg-blue-500 text-white">Perv</button>
+    <ng-container *ngFor="let page of pages">
+        <button (click)="onPageSelected(page)" [ngClass]="{'bg-blue-500! text-blue-500 font-bold': page === selectedPage}" class="bg-white rounded-xs cursor-pointer p-2 px-4 text-sm flex justify-center items-center text-gray-400">
             {{ page }}
         </button>
-    }
-    <button [disabled]="selectedPage() === pages().length" (click)="onNextPageChange()" class="w-fit p-2 cursor-pointer text-sm shadow-sm rounded-xs bg-blue-500 text-white">Next</button>
+    </ng-container>
+    <button [disabled]="selectedPage === pages.length" (click)="onNextPageChange()" class="w-fit p-2 cursor-pointer text-sm shadow-sm rounded-xs bg-blue-500 text-white">Next</button>
 </div>

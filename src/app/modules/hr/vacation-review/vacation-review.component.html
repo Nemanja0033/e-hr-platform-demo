@@ -1,0 +1,95 @@
+<main class="w-full flex justify-center p-6 md:p-10">
+    <div class="w-full max-w-7xl flex flex-col gap-8">
+        <div class="flex items-center justify-between border-b border-gray-100 pb-6">
+            <h1 class="text-3xl font-bold text-gray-900">Vacation Requests</h1>
+            <button (click)="onApproveAll()" class="bg-blue-500 p-3 text-white rounded-md shadow-md cursor-pointer hover:bg-blue-600 transition-all font-medium text-sm">Approve All Request</button>
+        </div>
+
+        <div class="w-full justify-between items-end flex gap-4">
+            <app-pagination 
+                *ngIf="{ pages: pages$ | async, selectedPage: selectedPage$ | async } as state"
+                [pages]="state.pages || []" 
+                [selectedPage]="state.selectedPage || 1" 
+                (pervPageChange)="onPageSelect((state.selectedPage || 1) - 1)" 
+                (nextPageChange)="onPageSelect((state.selectedPage || 1) + 1)" 
+                (slectPageChange)="onPageSelect($event)" />
+
+            <div class="w-72">
+                <app-input 
+                    placeholder="Search by employee name" 
+                    (input)="onSearchTermToggle($event)"
+                />
+            </div>
+        </div>
+
+        <ng-container *ngIf="!(isLoading$ | async); else loadingTpl">
+            <ng-container *ngIf="(requests$ | async) as requests; else noRequests">
+                <ng-container *ngIf="requests.length > 0; else noRequests">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <ng-container *ngFor="let req of requests">
+                            <div class="group flex flex-col gap-6 rounded-md border-2 border-gray-100 bg-surface p-6 shadow-card transition-all duration-300 hover:shadow-lg">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex flex-col gap-1">
+                                        <h3 class="text-lg font-bold text-gray-900">
+                                            {{ req.employe?.name }} {{ req.employe?.surname }}
+                                        </h3>
+                                        <span class="text-xs font-medium text-text-muted italic">Employee Request</span>
+                                    </div>
+                                    <span [ngClass]="{
+                                        'bg-amber-50 text-amber-600': req.status === 'pending',
+                                        'bg-green-50 text-green-600': req.status === 'approved',
+                                        'bg-red-50 text-red-600': req.status === 'rejected'
+                                    }" class="rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider">
+                                        {{ req.status }}
+                                    </span>
+                                </div>
+
+                                <div class="grid grid-cols-1 gap-3 border-t border-gray-50 pt-4">
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="text-gray-500">From:</span>
+                                        <span class="font-semibold text-gray-900">{{ req.startDate | date:'mediumDate' }}</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="text-gray-500">To:</span>
+                                        <span class="font-semibold text-gray-900">{{ req.endDate | date:'mediumDate' }}</span>
+                                    </div>
+                                </div>
+
+                                <ng-container *ngIf="req.status === 'pending'">
+                                    <div class="mt-auto flex gap-3 pt-2">
+                                        <button [disabled]="isActionsDisabled"
+                                                (click)="onRequestAction(req, 'rejected')" 
+                                                class="flex-1 flex items-center justify-center rounded-xs border border-gray-200 bg-surface px-4 py-2.5 text-sm font-medium text-red-600 transition-all duration-300 hover:bg-red-50 disabled:opacity-50">
+                                            Reject
+                                        </button>
+                                        <button [disabled]="isActionsDisabled"
+                                                (click)="onRequestAction(req, 'approved')" 
+                                                class="flex-1 flex items-center justify-center rounded-xs bg-primary px-4 py-2.5 text-sm font-medium text-surface shadow-sm transition-all duration-300 hover:bg-primary-dark disabled:opacity-50">
+                                            Approve
+                                        </button>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </ng-container>
+            
+            <ng-template #noRequests>
+                <div class="flex flex-col items-center justify-center py-24 opacity-60">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" class="text-gray-300 mb-4">
+                         <path d="M8 7V3M16 7V3M7 11H17M5 21H19C20.1046 21 21 20.1046 21 19V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V19C3 20.1046 3.89543 21 5 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h2 class="text-xl font-medium text-gray-400">Queue is Clear</h2>
+                    <p class="text-gray-400 text-sm mt-1">No vacation requests waiting for approval.</p>
+                </div>
+            </ng-template>
+        </ng-container>
+
+        <ng-template #loadingTpl>
+            <div class="flex justify-center py-20">
+                <app-spinner size="md"></app-spinner>
+            </div>
+        </ng-template>
+    </div>
+</main>

@@ -1,0 +1,69 @@
+<main class="w-full flex justify-center p-6 md:p-10">
+    <div class="w-full max-w-7xl flex flex-col gap-8">
+        <div class="flex items-center justify-between border-b border-gray-100 pb-6">
+            <h1 class="text-3xl font-bold text-gray-900">Sick Leave Reports</h1>
+            <div class="flex items-center gap-2 text-sm text-text-muted">
+                <span class="flex h-2 w-2 rounded-full bg-red-500"></span>
+                Real-time Monitoring
+            </div>
+        </div>
+
+        <ng-container *ngIf="(submitedSickLeaveRequests$ | async) as requests; else loadingTpl">
+            <ng-container *ngIf="requests.length > 0; else noDataTpl">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <ng-container *ngFor="let req of requests">
+                        <div class="group flex flex-col gap-6 rounded-md border-2 border-gray-100 bg-surface p-6 shadow-card transition-all duration-300 hover:shadow-lg">
+                            <div class="flex items-start justify-between">
+                                <div class="flex flex-col gap-1">
+                                    <h3 class="text-lg font-bold text-gray-900">
+                                        {{ req.employe?.name }} {{ req.employe?.surname }}
+                                    </h3>
+                                    <span class="text-xs font-medium text-text-muted italic">Employee</span>
+                                </div>
+                                <span class="rounded-full bg-red-50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-red-600">
+                                    {{ req.status || 'Reported' }}
+                                </span>
+                            </div>
+
+                            <div class="grid grid-cols-1 gap-3 border-t border-gray-50 pt-4">
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-500">Starts:</span>
+                                    <span class="font-semibold text-gray-900">{{ req.startDate | date:'mediumDate' }}</span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-500">Ends:</span>
+                                    <span class="font-semibold text-gray-900">{{ req.endDate | date:'mediumDate' }}</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-auto flex gap-3 pt-2">
+                                <button class="flex-1 flex items-center justify-center rounded-xs border border-gray-200 bg-surface px-4 py-2 text-sm font-medium text-gray-700 transition-all duration-300 hover:bg-gray-50">
+                                    View Details
+                                </button>
+                                <button class="flex-1 flex items-center justify-center rounded-xs bg-red-600 px-4 py-2 text-sm font-medium text-surface shadow-sm transition-all duration-300 hover:bg-red-700">
+                                    Acknowledge
+                                </button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+
+            <ng-template #noDataTpl>
+                <div class="flex flex-col items-center justify-center py-24 opacity-60">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" class="text-gray-300 mb-4">
+                         <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h2 class="text-xl font-medium text-gray-400">All Healthy</h2>
+                    <p class="text-gray-400 text-sm mt-1">No active sick leave reports found.</p>
+                </div>
+            </ng-template>
+        </ng-container>
+
+        <ng-template #loadingTpl>
+            <div class="flex justify-center py-20">
+                <app-spinner size="md" />
+            </div>
+        </ng-template>
+    </div>
+</main>

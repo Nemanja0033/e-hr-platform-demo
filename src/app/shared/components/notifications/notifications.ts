@@ -1,57 +1,57 @@
-import { Component, effect, inject, input, OnChanges, OnDestroy, OnInit, output, signal, SimpleChanges } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Component, inject, Input, OnChanges, OnDestroy, OnInit, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { BehaviorSubject, Subject, takeUntil, Observable } from 'rxjs';
 import { WebSocketService } from '../../../core/services/ws/webSocket.service';
 import { UserStore } from '../../../core/store/user.store';
 import { NotificationsType } from '../../../core/models';
-import { DatePipe } from '@angular/common';
-import { UnderscorePipe } from '../../../core/pipes/underscore-pipe';
+
 const notificationSound = new Audio('assets/notification.mp3');
 
 @Component({
   selector: 'app-notifications',
-  imports: [DatePipe, UnderscorePipe],
   templateUrl: './notifications.html',
 })
-export class Notifications implements OnInit, OnChanges, OnDestroy {
+export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
   private webSocketService = inject(WebSocketService);
   private userStore = inject(UserStore);
   private userRole = this.userStore.getUserRole();
 
-  avatarModalOpened = input<boolean>();
-  notificationsModalOpened = output<boolean>();
+  @Input() avatarModalOpened?: boolean;
+  @Output() notificationsModalOpened = new EventEmitter<boolean>();
 
-  notifications = signal<NotificationsType[]>([]);
-  isNotificationModalOpen = signal(false);
+  private _notifications$ = new BehaviorSubject<NotificationsType[]>([]);
+  notifications$: Observable<NotificationsType[]> = this._notifications$.asObservable();
+  
+  isNotificationModalOpen: boolean = false;
   destroy$ = new Subject<void>();
 
   toggleNotificationModal(){
-    // emit modal state to parent
     this.notificationsModalOpened.emit(true);
-    this.isNotificationModalOpen.update((perv) => !perv);
+    this.isNotificationModalOpen = !this.isNotificationModalOpen;
   }
 
-  // TODO move connection to global part of app
   ngOnInit(): void {
-    console.log('notifications', this.notifications().length)
-    this.webSocketService.connect(this.userStore.user()?.email as string);
+    const user = this.userStore.getUserSnapshot();
+    if (user?.email) {
+      this.webSocketService.connect(user.email);
+    }
+    
     this.webSocketService.on(`notification:new`).pipe(
       takeUntil(this.destroy$)
-    ).subscribe((n) => {
-      this.notifications.update((perv: any) => [...perv, n]);
-      notificationSound.play();
+    ).subscribe((n: any) => {
+      const current = this._notifications$.value;
+      this._notifications$.next([...current, n]);
+      notificationSound.play().catch(e => console.warn('Audio play failed', e));
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['avatarModalOpened']){
       const current = changes['avatarModalOpened'].currentValue;
-
       if(current === true){
-        this.isNotificationModalOpen.set(false)
+        this.isNotificationModalOpen = false;
       }
     }
   }
-
 
   ngOnDestroy(): void {
     this.destroy$.next();

@@ -1,0 +1,82 @@
+<main class="flex min-h-[80vh] items-center justify-center p-5">
+    <div class="w-full max-w-[420px] rounded-md border border-gray-100 bg-surface p-8 shadow-lg flex flex-col gap-6">
+        <ng-container *ngIf="haveAccount$ | async; else noAccount">
+            <form class="flex flex-col gap-6" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+                <div class="flex flex-col gap-1">
+                    <h2 class="text-2xl font-semibold text-gray-900">Login as HR</h2>
+                    <p class="text-sm text-text-muted">Manage your company resources.</p>
+                </div>
+
+                <div class="flex flex-col gap-4">
+                    <app-input
+                        label="Email"
+                        type="email"
+                        placeholder="Enter your email"
+                        formControlName="email"
+                        [error]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid ? 'Please enter a valid email' : null"
+                    />
+
+                    <app-input
+                        label="Password"
+                        type="password"
+                        placeholder="••••••••"
+                        formControlName="password"
+                        [error]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid ? 'Password is required' : null"
+                    />
+                </div>
+
+                <button [disabled]="(isFormSubmiting$ | async) || loginForm.invalid" 
+                        class="flex items-center justify-center rounded-xs bg-primary px-4 py-3 text-surface font-medium shadow-sm transition-all duration-300 hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed" 
+                        type="submit">
+                    {{ (isFormSubmiting$ | async) ? 'Logging in...' : 'Login' }}
+                </button>
+            </form>
+        </ng-container>
+        
+        <ng-template #noAccount>
+            <form class="flex flex-col gap-6 w-full" [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+                <div class="flex flex-col gap-1">
+                    <h2 class="text-2xl font-semibold text-gray-900">Register as HR</h2>
+                    <p class="text-sm text-text-muted">Create your HR manager account.</p>
+                </div>
+
+                <div class="flex flex-col gap-4">
+                    <app-input
+                        label="Full Name"
+                        placeholder="John Doe"
+                        formControlName="name"
+                        [error]="registerForm.get('name')?.touched && registerForm.get('name')?.invalid ? 'Name is required' : null"
+                    />
+
+                    <app-input
+                        label="Email"
+                        type="email"
+                        placeholder="email@example.com"
+                        formControlName="email"
+                        [error]="registerForm.get('email')?.touched && registerForm.get('email')?.invalid ? 'Valid email is required' : null"
+                    />
+
+                    <app-input
+                        label="Password"
+                        type="password"
+                        placeholder="••••••••"
+                        formControlName="password"
+                        [error]="registerForm.get('password')?.touched && registerForm.get('password')?.invalid ? 'Password (min 8 chars) is required' : null"
+                    />
+                </div>
+
+                <button [disabled]="(isFormSubmiting$ | async) || registerForm.invalid" 
+                        class="flex items-center justify-center rounded-xs bg-primary px-4 py-3 text-surface font-medium shadow-sm transition-all duration-300 hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed" 
+                        type="submit">
+                    {{ (isFormSubmiting$ | async) ? 'Registering...' : 'Register' }}
+                </button>
+            </form>
+        </ng-template>
+
+        <div class="text-center">
+            <button (click)="toggleCrateAccount()" class="text-sm font-medium text-primary hover:text-primary-dark hover:underline transition-all">
+                {{ (haveAccount$ | async) ? "Don't have an account? Register" : "Already have an account? Login" }}
+            </button>
+        </div>
+    </div>
+</main>

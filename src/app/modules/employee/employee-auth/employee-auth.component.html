@@ -1,0 +1,31 @@
+<main class="flex min-h-[80vh] items-center justify-center p-5">
+    <div class="w-full max-w-[400px] rounded-md border border-gray-100 bg-surface p-8 shadow-lg">
+        <form class="flex flex-col gap-6" [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-2">Login as Employee</h2>
+
+            <div class="flex flex-col gap-4">
+                <app-input
+                    label="Email"
+                    type="email"
+                    placeholder="Enter your email"
+                    formControlName="email"
+                    [error]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid ? 'Please enter a valid email' : null"
+                />
+
+                <app-input
+                    label="Password"
+                    type="password"
+                    placeholder="••••••••"
+                    formControlName="password"
+                    [error]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid ? 'Password is required' : null"
+                />
+            </div>
+
+            <button class="flex items-center justify-center rounded-xs bg-primary px-4 py-3 text-surface font-medium shadow-sm transition-all duration-300 hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed" 
+                    type="submit" 
+                    [disabled]="loginForm.invalid">
+                Login
+            </button>
+        </form>
+    </div>
+</main>

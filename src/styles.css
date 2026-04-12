@@ -1,26 +1,6 @@
-@theme {
-    --color-primary: #005cbb;
-    --color-primary-dark: #0453ad;
-    --color-sensitive: #ccddf0;
-    --color-text-muted: #696e72;
-
-    --color-employee: #218802;
-    --color-employee-soft: color-mix(in srgb, var(--color-employee), transparent 88%);
-
-    --color-request: #b30068;
-    --color-request-soft: color-mix(in srgb, var(--color-request), transparent 90%);
-
-    --color-background: whitesmoke;
-    --color-surface: #ffffff;
-
-    --radius-xs: 3px;
-    --radius-sm: 5px;
-    --radius-md: 10px;
-
-    --shadow-card: 0px 2px 20px #0204052d;
-}
-
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Global Resets */
 html,
@@ -35,7 +15,7 @@ body {
 body {
     margin: 0;
     color-scheme: light;
-    background-color: var(--color-background);
+    background-color: whitesmoke;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
 }

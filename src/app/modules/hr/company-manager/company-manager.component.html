@@ -1,0 +1,94 @@
+<main class="w-full flex justify-center p-6 md:p-10">
+    <div class="w-full max-w-3xl flex flex-col gap-8">
+        <div class="flex items-center justify-between border-b border-gray-100 pb-6">
+            <h1 class="text-3xl font-bold text-gray-900">Company Settings</h1>
+            
+            <ng-container *ngIf="!(company$ | async) && !(loading$ | async)">
+                <button [disabled]="isRegisterMode" 
+                        (click)="toggleRegisterMode()" 
+                        class="flex items-center justify-center rounded-xs bg-primary px-5 py-2.5 text-surface font-medium shadow-sm transition-all duration-300 hover:bg-primary-dark disabled:opacity-50">
+                    + Register Company
+                </button>
+            </ng-container>
+        </div>
+
+       <ng-container *ngIf="isRegisterMode; else noRegisterMode">
+            <div class="flex flex-col gap-6 bg-surface p-8 rounded-md border-2 border-gray-100 shadow-card">
+                <div class="flex flex-col gap-1">
+                    <h2 class="text-xl font-semibold text-gray-900">Register Your Company</h2>
+                    <p class="text-sm text-text-muted">Enter your company details to get started.</p>
+                </div>
+
+                <form class="flex flex-col gap-6" [formGroup]="registerCompanyForm" (ngSubmit)="onSubmitCompanyRegister()">
+                    <app-input
+                        label="Company Name"
+                        placeholder="e.g. Acme Corp"
+                        formControlName="name"
+                        [error]="registerCompanyForm.get('name')?.touched && registerCompanyForm.get('name')?.invalid ? 'Company name is required' : null"
+                    />
+
+                    <button type="submit" 
+                            [disabled]="registerCompanyForm.invalid || registerCompanyForm.pending" 
+                            class="flex items-center justify-center rounded-xs bg-primary px-6 py-3 text-surface font-medium shadow-sm transition-all duration-300 hover:bg-primary-dark disabled:opacity-50">
+                        {{ registerCompanyForm.pending ? 'Registering...' : 'Register Company' }}
+                    </button>
+                </form>
+            </div>
+       </ng-container>
+       
+       <ng-template #noRegisterMode>
+         <ng-container *ngIf="company$ | async as comp; else noCompany">
+            <div class="bg-surface p-8 rounded-md border-2 border-gray-100 shadow-card flex flex-col gap-8">
+                <div class="flex items-center justify-between border-b border-gray-50 pb-4">
+                    <div class="flex flex-col gap-1">
+                        <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Company Details</span>
+                        <h2 class="text-2xl font-bold text-gray-900">{{ comp.name }}</h2>
+                    </div>
+                    <span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-primary">ID: {{ comp.id }}</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-600">Company Name</label>
+                        <div class="rounded-md border border-gray-100 bg-gray-50 px-4 py-3 text-gray-700 opacity-70">
+                            {{ comp.name }}
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-600">Total Employees</label>
+                        <div class="rounded-md border border-gray-100 bg-gray-50 px-4 py-3 text-gray-700 opacity-70">
+                            {{ comp.size || 0 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-template #noCompany>
+           <ng-container *ngIf="loading$ | async; else noData">
+               <div class="flex justify-center py-20">
+                    <app-spinner size="md"></app-spinner>
+                </div>
+           </ng-container>
+
+           <ng-template #noData>
+                <div class="flex flex-col items-center justify-center py-20 opacity-60">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" class="text-gray-300 mb-4">
+                        <path d="M19 21V5C19 3.89543 18.1046 3 17 3H7C5.89543 3 5 3.89543 5 5V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3 21H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 7H10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 11H10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 15H10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M14 7H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M14 11H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M14 15H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h2 class="text-xl font-medium text-gray-400">No registered company found</h2>
+                    <p class="text-gray-400 text-sm mt-1">Register your company to start managing employees.</p>
+                </div>
+           </ng-template>
+        </ng-template>
+       </ng-template>
+    </div>
+</main>

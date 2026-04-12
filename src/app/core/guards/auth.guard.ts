@@ -8,8 +8,8 @@ export const authGuard = (role: "hr" | "employee"): CanActivateFn => {
     const userStore = inject(UserStore);
     const router = inject(Router);
 
-    console.log("userStore", userStore.isUserAuth());
-    const isAuth = userStore.isUserAuth();
+    const isAuth = userStore.getUserRole();
+    console.log("userStore role", isAuth);
 
     if (isAuth) {
       console.log("guard passing");

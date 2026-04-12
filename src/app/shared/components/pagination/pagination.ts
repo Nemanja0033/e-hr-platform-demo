@@ -1,17 +1,15 @@
-import { Component, computed, input, OnInit, output } from '@angular/core';
-import { NgClass } from '@angular/common';
+import { Component, computed, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({  
   selector: 'app-pagination',
-  imports: [NgClass],
   templateUrl: './pagination.html',
 })
-export class Pagination {
-  pages = input.required<number[]>();
-  selectedPage = input.required<number>();
-  slectPageChange = output<number>();
-  nextPageChange = output<void>();
-  pervPageChange = output<void>();
+export class PaginationComponent {
+  @Input() pages: number[] = [];
+  @Input() selectedPage: number = 0;
+  @Output() slectPageChange = new EventEmitter<number>();
+  @Output() nextPageChange = new EventEmitter<void>();
+  @Output() pervPageChange = new EventEmitter<void>();
 
   onNextPageChange(){
     this.nextPageChange.emit();

@@ -1,14 +1,13 @@
 export interface SickLeaveRequestDataType {
-    startDate: Date,
-    endDate: Date,
+    startDate: string | Date,
+    endDate: string | Date,
     reason: string,
-    // sickType: string
 }
 
 export interface SubmitedSickLeaveRequestType {
     id: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: string | Date;
+    endDate: string | Date;
     reason?: string;
     sickType?: string;
     status?: string;
